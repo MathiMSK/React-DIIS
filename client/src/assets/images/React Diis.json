@@ -1,0 +1,455 @@
+{
+	"info": {
+		"_postman_id": "ec0a8953-de00-4424-8835-b95db40ece77",
+		"name": "DIIS TASK",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19880472"
+	},
+	"item": [
+		{
+			"name": "user",
+			"item": [
+				{
+					"name": "fatculty reg",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Mass\",\r\n    \"email\": \"kumar@gmail.com\",\r\n    \"password\": \"123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:2023/api/user/factreg",
+							"host": [
+								"localhost"
+							],
+							"port": "2023",
+							"path": [
+								"api",
+								"user",
+								"factreg"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "student reg",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ODA0NTA4NzNjMzcyMWU2MmRiZGFhNiIsImlhdCI6MTY4NjY0NzU2MCwiZXhwIjoxNjg2NjkwNzYwfQ.w09WzHnkJrFDi1I0Mn87Lp3IeQ3BnqrLq6r3KrSFkDY",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"selva\",\r\n    \"email\": \"selva@gmail.com\",\r\n    \"password\": \"123456\",\r\n    \"class\":10\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:2023/api/user/reg",
+							"host": [
+								"localhost"
+							],
+							"port": "2023",
+							"path": [
+								"api",
+								"user",
+								"reg"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"selva@gmail.com\",\r\n    \"password\": \"123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:2023/api/user/login",
+							"host": [
+								"localhost"
+							],
+							"port": "2023",
+							"path": [
+								"api",
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAlluser",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:2023/api/user/getalluser",
+							"host": [
+								"localhost"
+							],
+							"port": "2023",
+							"path": [
+								"api",
+								"user",
+								"getalluser"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "assignment",
+			"item": [
+				{
+					"name": "create assignment",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ODA0NTA4NzNjMzcyMWU2MmRiZGFhNiIsImlhdCI6MTY4NjY0NzU2MCwiZXhwIjoxNjg2NjkwNzYwfQ.w09WzHnkJrFDi1I0Mn87Lp3IeQ3BnqrLq6r3KrSFkDY",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"class\":10,\r\n    \"subject\":\"science\",\r\n    \"assignmentTitle\": \"assignment 1\",\r\n    \"question\": [\r\n        {\r\n            \"questionNo\" : 1,\r\n            \"question\":\"Lepidopterology is a branch of biology, which deals with the following?\",\r\n            \"options\": [\r\n                {\r\n                    \"optionNo\" : 1,\r\n                    \"optionAns\" : \"Sucrose\"\r\n                },\r\n                {\r\n                    \"optionNo\" : 2,\r\n                    \"optionAns\" : \"Fructose\"\r\n                }\r\n            ],\r\n            \"answer\" :\"Fructose\",\r\n            \"markForThisQuestion\":5\r\n        },\r\n        {\r\n            \"questionNo\" : 2,\r\n            \"question\":\"How Many Sides are there in a Decagon?\",\r\n            \"options\": [\r\n                {\r\n                    \"optionNo\" : 1,\r\n                    \"optionAns\" : \"Moths & Butterflies\"\r\n                },\r\n                {\r\n                    \"optionNo\" : 2,\r\n                    \"optionAns\" : \"Ferns\"\r\n                }\r\n            ],\r\n            \"answer\" :\"Moths & Butterflies\",\r\n            \"markForThisQuestion\":5\r\n        }\r\n    ],\r\n    \"totalMarks\" : 10,\r\n    \"totalQuestion\":2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:2023/api/assign/createassign",
+							"host": [
+								"localhost"
+							],
+							"port": "2023",
+							"path": [
+								"api",
+								"assign",
+								"createassign"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get allassign",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:2023/api/assign/getallassign",
+							"host": [
+								"localhost"
+							],
+							"port": "2023",
+							"path": [
+								"api",
+								"assign",
+								"getallassign"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:2023/api/assign/getbyidassign/648155861ced7ec00ca9625f",
+							"host": [
+								"localhost"
+							],
+							"port": "2023",
+							"path": [
+								"api",
+								"assign",
+								"getbyidassign",
+								"648155861ced7ec00ca9625f"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "student assignment",
+			"item": [
+				{
+					"name": "attend assign",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ODgzNTBlYTg5NTg4ZDBlMTMyOTNiOSIsImlhdCI6MTY4NjY0ODY3NCwiZXhwIjoxNjg2NjkxODc0fQ.aRh1azrXP31rVNvev_7uQSA-ziUzifS5Afua5gebQp4",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"answers\":[\r\n       {\r\n            \"questionNo\":1,\r\n            \"answer\":\"Fructose\"\r\n       },\r\n       {\r\n            \"questionNo\":2,\r\n            \"answer\":\"Moths & Butterflies\"\r\n       }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:2023/api/stdassign/attendassign/64883a7c2288e83ff50dffa1",
+							"host": [
+								"localhost"
+							],
+							"port": "2023",
+							"path": [
+								"api",
+								"stdassign",
+								"attendassign",
+								"64883a7c2288e83ff50dffa1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "std view their all assign",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ODA1MDc0YzM3YTY3YjgyY2IyNzMwOSIsImlhdCI6MTY4NjE5NTg4NCwiZXhwIjoxNjg2MjM5MDg0fQ.fNod7OIwA-VQUz30yN1U7CirO3bluLB1ZVaJ9jIfgyc",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:2023/api/stdassign/stdviewallassign",
+							"host": [
+								"localhost"
+							],
+							"port": "2023",
+							"path": [
+								"api",
+								"stdassign",
+								"stdviewallassign"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "std view thier particular assign score",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ODA1MDc0YzM3YTY3YjgyY2IyNzMwOSIsImlhdCI6MTY4NjE5NTg4NCwiZXhwIjoxNjg2MjM5MDg0fQ.fNod7OIwA-VQUz30yN1U7CirO3bluLB1ZVaJ9jIfgyc",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:2023/api/stdassign/stdviewsingleassign/648155861ced7ec00ca9625f",
+							"host": [
+								"localhost"
+							],
+							"port": "2023",
+							"path": [
+								"api",
+								"stdassign",
+								"stdviewsingleassign",
+								"648155861ced7ec00ca9625f"
+							],
+							"query": [
+								{
+									"key": "action",
+									"value": "score",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "std view their single assign with answer",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ODA1MDc0YzM3YTY3YjgyY2IyNzMwOSIsImlhdCI6MTY4NjE5NTg4NCwiZXhwIjoxNjg2MjM5MDg0fQ.fNod7OIwA-VQUz30yN1U7CirO3bluLB1ZVaJ9jIfgyc",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:2023/api/stdassign/stdviewsingleassignans/648155861ced7ec00ca9625f",
+							"host": [
+								"localhost"
+							],
+							"port": "2023",
+							"path": [
+								"api",
+								"stdassign",
+								"stdviewsingleassignans",
+								"648155861ced7ec00ca9625f"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "factulty view all std assign",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ODA0NTA4NzNjMzcyMWU2MmRiZGFhNiIsImlhdCI6MTY4NjY0NzU2MCwiZXhwIjoxNjg2NjkwNzYwfQ.w09WzHnkJrFDi1I0Mn87Lp3IeQ3BnqrLq6r3KrSFkDY",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:2023/api/stdassign/factviewallassign",
+							"host": [
+								"localhost"
+							],
+							"port": "2023",
+							"path": [
+								"api",
+								"stdassign",
+								"factviewallassign"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "factulty view single student assignment",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ODA0NTA4NzNjMzcyMWU2MmRiZGFhNiIsImlhdCI6MTY4NjY0NzU2MCwiZXhwIjoxNjg2NjkwNzYwfQ.w09WzHnkJrFDi1I0Mn87Lp3IeQ3BnqrLq6r3KrSFkDY",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:2023/api/stdassign/factviewsingleassign?stdid=64804586000af1b6c0fa94c8&assignid=648155861ced7ec00ca9625f",
+							"host": [
+								"localhost"
+							],
+							"port": "2023",
+							"path": [
+								"api",
+								"stdassign",
+								"factviewsingleassign"
+							],
+							"query": [
+								{
+									"key": "stdid",
+									"value": "64804586000af1b6c0fa94c8"
+								},
+								{
+									"key": "assignid",
+									"value": "648155861ced7ec00ca9625f"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "get report as pdf",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": []
+				},
+				"url": {
+					"raw": "localhost:2023/api/assign/get",
+					"host": [
+						"localhost"
+					],
+					"port": "2023",
+					"path": [
+						"api",
+						"assign",
+						"get"
+					],
+					"query": [
+						{
+							"key": "subject",
+							"value": "computer science",
+							"disabled": true
+						},
+						{
+							"key": "class",
+							"value": "10",
+							"disabled": true
+						},
+						{
+							"key": "assignmentid",
+							"value": "64883710a89588d0e132948e",
+							"disabled": true
+						},
+						{
+							"key": "stdid",
+							"value": "64804586000af1b6c0fa94c8",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
