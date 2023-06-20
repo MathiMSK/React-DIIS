@@ -107,6 +107,7 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
           mt={2}
           mb={1}
           ml={1}
+          
         >
           {title}
         </ArgonTypography>
@@ -134,7 +135,7 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
             <Icon sx={{ fontWeight: "bold" }}>close</Icon>
           </ArgonTypography>
         </ArgonBox>
-        <ArgonBox component={NavLink} to="/" display="flex" alignItems="center">
+        {/* <ArgonBox component={NavLink} to="/" display="flex" alignItems="center">
           {brand && (
             <ArgonBox component="img" src={brand} alt="Argon Logo" width="2rem" mr={0.25} />
           )}
@@ -152,10 +153,10 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
              
             </ArgonTypography>
           </ArgonBox>
-        </ArgonBox>
+        </ArgonBox> */}
       </ArgonBox>
       <Divider light={darkSidenav} />
-      <List>{renderRoutes}</List>
+      <List sx={{    marginTop: "100%",    }}>{renderRoutes}</List>
 
       {/* <ArgonBox pt={1} mt="auto" mb={2} mx={2}>
         <SidenavFooter />

@@ -1,0 +1,15 @@
+.deptHeader{
+    justify-content: space-between;
+}
+
+@media screen and (max-width: 450px) {
+    .cusInpCon{
+        min-width:90% !important
+    }
+    .cusInpFullWrap{
+        margin-left: 1.2rem !important;
+    }
+    .cusInpFullCon{
+        margin-right: 8% !important;
+    }
+}

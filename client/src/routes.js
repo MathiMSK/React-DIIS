@@ -42,6 +42,7 @@ import RTL from "layouts/rtl";
 import Profile from "layouts/profile";
 import SignIn from "layouts/authentication/sign-in";
 import SignUp from "layouts/authentication/sign-up";
+import Assignments from "layouts/assignments";
 
 // Argon Dashboard 2 MUI components
 import ArgonBox from "components/ArgonBox";
@@ -65,6 +66,7 @@ const routes = [
     component: <Tables />,
   },
   {
+    type: "route",
     name: "Billing",
     key: "billing",
     route: "/billing",
@@ -72,6 +74,15 @@ const routes = [
     component: <Billing />,
   },
   {
+    type:"route",
+    name: "Assignments",
+    key: "assignments",
+    route: "/assignments",
+    icon: <ArgonBox component="i" color="success" fontSize="14px" className="ni ni-credit-card" />,
+    component: <Assignments />,
+  },
+  {
+    
     name: "Virtual Reality",
     key: "virtual-reality",
     route: "/virtual-reality",
