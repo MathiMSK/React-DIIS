@@ -14,7 +14,7 @@ Coded by www.creative-tim.com
 */
 
 import { useEffect, useState } from "react";
-
+import jwt_decode from "jwt-decode";
 // react-router-dom components
 import { useLocation, NavLink } from "react-router-dom";
 
@@ -42,8 +42,12 @@ import sidenavLogoLabel from "examples/Sidenav/styles/sidenav";
 // Argon Dashboard 2 MUI context
 import { useArgonController, setMiniSidenav } from "context";
 
+import dp from "assets/images/dp.jpg";
+import { getById } from "utility/apiService";
+
 function Sidenav({ color, brand, brandName, routes, ...rest }) {
   const [controller, dispatch] = useArgonController();
+  const [user, setUser] = useState("");
   const { miniSidenav, darkSidenav, layout } = controller;
   const location = useLocation();
   const { pathname } = location;
@@ -51,6 +55,30 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
 
   const closeSidenav = () => setMiniSidenav(dispatch, true);
 
+let token = localStorage.getItem("token");
+if (token) {
+  token = JSON.parse(token);
+}
+var decoded = jwt_decode(token);
+
+const handleLogout = () => {
+  localStorage.removeItem("token");
+  window.location.href = "/auth/login";
+};
+
+
+useEffect(() => {
+ let id = decoded.id;
+ const getUser = async () => {
+  try {
+    let result = await getById(id);
+    setUser(result.data.data);
+  } catch (error) {
+    console.log(error.message); 
+  }
+};
+getUser();
+}, [])
   useEffect(() => {
     // A function that sets the mini state of the sidenav.
     function handleMiniSidenav() {
@@ -154,9 +182,32 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
             </ArgonTypography>
           </ArgonBox>
         </ArgonBox> */}
+        <ArgonBox display="flex" justifyContent="center" alignItems="center" mt={3} mb={4}>
+          <ArgonBox
+          sx={{
+          borderRadius: "50%",
+          width: "12rem",
+          height: "12rem",
+          display: "block"
+       
+          }}
+            component="img"
+            src={dp}
+          />
+          </ArgonBox>
+          <ArgonTypography
+              component="h1"
+              variant="button"
+              fontWeight="medium"
+              fontSize="1rem"
+              color={darkSidenav ? "white" : "white"}
+            >
+             {user.name}
+             
+            </ArgonTypography>
       </ArgonBox>
       <Divider light={darkSidenav} />
-      <List sx={{    marginTop: "100%",    }}>{renderRoutes}</List>
+      <List sx={{    marginTop: "50%",    }}>{renderRoutes}</List>
 
       {/* <ArgonBox pt={1} mt="auto" mb={2} mx={2}>
         <SidenavFooter />

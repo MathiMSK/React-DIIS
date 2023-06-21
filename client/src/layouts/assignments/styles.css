@@ -13,3 +13,7 @@
         margin-right: 8% !important;
     }
 }
+
+.quesname::after{
+    min-width: 100%;
+}

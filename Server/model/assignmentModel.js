@@ -15,7 +15,7 @@ const assignment = new mongoose.Schema(
             required: true,
         },
         question: [
-            {
+            {   
                 questionNo : {
                     type: Number,
                     required: true,
