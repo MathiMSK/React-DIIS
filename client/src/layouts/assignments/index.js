@@ -33,7 +33,7 @@ const Assign = () => {
   const [noq, setNoq] = useState();
   const [datas, setDatas] = useState([]);
   const [assignData, setAssignData] = useState([])
-
+const [err, setErr]= useState("")
   const [asserr, setAssErr] = useState("");
   const[classerr,setClassErr]=useState("");
   const[subjecterr,setSubjectErr]=useState("");

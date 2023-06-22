@@ -69,7 +69,8 @@ function Illustration() {
         return toast.error(response.data.message);
       }
       localStorage.setItem("token", JSON.stringify(response.data.token));
-      return navigate("/dashboard");
+      navigate("/assignments");
+      window.location.reload();
     } catch (error) {
       console.log(error.message);
     }
@@ -78,7 +79,6 @@ function Illustration() {
   return (
     <IllustrationLayout
       title="Login"
-      // description="Enter your email and password to sign in"
       illustration={{
         image: bgImage
       }}
