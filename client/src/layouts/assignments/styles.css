@@ -17,3 +17,30 @@
 .quesname::after{
     min-width: 100%;
 }
+
+.App {
+    text-align: center;
+    }
+    
+
+    .row {
+        border-bottom: 1px solid #EBECED;
+        text-align: left;
+        margin: 5px 0;
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        }
+        
+        .content {
+        padding: 10px;
+        flex: 1;
+        }
+        
+        .accordHeader {
+        background: #DDD;
+        width: 100%;
+        padding: 8px;
+        cursor: pointer;
+        margin-bottom: 4px;
+        }

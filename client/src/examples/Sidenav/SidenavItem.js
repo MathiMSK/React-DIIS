@@ -71,7 +71,7 @@ SidenavItem.defaultProps = {
 
 // Typechecking props for the SidenavItem
 SidenavItem.propTypes = {
-  color: PropTypes.oneOf(["primary", "secondary", "info", "success", "warning", "error", "dark"]),
+  color: PropTypes.oneOf(["primary", "secondary", "info", "success", "warning", "error", "dark","white"]),
   icon: PropTypes.node.isRequired,
   name: PropTypes.string.isRequired,
   active: PropTypes.bool,

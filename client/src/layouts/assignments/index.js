@@ -14,12 +14,16 @@ import { useArgonController, setLayout } from "context";
 import ArgonBox from "components/ArgonBox";
 import { createAssign } from "utility/apiService";
 import { getAllAssign } from "utility/apiService";
+import Get from "./get";
+import ArgonTable from "components/AroganTable";
+import ArgonTypography from "components/ArgonTypography";
+// import Get from "./get";
 const Assign = () => {
   const [controller, dispatch] = useArgonController();
   const { miniSidenav, darkMode } = controller;
   const [open, setOpen] = useState(false);
+  
   const [open2, setOpen2] = useState(false);
-  const [asignData, setAsignData] = useState([]);
 
   const [assign, setAssign] = useState("");
   const [className, setClassName] = useState("");
@@ -28,8 +32,9 @@ const Assign = () => {
 
   const [noq, setNoq] = useState();
   const [datas, setDatas] = useState([]);
+  const [assignData, setAssignData] = useState([])
 
-  const [err, setErr] = useState("");
+  const [asserr, setAssErr] = useState("");
   const[classerr,setClassErr]=useState("");
   const[subjecterr,setSubjectErr]=useState("");
   const[markserr,setMarksErr]=useState("");
@@ -39,12 +44,14 @@ const Assign = () => {
   const[correcterr,setCorrectErr]=useState("");
   
 
+  
+ 
+
   const toggle = () => setOpen(!open);
   const toggle2 = () => {
     setOpen2(!open2);
   };
   const reset = () => {
-    setErr("");
     setAssign("");
   };
   let arr = [];
@@ -102,8 +109,7 @@ const Assign = () => {
       if (!response.ok) {
         return toast.error(response.data.message);
       }
-      toast.success(response.data.message);
-      setAsignData(response.data.data);
+      setAssignData(response.data.data);
     } catch (error) {
       console.log(error);
     }
@@ -115,29 +121,26 @@ const Assign = () => {
 
   const initiateAssign = async () => {
     if (!assign) {
-       setErr("Assign is required");
+       setAssErr("Assign is required");
     }
-    setErr("");
+    setAssErr("");
     if (!noq) {
-      return setNoqErr("Number of questions is required");
+       setNoqErr("Number of questions is required");
     }
     setNoqErr("");
     if(!subject){
-      return setSubjectErr("Subject is required");
+       setSubjectErr("Subject is required");
     }
     setSubjectErr("");
     if (!className) {
-      return setClassErr("Class name is required");
+       setClassErr("Class name is required");
     }
     setClassErr("")
     if (!marks) {
-      return setMarksErr("Marks is required");
+       setMarksErr("Marks is required");
     }
     setMarksErr("");
-    // if (datas?.length < noq) {
-    //   return setNoqErr("Please fill all the questions");
-    // }
-    // setNoqErr("")
+    if(assign && noq && subject && className && marks){
     try {
       let response = await createAssign({ 
         assignmentTitle: assign, 
@@ -147,19 +150,22 @@ const Assign = () => {
         totalQuestion:noq,
         question:datas,
        });
-       console.log(datas,"datas");
-       console.log(response,"response");
       if (!response.ok) {
         return toast.error(response.data.message);
       }
-      toast.success(response.data.message);
-      setOpen(!open)
+      else{
+        setOpen(!open)
+        toast.success(response.data.message);
+      }
     } catch (error) {
       console.log(error);
     }
+  }
+  else{
+    return toast.error("Please fill all the fields");
+  }
   };
 
-  // console.log("data", id._id);
   return (
     // <DashboardLayout>
     <ArgonBox
@@ -216,6 +222,10 @@ const Assign = () => {
                     Create
                   </Button>
                 </div>
+                <Container style={{marginTop:"5%",width:"80%",marginLeft:"10%"}}>
+                {/* <Get/> */}  
+                <ArgonTable/>
+                </Container>
               </>
             ) : (
               <>
@@ -286,7 +296,7 @@ const Assign = () => {
                             onChange={(e) => setAssign(e.target.value)}
                             // width="400px"
                           />
-                          {err ? <p style={{ color: "red" }}>{err}</p> : null}
+                          {asserr ? <ArgonTypography style={{ color: "red" }}>{asserr}</ArgonTypography> : null}
                         </Col>
                      
                       </Row>
@@ -312,7 +322,7 @@ const Assign = () => {
                             onChange={(e) => setClassName(e.target.value)}
                             // width="400px"
                           />
-                          {err ? <p style={{ color: "red" }}>{err}</p> : null}
+                          {classerr ? <ArgonTypography style={{ color: "red" }}>{classerr}</ArgonTypography> : null}
                         </Col>
                         <Col
                           md={6}
@@ -338,7 +348,7 @@ const Assign = () => {
                             onChange={(e) => setMarks(e.target.value)}
                             // width="400px"
                           />
-                          {err ? <p style={{ color: "red" }}>{err}</p> : null}
+                          {markserr ? <ArgonTypography style={{ color: "red" }}>{markserr}</ArgonTypography> : null}
                         </Col>
                       </Row>
                       <Row style={{display:"flex"}}>
@@ -362,10 +372,10 @@ const Assign = () => {
                             onChange={(e) => setSubject(e.target.value)}
                             // width="400px"
                           />
-                          {err ? <p style={{ color: "red" }}>{err}</p> : null}
+                          {subjecterr ? <ArgonTypography style={{ color: "red" }}>{subjecterr}</ArgonTypography> : null}
                         </Col>
                         <Col md={6} className="cusInpCon" style={{ width: "600px", marginLeft: "20px"  }}>
-                          <Label>
+                          <Label> 
                             No. of Questions
                             <span
                               style={{
@@ -384,7 +394,7 @@ const Assign = () => {
                             onChange={(e) => setNoq(e.target.value)}
                             // width="400px"
                           />
-                          {err ? <p style={{ color: "red" }}>{err}</p> : null}
+                          {noqerr ? <ArgonTypography style={{ color: "red" }}>{noqerr}</ArgonTypography> : null}
                         </Col>
                       </Row>
                     </Container>
@@ -499,7 +509,7 @@ const Assign = () => {
                             )
                           }
                         />
-                        {err ? <p style={{ color: "red" }}>{err}</p> : null}
+                        {err ? <ArgonTypography style={{ color: "red" }}>{err}</ArgonTypography> : null}
                       </Col>
                     </Row>
 
@@ -537,7 +547,7 @@ const Assign = () => {
                           }
                           // width="400px"
                         />
-                        {err ? <p style={{ color: "red" }}>{err}</p> : null}
+                        {err ? <ArgonTypography style={{ color: "red" }}>{err}</ArgonTypography> : null}
                       </Col>
                       <Col
                         md={6}
@@ -575,7 +585,7 @@ const Assign = () => {
                           }
                           // width="400px"
                         />
-                        {err ? <p style={{ color: "red" }}>{err}</p> : null}
+                        {err ? <ArgonTypography style={{ color: "red" }}>{err}</ArgonTypography> : null}
                       </Col>
                     </Row>
                     <Row style={{ display: "flex", justifyContent: "normal" }}>
@@ -611,7 +621,7 @@ const Assign = () => {
                           }
                           // width="400px"
                         />
-                        {err ? <p style={{ color: "red" }}>{err}</p> : null}
+                        {err ? <ArgonTypography style={{ color: "red" }}>{err}</ArgonTypography> : null}
                       </Col>
                       <Col
                         md={6}
@@ -649,7 +659,7 @@ const Assign = () => {
                           }
                           // width="400px"
                         />
-                        {err ? <p style={{ color: "red" }}>{err}</p> : null}
+                        {err ? <ArgonTypography style={{ color: "red" }}>{err}</ArgonTypography> : null}
                       </Col>
                     </Row>
                     <Row style={{ display: "flex", justifyContent: "normal" }}>
@@ -683,7 +693,7 @@ const Assign = () => {
                           }
                           // width="400px"
                         />
-                        {err ? <p style={{ color: "red" }}>{err}</p> : null}
+                        {err ? <ArgonTypography style={{ color: "red" }}>{err}</ArgonTypography> : null}
                       </Col>
 
                       <Col
@@ -721,7 +731,7 @@ const Assign = () => {
                           }
                           // width="400px"
                         />
-                        {err ? <p style={{ color: "red" }}>{err}</p> : null}
+                        {err ? <ArgonTypography style={{ color: "red" }}>{err}</ArgonTypography> : null}
                       </Col>
                     </Row>
                   </Container>

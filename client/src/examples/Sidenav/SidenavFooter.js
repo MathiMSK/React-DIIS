@@ -26,15 +26,33 @@ import { useArgonController } from "context";
 
 // Images
 import icon from "assets/images/illustrations/icon-documentation.svg";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import {FaPowerOff} from "react-icons/fa"
 
 function SidenavFooter() {
+  const navigate = useNavigate();
   const [controller] = useArgonController();
   const { miniSidenav, darkSidenav } = controller;
-
+  const [Logout,setLogout]=useState(false)
+  const handellogout=(e)=>{
+      e.preventDefault();  
+      localStorage.removeItem("token")
+      setLogout(true)
+      navigate("/authentication/sign-in")
+    }
   return (
     <ArgonBox opacity={miniSidenav ? 0 : 1} sx={{ transition: "opacity 200ms linear" }}>
       <ArgonBox position="relative" textAlign="center">
-        <ArgonBox component="img" src={icon} alt="sidebar_illustration" width="60%" />
+      <ArgonBox sx={{display:"flex",marginLeft:"10%"}}>
+      <ArgonBox>
+      <FaPowerOff color="white"/>
+      </ArgonBox>
+      <ArgonTypography color="white" variant="h6" sx={{cursor:"pointer",marginLeft:"5%"}} onClick={handellogout}>
+           Logout
+          </ArgonTypography>
+          </ArgonBox>
+        {/* <ArgonBox component="img" src={icon} alt="sidebar_illustration" width="60%" />
         <ArgonBox
           width="100%"
           pb={2}
@@ -49,9 +67,9 @@ function SidenavFooter() {
           <ArgonTypography color="inherit" variant="caption">
             Please check our docs
           </ArgonTypography>
-        </ArgonBox>
+        </ArgonBox> */}
       </ArgonBox>
-      <ArgonBox display="flex" flexDirection="column">
+      {/* <ArgonBox display="flex" flexDirection="column">
         <ArgonButton
           component={Link}
           href="https://www.creative-tim.com/learning-lab/react/overview/argon-dashboard/"
@@ -76,7 +94,7 @@ function SidenavFooter() {
         >
           Upgrade to PRO
         </ArgonButton>
-      </ArgonBox>
+      </ArgonBox> */}
     </ArgonBox>
   );
 }

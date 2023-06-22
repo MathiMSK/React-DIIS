@@ -56,19 +56,19 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
   const closeSidenav = () => setMiniSidenav(dispatch, true);
 
 let token = localStorage.getItem("token");
+let decoded;
 if (token) {
   token = JSON.parse(token);
+  decoded = jwt_decode(token);
 }
-var decoded = jwt_decode(token);
 
 const handleLogout = () => {
   localStorage.removeItem("token");
-  window.location.href = "/auth/login";
+  window.location.href = "/authentication/sign-in";
 };
 
 
-useEffect(() => {
- let id = decoded.id;
+ let id = decoded?.id;
  const getUser = async () => {
   try {
     let result = await getById(id);
@@ -78,7 +78,8 @@ useEffect(() => {
   }
 };
 getUser();
-}, [])
+
+
   useEffect(() => {
     // A function that sets the mini state of the sidenav.
     function handleMiniSidenav() {
@@ -202,16 +203,16 @@ getUser();
               fontSize="1rem"
               color={darkSidenav ? "white" : "white"}
             >
-             {user.name}
+             {user?.name}
              
             </ArgonTypography>
       </ArgonBox>
       <Divider light={darkSidenav} />
       <List sx={{    marginTop: "50%",    }}>{renderRoutes}</List>
 
-      {/* <ArgonBox pt={1} mt="auto" mb={2} mx={2}>
+      <ArgonBox pt={1} mt="auto" mb={2} mx={2}>
         <SidenavFooter />
-      </ArgonBox> */}
+      </ArgonBox>
     </SidenavRoot>
   );
 }
