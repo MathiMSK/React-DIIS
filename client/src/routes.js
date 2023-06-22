@@ -50,29 +50,7 @@ import Mis from "layouts/MIS";
 import ArgonBox from "components/ArgonBox";
 
 const routes = [
-  {
-    name: "Dashboard",
-    key: "dashboard",
-    route: "/dashboard",
-    icon: <ArgonBox component="i" color="primary" fontSize="14px" className="ni ni-tv-2" />,
-    component: <Dashboard />,
-  },
-  {
-    name: "Tables",
-    key: "tables",
-    route: "/tables",
-    icon: (
-      <ArgonBox component="i" color="warning" fontSize="14px" className="ni ni-calendar-grid-58" />
-    ),
-    component: <Tables />,
-  },
-  {
-    name: "Billing",
-    key: "billing",
-    route: "/billing",
-    icon: <ArgonBox component="i" color="success" fontSize="14px" className="ni ni-credit-card" />,
-    component: <Billing />,
-  },
+  
   {
     type:"route",
     name: "Assignments",
@@ -96,6 +74,29 @@ const routes = [
     route: "/mis",
     icon: <ArgonBox component="i" color="success" fontSize="14px" className="ni ni-credit-card" />,
     component: <Mis />,
+  },
+  {
+    name: "Dashboard",
+    key: "dashboard",
+    route: "/dashboard",
+    icon: <ArgonBox component="i" color="primary" fontSize="14px" className="ni ni-tv-2" />,
+    component: <Dashboard />,
+  },
+  {
+    name: "Tables",
+    key: "tables",
+    route: "/tables",
+    icon: (
+      <ArgonBox component="i" color="warning" fontSize="14px" className="ni ni-calendar-grid-58" />
+    ),
+    component: <Tables />,
+  },
+  {
+    name: "Billing",
+    key: "billing",
+    route: "/billing",
+    icon: <ArgonBox component="i" color="success" fontSize="14px" className="ni ni-credit-card" />,
+    component: <Billing />,
   },
   {
     
