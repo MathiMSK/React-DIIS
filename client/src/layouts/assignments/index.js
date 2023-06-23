@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState,createContext,useRef } from "react";
 import { toast, Toaster } from "react-hot-toast";
 // import CIcon from "@coreui/icons-react";
 // import { cilArrowCircleLeft } from "@coreui/icons";
@@ -17,7 +17,9 @@ import { getAllAssign } from "utility/apiService";
 import Get from "./get";
 import ArgonTable from "components/AroganTable";
 import ArgonTypography from "components/ArgonTypography";
+import { useReactToPrint } from "react-to-print";
 // import Get from "./get";
+
 const Assign = () => {
   const [controller, dispatch] = useArgonController();
   const { miniSidenav, darkMode } = controller;
@@ -43,9 +45,14 @@ const [err, setErr]= useState("")
   const[optionerr,setOptionErr]=useState("");
   const[correcterr,setCorrectErr]=useState("");
   
-
-  
- 
+ const componentPdf = useRef();
+ const generatePdf = useReactToPrint({
+    content: () => componentPdf.current,
+    documentTitle: "Assignment",
+    onAfterPrint: () => {
+     toast.success("Assignment Printed Successfully");
+    }
+  });
 
   const toggle = () => setOpen(!open);
   const toggle2 = () => {
@@ -118,7 +125,9 @@ const [err, setErr]= useState("")
   useEffect(() => {
     getAssign();
   }, []);
-
+  assignData?.map((item) => {
+    console.log(item,"item");
+    })
   const initiateAssign = async () => {
     if (!assign) {
        setAssErr("Assign is required");
@@ -211,6 +220,17 @@ const [err, setErr]= useState("")
                   >
                     Assignments
                   </h1>
+                  <div>
+                  <Button
+                    style={{
+                      marginRight: "1rem",
+                    }}
+                    onClick={generatePdf}
+                    variant="contained"
+                    color={"primary"}
+                  >
+                    Download
+                  </Button>
                   <Button
                     style={{
                       marginRight: "1rem",
@@ -221,10 +241,13 @@ const [err, setErr]= useState("")
                   >
                     Create
                   </Button>
+                  </div>
                 </div>
-                <Container style={{marginTop:"5%",width:"80%",marginLeft:"10%"}}>
-                {/* <Get/> */}  
+                <Container style={{marginTop:"5%",width:"80%",marginLeft:"10%"}} >
+                <div ref={componentPdf} style={{width:"100%",alignContent:"center",marginTop:"20%"}}>
                 <ArgonTable/>
+                </div>
+
                 </Container>
               </>
             ) : (
