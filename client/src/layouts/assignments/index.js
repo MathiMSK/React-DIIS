@@ -61,6 +61,8 @@ const [err, setErr]= useState("")
   const reset = () => {
     setAssign("");
   };
+
+  
   let arr = [];
   for (let i = 1; i <= noq; i++) {
     if (arr?.length < noq) {
@@ -221,7 +223,7 @@ const [err, setErr]= useState("")
                     Assignments
                   </h1>
                   <div>
-                  <Button
+                  {/* <Button
                     style={{
                       marginRight: "1rem",
                     }}
@@ -230,7 +232,7 @@ const [err, setErr]= useState("")
                     color={"primary"}
                   >
                     Download
-                  </Button>
+                  </Button> */}
                   <Button
                     style={{
                       marginRight: "1rem",
@@ -243,12 +245,12 @@ const [err, setErr]= useState("")
                   </Button>
                   </div>
                 </div>
-                <Container style={{marginTop:"5%",width:"80%",marginLeft:"10%"}} >
-                <div ref={componentPdf} style={{width:"100%",alignContent:"center",marginTop:"20%"}}>
-                <ArgonTable/>
-                </div>
-
-                </Container>
+                
+                {/* <div  ref={componentPdf} style={{width:"100%",height:"100%"}} >
+                
+                </div> */}
+                <Get />
+                
               </>
             ) : (
               <>

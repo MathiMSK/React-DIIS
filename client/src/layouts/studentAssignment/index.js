@@ -1,17 +1,16 @@
 import ArgonBox from 'components/ArgonBox'
 import { useArgonController } from 'context';
 import React, { createContext, useEffect, useState } from 'react'
-import Quiz from './quiz';
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
-import { Input, Switch } from "@mui/material";
-import { Col, Row, Label, Container, FormText } from "reactstrap";
+import { Card, FormGroup, Input, Switch, Typography } from "@mui/material";
+import { Col, Row, Label, Container, FormText, CardTitle, CardBody } from "reactstrap";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box/Box";
 import { getAllAssign } from 'utility/apiService';
 import { toast, Toaster } from "react-hot-toast";
 import ArgonTypography from 'components/ArgonTypography';
-import ArgonTable from 'components/AroganTable';
+import Get from './get';
 export const DataContext =createContext({})
 const studentAssignment = () => {
     const [controller, dispatch] = useArgonController(); 
@@ -39,49 +38,6 @@ const studentAssignment = () => {
       const[correcterr,setCorrectErr]=useState("");
       
     
-    
-      
-     
-    
-      const toggle = () => setOpen(!open);
-      const toggle2 = () => {
-        setOpen2(!open2);
-      };
-      const reset = () => {
-        setAssign("");
-      };
-      let arr = [];
-      for (let i = 1; i <= noq; i++) {
-        if (arr?.length < noq) {
-          arr.push(i);
-          if (datas?.length < noq) {
-            datas.push({
-              question: "",
-              questionNo: i,
-              options: [
-                {
-                  optionNo: 1,
-                  optionAns: "",
-                },
-                {
-                  optionNo: 2,
-                  optionAns: "",
-                },
-                {
-                  optionNo: 3,
-                  optionAns: "",
-                },
-                {
-                  optionNo: 4,
-                  optionAns: "",
-                },
-              ],
-              answer: "",
-              markForThisQuestion: 0,
-            });
-          }
-        }
-      }
       const handlechange = (e, index) => {
         console.log(index);
         const { name, value, indexForOption, optionName } = e.target;
@@ -110,13 +66,30 @@ const studentAssignment = () => {
           console.log(error);
         }
       };
-    
+
+      // let arr = [];
+      //   assignData?.map((item,index) => {
+      //     arr.push(item);
+      //     console.log(item);
+          
+      //       setQuesData(item)
+        
+      //     // item.question.map((j)=>{
+      //     //     let cho=[]
+      //     //     console.log(j);
+      //     //     j.options.map((option)=>{
+      //     //         cho.push(option.optionAns)
+      //     //     })
+      //     //     arr.push({question:j.question,choices:cho,correctAnswer:j.answer})
+      //     //     cho=[]
+      //     // })
+      //   });
+      
       useEffect(() => {
         getAssign();
+        // assign1();
       }, []);
-      assignData?.map((item) => {
-        console.log(item,"item");
-        })
+    
       const initiateAssign = async () => {
         if (!assign) {
            setAssErr("Assign is required");
@@ -163,8 +136,7 @@ const studentAssignment = () => {
         return toast.error("Please fill all the fields");
       }
       };
-     
-     
+    
 
      
   return (
@@ -226,279 +198,9 @@ const studentAssignment = () => {
                 <Get/>  
                 <ArgonTable/>
                 </Container> */}
-                <div
-                className="cusInpFullCon"
-                style={{
-                  position: "relative",
-                  marginTop: "3rem",
-                  marginRight: "5rem",
-                }}
-              >
-                {arr?.map((item, index) => (
-                  <Container
-                    key={index}
-                    className="cusInpFullWrap"
-                    style={{ marginLeft: "3.2rem", marginTop: "1rem" }}
-                  >
-                    <Row style={{ display: "flex" }}>
-                      <Col md={6} className="cusInpCon" style={{width:"1220px"}} >
-                        <Label>
-                          {index + 1}. Question 
-                          <span
-                            style={{
-                              paddingLeft: "5px",
-                              color: "red",
-                              fontSize: "15px",
-                            }}
-                          >
-                            *
-                          </span>
-                        </Label>
-                        <Input
-                          // id="exampleFormControlInput1"
-                          className="quesname"
-                          placeholder="Enter Question Name"
-                          name="question"
-                          onChange={(e) =>
-                            handlechange(
-                              {
-                                target: {
-                                  name: "question",
-                                  value: e.target.value,
-                                },
-                              },
-                              index
-                            )
-                          }
-                        />
-                        {err ? <ArgonTypography style={{ color: "red" }}>{err}</ArgonTypography> : null}
-                      </Col>
-                    </Row>
-
-                    <Row style={{ display: "flex", justifyContent: "normal" }}>
-                      <Col md={6} className="cusInpCon" style={{ width: "600px" }}>
-                        <Label>
-                          option 1
-                          <span
-                            style={{
-                              paddingLeft: "5px",
-                              color: "red",
-                              fontSize: "15px",
-                            }}
-                          >
-                            *
-                          </span>
-                        </Label>
-                        <Input
-                          id="exampleFormControlInput1"
-                          placeholder="Enter Date of submit"
-                          // value={dos}
-                          // onChange={(e) => setDos(e.target.value)}
-                          onChange={(e) =>
-                            handlechange(
-                              {
-                                target: {
-                                  name: "options",
-                                  value: e.target.value,
-                                  optionName: "optionAns",
-                                  indexForOption: 0,
-                                },
-                              },
-                              index
-                            )
-                          }
-                          // width="400px"
-                        />
-                        {err ? <ArgonTypography style={{ color: "red" }}>{err}</ArgonTypography> : null}
-                      </Col>
-                      <Col
-                        md={6}
-                        className="cusInpCon"
-                        style={{ width: "600px", marginLeft: "20px" }}
-                      >
-                        <Label>
-                          option 2
-                          <span
-                            style={{
-                              paddingLeft: "5px",
-                              color: "red",
-                              fontSize: "15px",
-                            }}
-                          >
-                            *
-                          </span>
-                        </Label>
-                        <Input
-                          id="exampleFormControlInput1"
-                          placeholder="Enter Class Name"
-                          // value={className}
-                          onChange={(e) =>
-                            handlechange(
-                              {
-                                target: {
-                                  name: "options",
-                                  value: e.target.value,
-                                  optionName: "optionAns",
-                                  indexForOption: 1,
-                                },
-                              },
-                              index
-                            )
-                          }
-                          // width="400px"
-                        />
-                        {err ? <ArgonTypography style={{ color: "red" }}>{err}</ArgonTypography> : null}
-                      </Col>
-                    </Row>
-                    <Row style={{ display: "flex", justifyContent: "normal" }}>
-                      <Col md={6} className="cusInpCon" style={{ width: "600px" }}>
-                        <Label>
-                          option 3
-                          <span
-                            style={{
-                              paddingLeft: "5px",
-                              color: "red",
-                              fontSize: "15px",
-                            }}
-                          >
-                            *
-                          </span>
-                        </Label>
-                        <Input
-                          id="exampleFormControlInput1"
-                          placeholder="Enter Total Marks"
-                          // value={marks}
-                          onChange={(e) =>
-                            handlechange(
-                              {
-                                target: {
-                                  name: "options",
-                                  value: e.target.value,
-                                  optionName: "optionAns",
-                                  indexForOption: 2,
-                                },
-                              },
-                              index
-                            )
-                          }
-                          // width="400px"
-                        />
-                        {err ? <ArgonTypography style={{ color: "red" }}>{err}</ArgonTypography> : null}
-                      </Col>
-                      <Col
-                        md={6}
-                        className="cusInpCon"
-                        style={{ width: "600px", marginLeft: "20px" }}
-                      >
-                        <Label>
-                          option 4
-                          <span
-                            style={{
-                              paddingLeft: "5px",
-                              color: "red",
-                              fontSize: "15px",
-                            }}
-                          >
-                            *
-                          </span>
-                        </Label>
-                        <Input
-                          id="exampleFormControlInput1"
-                          placeholder="Enter noq"
-                          // value={noq}
-                          onChange={(e) =>
-                            handlechange(
-                              {
-                                target: {
-                                  name: "options",
-                                  value: e.target.value,
-                                  optionName: "optionAns",
-                                  indexForOption: 3,
-                                },
-                              },
-                              index
-                            )
-                          }
-                          // width="400px"
-                        />
-                        {err ? <ArgonTypography style={{ color: "red" }}>{err}</ArgonTypography> : null}
-                      </Col>
-                    </Row>
-                    <Row style={{ display: "flex", justifyContent: "normal" }}>
-                      <Col md={6} className="cusInpCon" style={{ width: "600px" }}>
-                        <Label>
-                          Correct Answer
-                          <span
-                            style={{
-                              paddingLeft: "5px",
-                              color: "red",
-                              fontSize: "15px",
-                            }}
-                          >
-                            *
-                          </span>
-                        </Label>
-                        <Input
-                          id="exampleFormControlInput1"
-                          placeholder="Enter noq"
-                          // value={noq}
-                          onChange={(e) =>
-                            handlechange(
-                              {
-                                target: {
-                                  name: "answer",
-                                  value: e.target.value,
-                                },
-                              },
-                              index
-                            )
-                          }
-                          // width="400px"
-                        />
-                        {err ? <ArgonTypography style={{ color: "red" }}>{err}</ArgonTypography> : null}
-                      </Col>
-
-                      <Col
-                        md={6}
-                        className="cusInpCon"
-                        style={{ width: "600px", marginLeft: "20px" }}
-                      >
-                        <Label>
-                          Mark
-                          <span
-                            style={{
-                              paddingLeft: "5px",
-                              color: "red",
-                              fontSize: "15px",
-                            }}
-                          >
-                            *
-                          </span>
-                        </Label>
-                        <Input
-                          id="exampleFormControlInput1"
-                          placeholder="Enter noq"
-                          // value={noq}
-                          type = "number"
-                          onChange={(e) =>
-                            handlechange(
-                              {
-                                target: {
-                                  name: "markForThisQuestion",
-                                  value: e.target.value,
-                                },
-                              },
-                              index
-                            )
-                          }
-                          // width="400px"
-                        />
-                        {err ? <ArgonTypography style={{ color: "red" }}>{err}</ArgonTypography> : null}
-                      </Col>
-                    </Row>
-                  </Container>
-                ))}
-              </div>
+                {/* <Container style={{marginTop:"5%",width:"80%",marginLeft:"10%"}}>
+                </Container> */}
+          <Get/>
               </>
             ) : (
               <>

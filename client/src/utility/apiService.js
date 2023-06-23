@@ -113,3 +113,25 @@ export const createUser = async (body) => {
       return { data: data, ok: true };
     }
   }
+
+  export const stdViewTheirAllAssign = async () => {
+    const requestOptions = {
+      method: "GET",
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    if (token) {
+      const response = await fetch(
+        `${baseUrl}stdassign/stdviewallassign`,
+        requestOptions
+      );
+      if (!response.ok) {
+        let data = await response.json();
+        return { data: data, ok: false };
+      }
+      let data = await response?.json();
+      return { data: data, ok: true };
+    }
+  }
