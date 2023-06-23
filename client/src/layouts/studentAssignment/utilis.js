@@ -81,10 +81,11 @@ console.log(unique);
             </Col>
             </Row>
           </CardContent>
-          <ArgonButton color="primary" variant="outlined" style={{margintop:"30px"}}>
+
+          <CardActions disableSpacing style={{alignItems:"center",display:"flex",justifyContent:"center"}}>
+          <ArgonButton color="primary" variant="outlined" style={{alignItems:"center",display:"flex",justifyContent:"center"}}>
               Attend
             </ArgonButton>
-          <CardActions disableSpacing>
             {/* <ArgonButton color="primary" variant="outlined" style={{margintop:"30px"}}>
               Attend
             </ArgonButton> */}
