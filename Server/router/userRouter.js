@@ -1,5 +1,5 @@
 import express from 'express';
-import {  facReg, getAllUser, login, profile, reg } from '../controller/userController.js';
+import {  facReg, getAllUser, getById, login, profile, reg } from '../controller/userController.js';
 import auth from '../middleware/auth.js';
 import isFaculty from '../middleware/isFatculty.js';
 import path from 'path';
@@ -15,6 +15,7 @@ router.post("/reg",[auth,isFaculty],reg)
 router.post("/factreg",facReg)
 router.post("/login",login)
 router.get("/getalluser",getAllUser)
+router.get("/getbyid/:id", getById)
 router.get("/profile",auth,profile)
 // router.put("/addassignment",auth,addAssignment)
 

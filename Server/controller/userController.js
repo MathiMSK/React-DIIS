@@ -63,9 +63,9 @@ export const login = async (req, res) => {
         if (result) {
             try {
                 const token = jwt.sign({ id: foundUser?._id }, process.env.JWT, {
-                expiresIn: "12h",
+                expiresIn: "4h",
                 });
-                res.header("hrms-auth-token", token).json({ message: "login successfully", token: token });
+                res.header("token", token).json({ message: "login successfully", token: token });
             } catch (error) {
                 res.status(400).json({ message: error.message });
             }
@@ -97,7 +97,18 @@ export const getAllUser = async (req, res) => {
         res.status(400).json({ message: error.message });
     }
 };
-  
+
+
+export const getById = async (req, res) => {
+  try {
+    const view = await User.findById({ _id: req.params.id }).select("-password")
+    res.status(200).json({ data: view });
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
+
 // export const addAssignment = async (req, res) => {
 //     try {
 //       const view = await User.find().select("-password");

@@ -53,8 +53,10 @@ export const stdViewTheirAllAssign = async (req, res) => {
         const view = await StudentAssignment.find({student: req.user.id})
         .populate({path:"student",model:"User"}).populate({path:"assignment",model:"Assignment"});
         if (!view) return res.status(404).json({ message: "assignment not found" });
-        view.assignment.question.forEach((question)=> {
-            question.answer = "";
+        view.map((i)=>{
+            i.assignment.question.forEach((question)=> {
+                question.answer = "";
+            })
         })
         res.status(200).json({ data: view });
     } catch (error) {

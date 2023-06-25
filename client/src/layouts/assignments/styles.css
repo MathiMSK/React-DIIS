@@ -1,0 +1,46 @@
+.deptHeader{
+    justify-content: space-between;
+}
+
+@media screen and (max-width: 450px) {
+    .cusInpCon{
+        min-width:90% !important
+    }
+    .cusInpFullWrap{
+        margin-left: 1.2rem !important;
+    }
+    .cusInpFullCon{
+        margin-right: 8% !important;
+    }
+}
+
+.quesname::after{
+    min-width: 100%;
+}
+
+.App {
+    text-align: center;
+    }
+    
+
+    .row {
+        border-bottom: 1px solid #EBECED;
+        text-align: left;
+        margin: 5px 0;
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        }
+        
+        .content {
+        padding: 10px;
+        flex: 1;
+        }
+        
+        .accordHeader {
+        background: #DDD;
+        width: 100%;
+        padding: 8px;
+        cursor: pointer;
+        margin-bottom: 4px;
+        }
