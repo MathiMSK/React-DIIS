@@ -5,6 +5,7 @@ import AutoSizer from "react-virtualized-auto-sizer";
 import { Container } from "@mui/material";
 import SimpleCard from "./utilis";
 import { getAllAssign } from "utility/apiService";
+import { stdViewTheirAllAssign } from "utility/apiService";
 
 
 const ListContainer = props => {
@@ -18,20 +19,20 @@ const Get = () => {
   
   const get = async () => {
     try {
-      let response = await getAllAssign();
-      let list = []
-      response?.data?.data.map((item) => {
-      list.push({
-        assignmentTitle: item?.assignmentTitle,
-        class: item?.class,
-        subject: item?.subject,
-        totalMarks: item?.totalMarks,
-        totalQuestion: item?.totalQuestion,
-      })
-      setData(list)
+      let response = await stdViewTheirAllAssign();
+      console.log(response,"res");
       // let list = []
-        console.log(list,"added");  
-      })
+      // response?.data?.data.map((item) => {
+      // list.push({
+      //   assignmentTitle: item?.assignmentTitle,
+      //   class: item?.class,
+      //   subject: item?.subject,
+      //   totalMarks: item?.totalMarks,
+      //   totalQuestion: item?.totalQuestion,
+      // })
+      setData(response?.data?.data)
+      //   console.log(list,"added");  
+      // })
     
     } catch (error) {
       console.log(error);

@@ -11,6 +11,7 @@ import { getAllAssign } from 'utility/apiService';
 import { toast, Toaster } from "react-hot-toast";
 import ArgonTypography from 'components/ArgonTypography';
 import Get from './get';
+import SimpleCard from './utilis';
 export const DataContext =createContext({})
 const studentAssignment = () => {
     const [controller, dispatch] = useArgonController(); 
@@ -201,6 +202,7 @@ const studentAssignment = () => {
                 {/* <Container style={{marginTop:"5%",width:"80%",marginLeft:"10%"}}>
                 </Container> */}
           <Get/>
+          {/* <SimpleCard/> */}
               </>
             ) : (
               <>

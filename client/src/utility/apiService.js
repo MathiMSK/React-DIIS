@@ -115,23 +115,44 @@ export const createUser = async (body) => {
   }
 
   export const stdViewTheirAllAssign = async () => {
+    let token = localStorage.getItem("token");
+    if (token) {
+      token = JSON.parse(token);
+    }
     const requestOptions = {
       method: "GET",
       mode: "cors",
       headers: {
         "Content-Type": "application/json",
+        "token": token,
       },
     };
-    if (token) {
-      const response = await fetch(
-        `${baseUrl}stdassign/stdviewallassign`,
-        requestOptions
-      );
-      if (!response.ok) {
-        let data = await response.json();
-        return { data: data, ok: false };
-      }
-      let data = await response?.json();
-      return { data: data, ok: true };
+    const response = await fetch(`${baseUrl}stdassign/stdviewallassign`,requestOptions);
+    if (!response.ok) {
+      let data = await response.json();
+      return { data: data, ok: false };
     }
-  }
+    let data = await response?.json();
+    return { data: data, ok: true };
+  };
+
+  export const assAttend = async (id,body) => {
+    console.log(body);
+    let token = localStorage.getItem("token");
+    const requestOptions = {
+      method: "PUT",
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json",
+        "token": token,
+      },
+      body: JSON.stringify(body),
+    };
+    const response = await fetch(`${baseUrl}stdassign/attendassign/${id}`,requestOptions);
+    if (!response.ok) {
+      let data = await response.json();
+      return { data: data, ok: false };
+    }
+    let data = await response?.json();
+    return { data: data, ok: true };
+  };

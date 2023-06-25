@@ -58,7 +58,6 @@ const Get = () => {
   //     </Button>
   //   );
   // }
-  console.log(data.length);
   return (
     <AutoSizer>
       {({ height, width }) => (

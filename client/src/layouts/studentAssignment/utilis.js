@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles, createStyles } from "@material-ui/core/styles";
 import ArgonBox from "components/ArgonBox";
 import {
@@ -17,8 +17,14 @@ import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import { Image } from "@mui/icons-material";
 import ArgonButton from "components/ArgonButton";
 import { Col, Row } from "reactstrap";
+import Get from "./get";
+import Attend from "./Attend";
 
 const SimpleCard = ({ index, style, data }) => {
+  const[attendData,setAttendData]=useState([]);
+  const[checkData,setCheckData]=useState([]);
+  const[open,setOpen]=useState(false)
+  const[open1,setOpen1]=useState(false)
   // let arr=[]
   // data.forEach((item)=>{
   //   let found = false
@@ -35,7 +41,7 @@ const SimpleCard = ({ index, style, data }) => {
   // console.log(arr);
   const uniqueIds = [];
 
-const unique = data.filter(element => {
+const unique = data?.filter(element => {
   const isDuplicate = uniqueIds.includes(element.assignmentTitle);
 
   if (!isDuplicate) {
@@ -47,52 +53,65 @@ const unique = data.filter(element => {
   return false;
 });
 
-console.log(unique);
+// console.log(unique);
+const Attend=(i)=>{
+  setAttendData(i)
+  setOpen(true)
+}
   return (
+    <>
+    {open1 ? <Get open={open1} setOpen={setOpen1} data={checkData} /> :
+     <>
+      {open ? <Attend data={data} id={attendData} />:
     <ArgonBox>
-      {unique?.map((item) => (
+      {data?.map((item) => (
         <Card key={item} style={{border:"1px solid #b931ce" ,marginBottom:"20px"}}>
           <CardContent>
             <ArgonTypography variant="body2" color="textSecondary" component="p">
-              Assignment Name : {item?.assignmentTitle}
+              Assignment Name : {item?.assignment?.assignmentTitle}
             </ArgonTypography>
             <Row style={{display:"flex",justifyContent:"space-between",borderStyle:"none"}}>
             <Col>
             <ArgonTypography variant="body2" color="textSecondary" component="p">
-              Class : {item?.class}
+              Class : {item?.assignment?.class}
             </ArgonTypography>
             </Col>
             <Col>
             <ArgonTypography variant="body2" color="textSecondary" component="p">
-              Subject :{item?.subject}
+              Subject :{item?.assignment?.subject}
             </ArgonTypography>
             </Col>
             </Row>
             <Row style={{display:"flex",justifyContent:"space-between",borderStyle:"none"}}>
             <Col>
             <ArgonTypography variant="body2" color="textSecondary" component="p">
-              Total Marks :{item?.totalMarks}
+              Total Marks :{item?.assignment?.totalMarks}
             </ArgonTypography>
             </Col>
             <Col>
             <ArgonTypography variant="body2" color="textSecondary" component="p">
-              Total Question : {item?.totalQuestion}
+              Total Question : {item?.assignment?.totalQuestion}
             </ArgonTypography>
             </Col>
             </Row>
           </CardContent>
 
           <CardActions disableSpacing style={{alignItems:"center",display:"flex",justifyContent:"center"}}>
-          <ArgonButton color="primary" variant="outlined" style={{alignItems:"center",display:"flex",justifyContent:"center"}}>
+          {/* <ArgonButton color="primary" variant="outlined" style={{alignItems:"center",display:"flex",justifyContent:"center"}}>
               Attend
-            </ArgonButton>
+            </ArgonButton> */}
             {/* <ArgonButton color="primary" variant="outlined" style={{margintop:"30px"}}>
               Attend
             </ArgonButton> */}
+                 {item?.answers.length<=0 ? <ArgonButton variant="contained" style={{alignItems:"center",display:"flex",justifyContent:"center"}} onClick={()=>Attend(item)}>Attend</ArgonButton>:<ArgonButton variant="contained" style={{alignItems:"center",display:"flex",justifyContent:"center"}} onClick={()=>{
+          setOpen1(true) 
+          setCheckData(item)}}>View</ArgonButton>}
           </CardActions>
         </Card>
       ))}
-    </ArgonBox>
+    </ArgonBox>}
+    </>}
+    </>
   );
 };
 

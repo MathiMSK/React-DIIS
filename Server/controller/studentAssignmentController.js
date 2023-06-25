@@ -47,22 +47,23 @@ export const attendAssign = async (req, res) => {
         res.status(400).json({ message: error.message });
     }
 };
-
 export const stdViewTheirAllAssign = async (req, res) => {
     try {
-        const view = await StudentAssignment.find({student: req.user.id})
-        .populate({path:"student",model:"User"}).populate({path:"assignment",model:"Assignment"});
-        if (!view) return res.status(404).json({ message: "assignment not found" });
-        view.map((i)=>{
-            i.assignment.question.forEach((question)=> {
-                question.answer = "";
-            })
-        })
-        res.status(200).json({ data: view });
+    const view = await StudentAssignment.find({student: req.user.id})
+    .populate({path:"student",model:"User"}).populate({path:"assignment",model:"Assignment"});
+    if (!view) return res.status(404).json({ message: "assignment not found" })
+    console.log(view);
+    
+    view.map((i)=>{
+    i.assignment.question.forEach((question)=> {
+    question.answer = "";
+    })
+    })
+    res.status(200).json({ data: view });
     } catch (error) {
-        res.status(400).json({ message: error.message });
+    res.status(400).json({ message: error.message });
     }
-};
+    };
 
 export const stdViewTheirParticularAssign = async (req, res) => {
     try {

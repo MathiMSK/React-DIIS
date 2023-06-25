@@ -50,8 +50,8 @@ const unique = data.filter(element => {
 console.log(unique);
   return (
     <ArgonBox>
-      {unique?.map((item) => (
-        <Card key={item} style={{border:"1px solid #b931ce" ,marginBottom:"20px"}}>
+      {data?.map((item,index) => (
+        <Card key={index} style={{border:"1px solid #b931ce" ,marginBottom:"20px"}}>
           <CardContent>
             <ArgonTypography variant="body2" color="textSecondary" component="p">
               Assignment Name : {item?.assignmentTitle}

@@ -77,7 +77,9 @@ const handleLogout = () => {
     console.log(error.message); 
   }
 };
+useEffect(() => {
 getUser();
+}, []);
 
 
   useEffect(() => {
