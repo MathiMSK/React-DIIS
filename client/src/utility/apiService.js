@@ -1,3 +1,4 @@
+import axios from "axios";
 //  ******************** Base URL ***********************
 let baseUrl = "http://localhost:7373/api/";
 
@@ -203,3 +204,18 @@ export const createUser = async (body) => {
     let data = await response?.json();
     return {data:data,ok:true};
   }
+
+  export const pdfDownload = async (subjectVal)=>{
+    if(subjectVal !== undefined){
+      return await axios.get(`${baseUrl}assign/get?view=true&subject=${subjectVal}`, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        },
+        responseType: 'arraybuffer'
+      })
+      
+    }
+   
+    
+  }
+ 

@@ -2,19 +2,21 @@ import ArgonBox from 'components/ArgonBox';
 import DTable from 'components/AroganTable/view';
 import CustomSelect from 'components/select/CustomSelect';
 import { useArgonController } from 'context';
-import React, { useEffect, useState } from 'react'
-import { Container } from 'reactstrap';
+import React, { useEffect, useRef, useState } from 'react'
 import { generatePDF } from 'utility/apiService';
 import jwt_decode from "jwt-decode";  
-import { stdViewTheirAllAssign } from 'utility/apiService';
-import { getAllAssign } from 'utility/apiService';
-
+import { getAllAssign,pdfDownload } from 'utility/apiService';
+import ArgonButton from 'components/ArgonButton';
+import {toast,Toaster } from 'react-hot-toast';
+import { useReactToPrint } from "react-to-print";
+import { saveAs } from 'file-saver'
 const MIS = () => {
-
+    const [ open, setOpen ] = useState(false);
     const [controller] = useArgonController();
     const { miniSidenav } = controller;
     const [subject, setSubject] = useState("");
-    console.log(subject,"subj");
+    const [data, setData] = useState([]);
+    const [chartData, setChartData] = useState([]);
     const [subjectVal, setSubjectVal] = useState("");
 
           let token = localStorage.getItem("token");
@@ -41,47 +43,58 @@ const values =async()=>{
     );
 
 }
+const columns = [
+  {
+    name: 'Student Name',
+    selector: row => row.name,
+    sortable: true,
+},
+  {
+      name: 'Assignment Name',
+      selector: row => row.assignmentName,
+      sortable: true,
+  },
+  {
+      name: 'Class',
+      selector: row => row.class,
+      sortable: true,
+  },
+
+  {
+      name: 'Marks',
+      selector: row => row.scoredMarks,
+      sortable: true,
+  },
+  {
+      name: 'Subject',
+      selector: row => row.subject,
+      sortable: true,
+  },
+];
+const componentPdf = useRef();
+ const generatePdf = useReactToPrint({
+    content: () => componentPdf.current,
+    documentTitle: "Assignment",
+    onAfterPrint: () => {
+     toast.success("Assignment Printed Successfully");
+    }
+  });
 
     const handleSubt = async () => {
-      const Sub = await generatePDF(subjectVal);
-      console.log(Sub,"sub");
-      // const SubData = Sub.data?.data?.filter((item) => {
-      //   return item.isBlock === false;
-      // });
-  
-      // setSubject(
-      //   SubData.map((item) => {
-      //     return {
-      //       value: item.subtName || "",
-      //       label: item.subtName || "",
-      //       subId: item._id || "",
-      //     };
-      //   })
-      // );
-  
-    //   let desig = await getallDes();
-    //   const desigData = desig.data?.data.filter((item) => {
-    //     return (
-    //       item.subjectId === workValues.subject?.subId &&
-    //       item.isBlock === false
-    //     );
-    //   });
-    //   if (workValues.subject) {
-    //     // setDesignation("xyz")
-    //     setDesignation(
-    //       desigData?.map((item) => {
-    //         return {
-    //           value: item.designationName || "",
-    //           label: item.designationName || "",
-    //           desigId: item._id || "",
-    //         };
-    //       })
-    //     );
-    //   }
+      const Sub = await generatePDF(subjectVal?.value);
+      setData(Sub?.data?.data?.tableData);
+      setChartData(Sub?.data?.data?.chartImg);
     }  
 
+    const handlePdf = async(e) => {
+      e?.preventDefault();
+      const {data1} = await pdfDownload(subjectVal?.value);
+      const blob = new Blob([data1], { type: 'application/pdf' })
+      saveAs(blob, "result.pdf")
+    };
     useEffect(() => {
-      handleSubt();
+      // handleSubt();
+      // handlePdf()
       values();
     }, []);
   return (
@@ -96,7 +109,7 @@ const values =async()=>{
       },
     })}
   >
-  <div>
+  
   <div
         style={{
           width: "100%",
@@ -105,6 +118,8 @@ const values =async()=>{
           borderRadius: "20px",
         }}
       >
+         {!open ? (
+              <>
                 <div
                   style={{
                     display: "flex",
@@ -125,6 +140,12 @@ const values =async()=>{
                   >
                     Reports
                   </h1>
+                  <ArgonButton onClick={()=>{
+                    handleSubt()
+                    setOpen(true)}} >
+                    <span style={{ marginRight: "10px" }}>Download</span>
+                    <i className="fas fa-download"></i>
+                  </ArgonButton>
                 </div>
                 <div>
               <CustomSelect 
@@ -134,13 +155,24 @@ const values =async()=>{
                   isSearchable={true}
                   isMulti={false}
               />
+                </div >
+                </>
+                ) : (
+              <>
+               <ArgonButton 
+               onClick={handlePdf}
+                >
+                    <span style={{ marginRight: "10px" }}>Download</span>
+                    <i className="fas fa-download"></i>
+                  </ArgonButton>
+                <div ref={componentPdf} >
+                  <DTable columns={columns} data={data}  />
+                  <img style={{width:"100%"}} src={chartData} ></img>
                 </div>
-                <Container>
-                  <DTable />
-                </Container>
 
                 
-              </div>
+              </>
+         )}
            
   </div>
   </ArgonBox>

@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import DataTable from 'react-data-table-component';
 import React from 'react'
 
- const DTable=({columns,data})=> {
+ const DTable=({columns,data,ref})=> {
   const [pending, setPending] = React.useState(true);
 	const [rows, setRows] = React.useState([]);
 
@@ -18,6 +18,7 @@ import React from 'react'
     <DataTable
       columns={columns}
       data={data} 
+      ref={ref}
       progressPending={pending}
       pagination
     />

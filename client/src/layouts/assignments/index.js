@@ -10,13 +10,14 @@ import Button from "@mui/material/Button";
 import Box from "@mui/material/Box/Box";
 import "./styles.css";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
-import { useArgonController, setLayout } from "context";
+import { useArgonController } from "context";
 import ArgonBox from "components/ArgonBox";
 import { createAssign } from "utility/apiService";
 import { getAllAssign } from "utility/apiService";
 import Get from "./get";
 import ArgonTable from "components/AroganTable";
 import ArgonTypography from "components/ArgonTypography";
+import { facultyContext } from "context/facultyContext"
 import { useReactToPrint } from "react-to-print";
 // import Get from "./get";
 
@@ -53,6 +54,8 @@ const [err, setErr]= useState("")
      toast.success("Assignment Printed Successfully");
     }
   });
+
+ x
 
   const toggle = () => setOpen(!open);
   const toggle2 = () => {
@@ -176,7 +179,8 @@ const [err, setErr]= useState("")
     return toast.error("Please fill all the fields");
   }
   };
-
+  let faculty = useContext(facultyContext);
+  
   return (
     // <DashboardLayout>
     <ArgonBox
@@ -233,6 +237,8 @@ const [err, setErr]= useState("")
                   >
                     Download
                   </Button> */}
+                  if(faculty)
+                  {
                   <Button
                     style={{
                       marginRight: "1rem",
@@ -243,6 +249,7 @@ const [err, setErr]= useState("")
                   >
                     Create
                   </Button>
+}
                   </div>
                 </div>
                 

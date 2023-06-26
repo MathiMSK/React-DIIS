@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useContext} from "react";
 import { makeStyles, createStyles } from "@material-ui/core/styles";
 import ArgonBox from "components/ArgonBox";
 import {
@@ -19,6 +19,7 @@ import ArgonButton from "components/ArgonButton";
 import { Col, Row } from "reactstrap";
 
 const SimpleCard = ({ index, style, data }) => {
+  const fatculty = useContext(FatcultyContext);
   // let arr=[]
   // data.forEach((item)=>{
   //   let found = false
@@ -81,11 +82,6 @@ console.log(unique);
             </Col>
             </Row>
           </CardContent>
-          {/* <ArgonButton color="primary" variant="outlined" style={{margintop:"30px"}}>
-              Attend
-            </ArgonButton>
-          <CardActions disableSpacing>
-          </CardActions> */}
         </Card>
       ))}
     </ArgonBox>
