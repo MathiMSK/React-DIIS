@@ -182,7 +182,7 @@ export const createUser = async (body) => {
     return { data: data, ok: true };
   };
 
-  export const generatePDF = async ()=>{
+  export const generatePDF = async (subjectVal)=>{
     let token = localStorage.getItem("token");
     if(token){
       token = JSON.parse(token);
@@ -195,7 +195,7 @@ export const createUser = async (body) => {
         "token": token,
       },
     };
-    const response = await fetch(`${baseUrl}assign/get`,requestOptions);
+    const response = await fetch(`${baseUrl}assign/get?view=true&subject=${subjectVal}`,requestOptions);
     if(!response.ok){
       let data = await response.json();
       return {data:data,ok:false};

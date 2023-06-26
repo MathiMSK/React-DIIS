@@ -5,15 +5,46 @@ import { useArgonController } from 'context';
 import React, { useEffect, useState } from 'react'
 import { Container } from 'reactstrap';
 import { generatePDF } from 'utility/apiService';
+import jwt_decode from "jwt-decode";  
+import { stdViewTheirAllAssign } from 'utility/apiService';
+import { getAllAssign } from 'utility/apiService';
 
 const MIS = () => {
+
     const [controller] = useArgonController();
     const { miniSidenav } = controller;
     const [subject, setSubject] = useState("");
+    console.log(subject,"subj");
+    const [subjectVal, setSubjectVal] = useState("");
+
+          let token = localStorage.getItem("token");
+          let decoded;
+          if (token) {
+            token = JSON.parse(token);
+            decoded = jwt_decode(token);
+          }
+          let stdid = decoded?.id;
+
+const values =async()=>{
+   let response = await getAllAssign();
+   let data = response.data?.data?.filter((item)=>{
+      console.log(item,"item");
+      return item
+    })
+    setSubject(
+      data.map((item) => {
+        return {
+          value: item.subject || "",
+          label: item.subject || "",
+        };
+      })
+    );
+
+}
 
     const handleSubt = async () => {
-      const Sub = await generatePDF();
-      console.log(Sub);
+      const Sub = await generatePDF(subjectVal);
+      console.log(Sub,"sub");
       // const SubData = Sub.data?.data?.filter((item) => {
       //   return item.isBlock === false;
       // });
@@ -51,6 +82,7 @@ const MIS = () => {
 
     useEffect(() => {
       handleSubt();
+      values();
     }, []);
   return (
     <ArgonBox
@@ -97,10 +129,8 @@ const MIS = () => {
                 <div>
               <CustomSelect 
                  option={subject}
-                  // selectedOptions={workValues.subject}
-                  // setSelectedOptions={(e) =>
-                  //   setWork({ ...workValues, subject: e })
-                  // }
+                  selectedOptions={subjectVal}
+                  setSelectedOptions={setSubjectVal}
                   isSearchable={true}
                   isMulti={false}
               />
