@@ -139,6 +139,9 @@ export const createUser = async (body) => {
   export const assAttend = async (id,body) => {
     console.log(body);
     let token = localStorage.getItem("token");
+    if (token) {
+      token = JSON.parse(token);
+    }
     const requestOptions = {
       method: "PUT",
       mode: "cors",
@@ -156,3 +159,47 @@ export const createUser = async (body) => {
     let data = await response?.json();
     return { data: data, ok: true };
   };
+
+  export const viewStuAssById = async (id) => {
+    let token = localStorage.getItem("token");
+    if (token) {
+      token = JSON.parse(token);
+    }
+    const requestOptions = {
+      method: "GET",
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json",
+        "token": token,
+      },
+    };
+    const response = await fetch(`${baseUrl}stdassign/stdviewsingleassignans/${id}`,requestOptions);
+    if (!response.ok) {
+      let data = await response.json();
+      return { data: data, ok: false };
+    }
+    let data = await response?.json();
+    return { data: data, ok: true };
+  };
+
+  export const generatePDF = async ()=>{
+    let token = localStorage.getItem("token");
+    if(token){
+      token = JSON.parse(token);
+    }
+    const requestOptions = {
+      method: "GET",
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json",
+        "token": token,
+      },
+    };
+    const response = await fetch(`${baseUrl}assign/get`,requestOptions);
+    if(!response.ok){
+      let data = await response.json();
+      return {data:data,ok:false};
+    }
+    let data = await response?.json();
+    return {data:data,ok:true};
+  }
