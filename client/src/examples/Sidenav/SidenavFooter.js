@@ -29,6 +29,7 @@ import icon from "assets/images/illustrations/icon-documentation.svg";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {FaPowerOff} from "react-icons/fa"
+import {BiLogOutCircle} from "react-icons/bi"
 
 function SidenavFooter() {
   const navigate = useNavigate();
@@ -46,7 +47,7 @@ function SidenavFooter() {
       <ArgonBox position="relative" textAlign="center">
       <ArgonBox sx={{display:"flex",marginLeft:"10%"}}>
       <ArgonBox>
-      <FaPowerOff color="white"/>
+      <BiLogOutCircle color="#FDD451"/>
       </ArgonBox>
       <ArgonTypography color="white" variant="h6" sx={{cursor:"pointer",marginLeft:"5%"}} onClick={handellogout}>
            Logout

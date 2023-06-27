@@ -105,7 +105,7 @@ function Illustration() {
         <ArgonBox mb={2}>
         <ArgonTypography variant="h5" color="textPrimary">Password</ArgonTypography>
           <ArgonInput type="password" placeholder="Password" size="large" sx={{boxShadow:"3px 4px 5px #877b7b"}}
-                   value={password}
+             value={password}
             onChange={(e) => setPassword(e.target.value)} />
            {passwordError ? (
                     <ArgonTypography
