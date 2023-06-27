@@ -10,14 +10,17 @@ import ArgonButton from 'components/ArgonButton';
 import {toast,Toaster } from 'react-hot-toast';
 import { useReactToPrint } from "react-to-print";
 import { saveAs } from 'file-saver'
+import { Col, Container, Row } from 'reactstrap';
 const MIS = () => {
     const [ open, setOpen ] = useState(false);
     const [controller] = useArgonController();
     const { miniSidenav } = controller;
-    const [subject, setSubject] = useState("");
     const [data, setData] = useState([]);
     const [chartData, setChartData] = useState([]);
+    const [subject, setSubject] = useState("");
     const [subjectVal, setSubjectVal] = useState("");
+    const [className, setClassName] = useState("");
+    const [classNameVal, setClassNameVal] = useState("");
 
           let token = localStorage.getItem("token");
           let decoded;
@@ -38,6 +41,20 @@ const values =async()=>{
         return {
           value: item.subject || "",
           label: item.subject || "",
+        };
+      })
+    );
+
+   let res = await getAllAssign();
+   let clasdata = res.data?.data?.filter((item)=>{
+      console.log(item,"item");
+      return item
+    })
+    setClassName(
+      clasdata.map((item) => {
+        return {
+          value: item.class || "",
+          label: item.class || "",
         };
       })
     );
@@ -147,7 +164,9 @@ const componentPdf = useRef();
                     <i className="fas fa-download"></i>
                   </ArgonButton>
                 </div>
-                <div>
+                <Container>
+                  <Row>
+                    <Col>
               <CustomSelect 
                  option={subject}
                   selectedOptions={subjectVal}
@@ -155,7 +174,18 @@ const componentPdf = useRef();
                   isSearchable={true}
                   isMulti={false}
               />
-                </div >
+              </Col>
+              <Col>
+              <CustomSelect 
+                 option={className}
+                  selectedOptions={classNameVal}
+                  setSelectedOptions={setClassNameVal}
+                  isSearchable={true}
+                  isMulti={false}
+              />
+              </Col>
+              </Row>
+                </Container >
                 </>
                 ) : (
               <>

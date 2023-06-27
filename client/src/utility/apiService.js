@@ -206,8 +206,9 @@ export const createUser = async (body) => {
   }
 
   export const pdfDownload = async (subjectVal)=>{
+    console.log(subjectVal);
     if(subjectVal !== undefined){
-      return await axios.get(`${baseUrl}assign/get?view=true&subject=${subjectVal}`, {
+      return await axios.get(`${baseUrl}assign/get?subject=${subjectVal}`, {
         headers: {
           'Content-Type': 'multipart/form-data'
         },
