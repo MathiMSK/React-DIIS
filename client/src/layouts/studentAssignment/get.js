@@ -4,7 +4,6 @@ import { FixedSizeList as List } from "react-window";
 import AutoSizer from "react-virtualized-auto-sizer";
 import { Container } from "@mui/material";
 import SimpleCard from "./utilis";
-import { getAllAssign } from "utility/apiService";
 import { stdViewTheirAllAssign } from "utility/apiService";
 
 
@@ -20,8 +19,7 @@ const Get = () => {
   const get = async () => {
     try {
       let response = await stdViewTheirAllAssign();
-      setData(response?.data?.data)
-    
+      setData(response?.data?.data)    
     } catch (error) {
       console.log(error);
     }
@@ -29,7 +27,7 @@ const Get = () => {
   useEffect(() => {
         get();
   }, []); 
-  
+  console.log(data);
   return (
     <AutoSizer>
       {({ height, width }) => (

@@ -519,7 +519,6 @@ const Assign = () => {
                           </span>
                         </Label>
                         <Input
-                          // id="exampleFormControlInput1"
                           className="quesname"
                           placeholder="Enter Question Name"
                           name="question"
@@ -555,9 +554,7 @@ const Assign = () => {
                         </Label>
                         <Input
                           id="exampleFormControlInput1"
-                          placeholder="Enter Date of submit"
-                          // value={dos}
-                          // onChange={(e) => setDos(e.target.value)}
+                          placeholder="Enter option 1"
                           onChange={(e) =>
                             handlechange(
                               {
@@ -594,8 +591,7 @@ const Assign = () => {
                         </Label>
                         <Input
                           id="exampleFormControlInput1"
-                          placeholder="Enter Class Name"
-                          // value={className}
+                          placeholder="Enter option 2"
                           onChange={(e) =>
                             handlechange(
                               {
@@ -609,7 +605,6 @@ const Assign = () => {
                               index
                             )
                           }
-                          // width="400px"
                         />
                       
                       </Col>
@@ -630,8 +625,7 @@ const Assign = () => {
                         </Label>
                         <Input
                           id="exampleFormControlInput1"
-                          placeholder="Enter Total Marks"
-                          // value={marks}
+                          placeholder="Enter option 3"
                           onChange={(e) =>
                             handlechange(
                               {
@@ -645,7 +639,6 @@ const Assign = () => {
                               index
                             )
                           }
-                          // width="400px"
                         />
                       
                       </Col>
@@ -668,8 +661,7 @@ const Assign = () => {
                         </Label>
                         <Input
                           id="exampleFormControlInput1"
-                          placeholder="Enter noq"
-                          // value={noq}
+                          placeholder="Enter option 4"
                           onChange={(e) =>
                             handlechange(
                               {
@@ -683,7 +675,6 @@ const Assign = () => {
                               index
                             )
                           }
-                          // width="400px"
                         />
                       
                       </Col>
@@ -704,7 +695,7 @@ const Assign = () => {
                         </Label>
                         <Input
                           id="exampleFormControlInput1"
-                          placeholder="Enter noq"
+                          placeholder="Enter Correct Answer"
                           // value={noq}
                           onChange={(e) =>
                             handlechange(
@@ -717,7 +708,6 @@ const Assign = () => {
                               index
                             )
                           }
-                          // width="400px"
                         />
                       
                       </Col>
@@ -741,8 +731,7 @@ const Assign = () => {
                         </Label>
                         <Input
                           id="exampleFormControlInput1"
-                          placeholder="Enter noq"
-                          // value={noq}
+                          placeholder="Enter Marks"
                           type = "number"
                           onChange={(e) =>
                             handlechange(
@@ -755,7 +744,6 @@ const Assign = () => {
                               index
                             )
                           }
-                          // width="400px"
                         />
                       
                       </Col>

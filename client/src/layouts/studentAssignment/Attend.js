@@ -170,7 +170,6 @@ export default function Attend({ data ,id }) {
                 Student Attend
               </ArgonTypography>
             </div>
-            {/* <Divider style={{ backgroundColor: "black" }} /> */}
             {question?.map((i, index) =>
               i ? (
                 <Container

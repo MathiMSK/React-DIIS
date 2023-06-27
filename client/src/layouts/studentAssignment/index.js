@@ -175,217 +175,10 @@ const studentAssignment = () => {
                     Student Assignments
                   </h1>
                 </div>
-                <div style={{border:"1px solid #0070CD",marginBottom:"20px"}}/>
-                
+                <div style={{border:"1px solid #0070CD",marginBottom:"20px"}}/>  
                 <Get />
               </>
-            ) : (
-              <>
-                <div>
-                  <div
-                    style={{
-                    }}
-                  >
-                    <Container style={{ display: "contents" }}>
-                      <KeyboardArrowLeftIcon
-                        fontSize="large"
-                        style={{
-                          marginTop: "1rem",
-                          marginLeft: "1rem",
-                          cursor: "pointer",
-                        }}
-                        onClick={toggle}
-                      />
-                      <h1
-                        style={{
-                          fontSize: "1.5rem",
-                          fontWeight: "500",
-                          marginLeft: "3.8rem",
-                          position: "absolute",
-                          top: "13px",
-                        }}
-                      >
-                        Create Assignment
-                      </h1>
-                    </Container>
-                  </div>
-                  <div
-                    className="cusInpFullCon"
-                    style={{
-                      position: "relative",
-                      marginTop: "3rem",
-                      marginRight: "5rem",
-                    }}
-                  >
-                    <Container
-                      className="cusInpFullWrap"
-                      style={{ marginLeft: "3.2rem", marginTop: "1rem" }}
-                    >
-                      <Row style={{ display: "flex", justifyContent: "normal" }}>
-                        <Col md={6} className="cusInpCon" style={{ width: "600px" }}>
-                          <Label>
-                            Assignment Name
-                            <span
-                              style={{
-                                paddingLeft: "5px",
-                                color: "red",
-                                fontSize: "15px",
-                              }}
-                            >
-                              *
-                            </span>
-                          </Label>
-                          <Input
-                            id="exampleFormControlInput1"
-                            placeholder="Enter Assignment Name"
-                            value={assign}
-                            onChange={(e) => setAssign(e.target.value)}
-                            // width="400px"
-                          />
-                          {asserr ? (
-                            <ArgonTypography style={{ color: "red" }}>{asserr}</ArgonTypography>
-                          ) : null}
-                        </Col>
-                      </Row>
-
-                      <Row style={{ display: "flex" }}>
-                        <Col md={6} className="cusInpCon" style={{ width: "600px" }}>
-                          <Label>
-                            Class
-                            <span
-                              style={{
-                                paddingLeft: "5px",
-                                color: "red",
-                                fontSize: "15px",
-                              }}
-                            >
-                              *
-                            </span>
-                          </Label>
-                          <Input
-                            id="exampleFormControlInput1"
-                            placeholder="Enter Class Name"
-                            value={className}
-                            onChange={(e) => setClassName(e.target.value)}
-                            // width="400px"
-                          />
-                          {classerr ? (
-                            <ArgonTypography style={{ color: "red" }}>{classerr}</ArgonTypography>
-                          ) : null}
-                        </Col>
-                        <Col
-                          md={6}
-                          className="cusInpCon"
-                          style={{ width: "600px", marginLeft: "20px" }}
-                        >
-                          <Label>
-                            Total Marks
-                            <span
-                              style={{
-                                paddingLeft: "5px",
-                                color: "red",
-                                fontSize: "15px",
-                              }}
-                            >
-                              *
-                            </span>
-                          </Label>
-                          <Input
-                            id="exampleFormControlInput1"
-                            placeholder="Enter Total Marks"
-                            value={marks}
-                            onChange={(e) => setMarks(e.target.value)}
-                            // width="400px"
-                          />
-                          {markserr ? (
-                            <ArgonTypography style={{ color: "red" }}>{markserr}</ArgonTypography>
-                          ) : null}
-                        </Col>
-                      </Row>
-                      <Row style={{ display: "flex" }}>
-                        <Col md={6} className="cusInpCon" style={{ width: "600px" }}>
-                          <Label>
-                            Subject
-                            <span
-                              style={{
-                                paddingLeft: "5px",
-                                color: "red",
-                                fontSize: "15px",
-                              }}
-                            >
-                              *
-                            </span>
-                          </Label>
-                          <Input
-                            id="exampleFormControlInput1"
-                            placeholder="Enter subject Name"
-                            value={subject}
-                            onChange={(e) => setSubject(e.target.value)}
-                            // width="400px"
-                          />
-                          {subjecterr ? (
-                            <ArgonTypography style={{ color: "red" }}>{subjecterr}</ArgonTypography>
-                          ) : null}
-                        </Col>
-                        <Col
-                          md={6}
-                          className="cusInpCon"
-                          style={{ width: "600px", marginLeft: "20px" }}
-                        >
-                          <Label>
-                            No. of Questions
-                            <span
-                              style={{
-                                paddingLeft: "5px",
-                                color: "red",
-                                fontSize: "15px",
-                              }}
-                            >
-                              *
-                            </span>
-                          </Label>
-                          <Input
-                            id="exampleFormControlInput1"
-                            placeholder="Enter noq"
-                            value={noq}
-                            onChange={(e) => setNoq(e.target.value)}
-                            // width="400px"
-                          />
-                          {noqerr ? (
-                            <ArgonTypography style={{ color: "red" }}>{noqerr}</ArgonTypography>
-                          ) : null}
-                        </Col>
-                      </Row>
-                    </Container>
-                  </div>
-                  <Box
-                    mt={"30px"}
-                    sx={{
-                      display: "flex",
-                      flexDirection: "row",
-                      flexWrap: "wrap",
-                      justifyContent: "end",
-                    }}
-                  >
-                    <Button
-                      autoCapitalize="none"
-                      variant="contained"
-                      endIcon={<KeyboardArrowRightIcon />}
-                      aria-label="fingerprint"
-                      sx={{
-                        display: "flex",
-                        margin: "12px",
-                        alignSelf: "left",
-                      }}
-                      color={"success"}
-                      onClick={toggle2}
-                    >
-                      Next
-                    </Button>
-                  </Box>
-                </div>
-              </>
-            )}
+            ) :null}
           </>
         ) : (
           <>
@@ -490,9 +283,7 @@ const studentAssignment = () => {
                         </Label>
                         <Input
                           id="exampleFormControlInput1"
-                          placeholder="Enter Date of submit"
-                          // value={dos}
-                          // onChange={(e) => setDos(e.target.value)}
+                          placeholder="Enter option 1"
                           onChange={(e) =>
                             handlechange(
                               {
@@ -531,8 +322,7 @@ const studentAssignment = () => {
                         </Label>
                         <Input
                           id="exampleFormControlInput1"
-                          placeholder="Enter Class Name"
-                          // value={className}
+                          placeholder="Enter option 2"
                           onChange={(e) =>
                             handlechange(
                               {
@@ -569,8 +359,7 @@ const studentAssignment = () => {
                         </Label>
                         <Input
                           id="exampleFormControlInput1"
-                          placeholder="Enter Total Marks"
-                          // value={marks}
+                          placeholder="Enter option 3"
                           onChange={(e) =>
                             handlechange(
                               {
@@ -584,7 +373,6 @@ const studentAssignment = () => {
                               index
                             )
                           }
-                          // width="400px"
                         />
                         {err ? (
                           <ArgonTypography style={{ color: "red" }}>{err}</ArgonTypography>
@@ -609,8 +397,7 @@ const studentAssignment = () => {
                         </Label>
                         <Input
                           id="exampleFormControlInput1"
-                          placeholder="Enter noq"
-                          // value={noq}
+                          placeholder="Enter option 4"
                           onChange={(e) =>
                             handlechange(
                               {
@@ -647,8 +434,7 @@ const studentAssignment = () => {
                         </Label>
                         <Input
                           id="exampleFormControlInput1"
-                          placeholder="Enter noq"
-                          // value={noq}
+                          placeholder="Enter Correct Answer"
                           onChange={(e) =>
                             handlechange(
                               {
@@ -660,7 +446,6 @@ const studentAssignment = () => {
                               index
                             )
                           }
-                          // width="400px"
                         />
                         {err ? (
                           <ArgonTypography style={{ color: "red" }}>{err}</ArgonTypography>
@@ -686,8 +471,7 @@ const studentAssignment = () => {
                         </Label>
                         <Input
                           id="exampleFormControlInput1"
-                          placeholder="Enter noq"
-                          // value={noq}
+                          placeholder="Enter Marks"
                           type="number"
                           onChange={(e) =>
                             handlechange(
