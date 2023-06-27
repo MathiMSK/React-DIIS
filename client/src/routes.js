@@ -45,10 +45,15 @@ import SignUp from "layouts/authentication/sign-up";
 import Assignments from "layouts/assignments";
 import StudentAssignment from "layouts/studentAssignment";
 import Mis from "layouts/MIS";
-
-// Argon Dashboard 2 MUI components
 import ArgonBox from "components/ArgonBox";
+import {MdAssignment,MdOutlineAssignmentInd} from "react-icons/md";
+import {BsFillInfoCircleFill} from "react-icons/bs";
 
+let token;
+let getToken=localStorage.getItem('token') 
+if(getToken){
+  token=JSON.parse(getToken)
+}
 const routes = [
   
   {
@@ -56,88 +61,45 @@ const routes = [
     name: "Assignments",
     key: "assignments",
     route: "/assignments",
-    icon: <ArgonBox component="i" color="success" fontSize="14px" className="ni ni-credit-card" />,
+    token: token,
+    icon: <MdAssignment color="#FDD451"/>,
     component: <Assignments />,
   },
   {
     type:"route",
     name: "Student Assignments",
     key: "stuassign",
+    token: token,
     route: "/studentassignments",
-    icon: <ArgonBox component="i" color="success" fontSize="14px" className="ni ni-credit-card" />,
+    icon: <MdOutlineAssignmentInd color="#FDD451"/>,
     component: <StudentAssignment />,
   },
   {
     type:"route",
     name: "MIS",
     key: "mis",
+    token: token,
     route: "/mis",
-    icon: <ArgonBox component="i" color="success" fontSize="14px" className="ni ni-credit-card" />,
+    icon:  <BsFillInfoCircleFill style={{width:"17px"}} color="#FDD451"/>,
     component: <Mis />,
   },
   {
-    name: "Dashboard",
-    key: "dashboard",
-    route: "/dashboard",
-    icon: <ArgonBox component="i" color="primary" fontSize="14px" className="ni ni-tv-2" />,
-    component: <Dashboard />,
-  },
-  {
-    name: "Tables",
-    key: "tables",
-    route: "/tables",
-    icon: (
-      <ArgonBox component="i" color="warning" fontSize="14px" className="ni ni-calendar-grid-58" />
-    ),
-    component: <Tables />,
-  },
-  {
-    name: "Billing",
-    key: "billing",
-    route: "/billing",
-    icon: <ArgonBox component="i" color="success" fontSize="14px" className="ni ni-credit-card" />,
-    component: <Billing />,
-  },
-  {
-    
-    name: "Virtual Reality",
-    key: "virtual-reality",
-    route: "/virtual-reality",
-    icon: <ArgonBox component="i" color="info" fontSize="14px" className="ni ni-app" />,
-    component: <VirtualReality />,
-  },
-  {
-    name: "RTL",
-    key: "rtl",
-    route: "/rtl",
-    icon: <ArgonBox component="i" color="error" fontSize="14px" className="ni ni-world-2" />,
-    component: <RTL />,
-  },
-  // { type: "title", title: "Account Pages", key: "account-pages" },
-  {
-    name: "Profile",
-    key: "profile",
-    route: "/profile",
-    icon: <ArgonBox component="i" color="dark" fontSize="14px" className="ni ni-single-02" />,
-    component: <Profile />,
-  },
-  {
-    type: "route",
     name: "Sign In",
     key: "sign-in",
     route: "/authentication/sign-in",
+    token: token,
     icon: (
       <ArgonBox component="i" color="warning" fontSize="14px" className="ni ni-single-copy-04" />
     ),
     component: <SignIn />,
   },
-  {
-    name: "Sign Up",
-    key: "sign-up",
-    route: "/authentication/sign-up",
-    icon: <ArgonBox component="i" color="info" fontSize="14px" className="ni ni-collection" />,
-    component: <SignUp />,
-  },
+  // {
+  //   name: "Sign Up",
+  //   key: "sign-up",
+  //   route: "/authentication/sign-up",
+  //   icon: <ArgonBox component="i" color="info" fontSize="14px" className="ni ni-collection" />,
+  //   component: <SignUp />,
+  // },
 ];
 
 export default routes;

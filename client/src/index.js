@@ -17,7 +17,7 @@ import React from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import App from "App";
-
+import facultyContext from "context/facultyContext";
 // Soft UI Context Provider
 import { ArgonControllerProvider } from "context";
 
@@ -32,10 +32,12 @@ const root = createRoot(container);
 
 root.render(
   <BrowserRouter>
+  <facultyContext.Provider value={{isFaculty:false}}>
     <ArgonControllerProvider>
       <PerfectScrollbar>
         <App />
       </PerfectScrollbar>
     </ArgonControllerProvider>
+    </facultyContext.Provider>
   </BrowserRouter>
 );

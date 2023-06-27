@@ -183,7 +183,7 @@ export const createUser = async (body) => {
     return { data: data, ok: true };
   };
 
-  export const generatePDF = async (subjectVal,classVal)=>{
+  export const generatePDF = async (subjectVal,classVal,stdidVal)=>{
     let token = localStorage.getItem("token");
     if(token){
       token = JSON.parse(token);
@@ -202,31 +202,15 @@ export const createUser = async (body) => {
       return await axios.get(`${baseUrl}assign/get?view=true&subject=${subjectVal}`)
     }else if(classVal!== undefined){
       return await axios.get(`${baseUrl}assign/get?view=true&class=${classVal}`)
+    }else if(stdidVal!== undefined){
+      return await axios.get(`${baseUrl}assign/get?view=true&stdid=${stdidVal}`)
     }else{
       return await axios.get(`${baseUrl}assign/get?view=true`)
     }
   } 
-
-  // export const pdfDownload = async (subjectVal,classNameVal)=>{
-  //   console.log(subjectVal,"codeval");
-  //   if(subjectVal!== undefined){
-  //     return await axios.get(`${baseUrl}assign/get?view=false&subject=${subjectVal}`, {
-  //       headers: {
-  //         'Content-Type': 'multipart/form-data'
-  //       },
-  //       responseType: 'arraybuffer'
-  //     }) 
-  //   }
-  //   if(classNameVal!== undefined)
-  //   return await axios.get(`${baseUrl}assign/get?class=${classNameVal}`, {
-  //     headers: {
-  //       'Content-Type': 'multipart/form-data'
-  //     },
-  //     responseType: 'arraybuffer'
-  //   }) 
-  // }
  
-  export const getTicketsPdf =async (subjectVal,classVal)=> {
+  export const getTicketsPdf =async (subjectVal,classVal,stdidVal)=> {
+    console.log(stdidVal);
     if(subjectVal!== undefined && classVal == undefined){
       return axios.get(`${baseUrl}assign/get?view=false&subject=${subjectVal}`, {
         headers: {
@@ -241,6 +225,13 @@ export const createUser = async (body) => {
         },
         responseType: 'arraybuffer'
       })
+    }else if(stdidVal!== undefined){
+      return axios.get(`${baseUrl}assign/get?view=false&stdid=${stdidVal}`, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        },
+        responseType: 'arraybuffer'
+      })
     }else{
       return axios.get(`${baseUrl}assign/get?view=false`, {
         headers: {
@@ -249,4 +240,52 @@ export const createUser = async (body) => {
         responseType: 'arraybuffer'
       })
     }
+  }
+
+  export const getAllUser = async () => {
+    const requestOptions = {
+      method: "GET",
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    if (token) {
+      const response = await fetch(
+        `${baseUrl}user/getalluser`,
+        requestOptions
+      );
+      if (!response.ok) {
+        let data = await response.json();
+        return { data: data, ok: false };
+      }
+      let data = await response?.json();
+      return { data: data, ok: true };
+    }
+  }
+
+  export const getProfile = async () => {
+    let token = localStorage.getItem("token");
+    if (token) {
+      token = JSON.parse(token);
+    }
+    const requestOptions = {
+      method: "GET",
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json",
+        "token": token,
+      },
+    };
+
+      const response = await fetch(
+        `${baseUrl}user/profile`,
+        requestOptions
+      );
+      if (!response.ok) {
+        let data = await response.json();
+        return { data: data, ok: false };
+      }
+      let data = await response?.json();
+      return { data: data, ok: true };
   }

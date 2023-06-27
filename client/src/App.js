@@ -22,7 +22,7 @@ import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import Icon from "@mui/material/Icon";
-
+import SignIn from "layouts/authentication/sign-in";
 // Argon Dashboard 2 MUI components
 import ArgonBox from "components/ArgonBox";
 
@@ -96,8 +96,9 @@ export default function App() {
   useEffect(() => {
     document.body.setAttribute("dir", direction);
   }, [direction]);
-  let getToken=localStorage.getItem('token') 
+
   let token;
+  let getToken=localStorage.getItem('token') 
   if(getToken){
     token=JSON.parse(getToken)
   }
@@ -107,18 +108,19 @@ export default function App() {
     document.scrollingElement.scrollTop = 0;
   }, [pathname]);
 
-  const getRoutes = (allRoutes) =>
+  const getRoutes = (allRoutes) =>  
     allRoutes.map((route) => {
       if (route.collapse) {
-        return getRoutes(route.collapse);
+        return getRoutes(route.collapse)
       }
-
       if (route.route) {
         return <Route exact path={route.route} element={route.component} key={route.key} />;
       }
-
+      if(route.token == undefined) {
+        return <Route exact path="/authentication/sign-in" element={<SignIn/>} key={"sign-in"} />
+      }
       return null;
-    });
+    })
 
   const configsButton = (
     <ArgonBox
@@ -164,8 +166,8 @@ export default function App() {
         )}
         {layout === "vr" && <Configurator />}
         <Routes>
+        {!token && <Route exact path="/authentication/sign-in" element={<SignIn/>} key="sign-in" />}
           {getRoutes(routes)}
-          <Route path="*" element={<Navigate to="/authentication/sign-in" />} />
         </Routes>
       </ThemeProvider>
     </CacheProvider>
@@ -188,8 +190,8 @@ export default function App() {
       )}
       {layout === "vr" && <Configurator />}
       <Routes>
+        {!token && <Route exact path="/authentication/sign-in" element={<SignIn/>} />}
         {getRoutes(routes)}
-        {!token && <Route path="*" element={<Navigate to="/authentication/sign-in" />} />}
       </Routes>
     </ThemeProvider>
   );

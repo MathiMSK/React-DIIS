@@ -49,7 +49,6 @@ const unique = data.filter(element => {
   return false;
 });
 
-console.log(unique);
   return (
     <ArgonBox>
       {data?.map((item,index) => (

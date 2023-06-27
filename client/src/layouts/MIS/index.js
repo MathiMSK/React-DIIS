@@ -14,6 +14,9 @@ import { Col, Container, Row } from 'reactstrap';
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import { getTicketsPdf } from 'utility/apiService';
 import Modal from '@mui/material/Modal';
+import { getById } from 'utility/apiService';
+import { getAllUser } from 'utility/apiService';
+import ArgonTypography from 'components/ArgonTypography';
 const MIS = () => {
     const [ open, setOpen ] = useState(false);
     const handleOpen = () => setOpen(true);
@@ -26,19 +29,12 @@ const MIS = () => {
     const [subjectVal, setSubjectVal] = useState("");
     const [className, setClassName] = useState("");
     const [classNameVal, setClassNameVal] = useState("");
-
-          let token = localStorage.getItem("token");
-          let decoded;
-          if (token) {
-            token = JSON.parse(token);
-            decoded = jwt_decode(token);
-          }
-          let stdid = decoded?.id;
+    const [stdid, setStdid] = useState("");
+    const [stdidVal, setStdidVal] = useState("");
 
 const values =async()=>{
    let response = await getAllAssign();
    let data = response.data?.data?.filter((item)=>{
-      console.log(item,"item");
       return item
     })
     setSubject(
@@ -52,7 +48,6 @@ const values =async()=>{
 
    let res = await getAllAssign();
    let clasdata = res.data?.data?.filter((item)=>{
-      console.log(item,"item");
       return item
     })
     setClassName(
@@ -64,7 +59,21 @@ const values =async()=>{
       })
     );
 
-}
+    let resp = await getAllUser();
+    let std = resp.data?.data.filter((item) => {
+      return item.isFaculty==false
+    });
+    setStdid(
+      std.map((item) => {
+        return {
+          id:item._id,
+          value: item.name || "",
+          label: item.name || "",
+        };
+      })
+    );
+    
+  }
 const columns = [
   {
     name: 'Student Name',
@@ -114,15 +123,14 @@ const componentPdf = useRef();
   };
   
     const handleSubt = async () => {
-      const Sub = await generatePDF(subjectVal?.value,classNameVal?.value);
-      console.log(Sub);
+      const Sub = await generatePDF(subjectVal?.value,classNameVal?.value,stdidVal?.id);
       setData(Sub?.data?.data?.tableData);
       setChartData(Sub?.data?.data?.chartImg);
     }  
 
     const handlePdf = async(e) => {
       e?.preventDefault();
-        const { data } = await getTicketsPdf(subjectVal?.value,classNameVal?.value)
+        const { data } = await getTicketsPdf(subjectVal?.value,classNameVal?.value,stdidVal?.id)
         const blob = new Blob([data], { type: 'application/pdf' })
         saveAs(blob, "Student Result.pdf")
     };
@@ -141,7 +149,6 @@ const componentPdf = useRef();
       },
     })}
   >
-  
   <div
         style={{
           width: "100%",
@@ -180,6 +187,7 @@ const componentPdf = useRef();
                   </ArgonButton>
                 </div>
                 <div style={{border:"1px solid #0070CD"}}/>
+                <ArgonTypography style={{fontSize:"10px"}}>If you want to view all Students data,then hit the download button without selecting...</ArgonTypography>
                 <div
                     className="cusInpFullCon"
                     style={{
@@ -188,22 +196,34 @@ const componentPdf = useRef();
                       marginRight: "5rem",
                     }}
                   >
-                <Container   style={{ marginLeft: "3.2rem", marginTop: "1rem", display: "flex", justifyContent: "center" }}>
+                <Container style={{ marginLeft: "3.2rem", marginTop: "1rem", display: "flex", justifyContent: "center" }}>
                   <Row style={{ display: "flex", justifyContent: "center",border:"none" }}>
-                    <Col  md={6} className="cusInpCon" style={{ width: "200px" }}>
+                    <Col  md={6} style={{ width: "200px" }}>
               <CustomSelect 
                  option={subject}
                   selectedOptions={subjectVal}
                   setSelectedOptions={setSubjectVal}
+                  placeholder="Select Subject"
                   isSearchable={true}
                   isMulti={false}
               />
               </Col>
-              <Col  md={6} className="cusInpCon" style={{ width: "200px" }}>
+              <Col  md={6} style={{ width: "200px",marginLeft:"5px" }}>
               <CustomSelect 
                  option={className}
                   selectedOptions={classNameVal}
                   setSelectedOptions={setClassNameVal}
+                  placeholder="Select Class"
+                  isSearchable={true}
+                  isMulti={false}
+              />
+              </Col>
+              <Col  md={6} style={{ width: "200px",marginLeft:"5px" }}>
+              <CustomSelect 
+                 option={stdid}
+                  selectedOptions={stdidVal}
+                  setSelectedOptions={setStdidVal}
+                  placeholder="Select Student"
                   isSearchable={true}
                   isMulti={false}
               />

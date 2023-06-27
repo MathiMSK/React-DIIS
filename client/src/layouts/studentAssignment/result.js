@@ -79,17 +79,16 @@ export default function Result({ data,id}) {
   const { miniSidenav } = controller;
   const [open, setOpen] = useState(false);
   const [answerData, setAnswerData] = useState([]); 
- 
-
-  const handel = async () => {
+  
+  const handleAns = async () => {
     let res = await viewStuAssById(id);
     setAnswerData(res?.data?.data);
   };
+
  
   useEffect(() => {
-    handel();
+    handleAns();
   }, []);
-  console.log(answerData);
 
   return (
     <>
@@ -162,7 +161,7 @@ export default function Result({ data,id}) {
                     </ArgonTypography>
                   </Col>
                 </Row>
-                <FormControl style={{ margin: "5%" }}>
+                <FormControl style={{ margin: "1%" }}>
                   <RadioGroup
                     aria-labelledby="demo-customized-radios"
                     name="customized-radios"
@@ -199,13 +198,20 @@ export default function Result({ data,id}) {
                   </RadioGroup>
                   <br/>
                   <FormLabel id="demo-radio-buttons-group-label">
-                    Answer:
-                  <ArgonTypography
-                      id="form1"
-                      type="text"
-                      disabled
-                      value={i?.answer}
-                    />
+                   Correct Answer:
+                  <ArgonTypography>
+                  {i?.answer}
+                  </ArgonTypography>
+                    <ArgonTypography>
+                      {i?.answer==answerData.answers[index].answer ? (<>
+                        <ArgonTypography key={i} style={{ fontSize: "15px",color:"green" }} >Wonderful! Student</ArgonTypography>
+                      </>
+                      ):(
+                        <>
+                        <ArgonTypography key={i} style={{ fontSize: "15px",color:"red " }}>Yowai Mo! Student</ArgonTypography>
+                        </>)}
+                    </ArgonTypography>
+
                   </FormLabel>
                 </FormControl>
               </Container>

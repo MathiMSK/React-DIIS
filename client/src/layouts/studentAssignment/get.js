@@ -20,7 +20,6 @@ const Get = () => {
   const get = async () => {
     try {
       let response = await stdViewTheirAllAssign();
-      console.log(response,"res");
       setData(response?.data?.data)
     
     } catch (error) {
@@ -31,7 +30,6 @@ const Get = () => {
         get();
   }, []); 
   
-  console.log(data?.length);
   return (
     <AutoSizer>
       {({ height, width }) => (
@@ -42,7 +40,7 @@ const Get = () => {
           itemCount={data?.length-(data?.length/2)}
           itemSize={220}
           itemData={data}
-          // innerElementType={ListContainer}
+          innerElementType={ListContainer}
         >
           {SimpleCard}
         </List>

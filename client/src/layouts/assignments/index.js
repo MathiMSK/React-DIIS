@@ -17,9 +17,9 @@ import { getAllAssign } from "utility/apiService";
 import Get from "./get";
 import ArgonTable from "components/AroganTable";
 import ArgonTypography from "components/ArgonTypography";
-// import { facultyContext } from "context/facultyContext"
+import facultyContext from "context/facultyContext.js"
 import { useReactToPrint } from "react-to-print";
-// import Get from "./get";
+import { getProfile } from "utility/apiService";
 
 const Assign = () => {
   const [controller, dispatch] = useArgonController();
@@ -27,25 +27,23 @@ const Assign = () => {
   const [open, setOpen] = useState(false);
   
   const [open2, setOpen2] = useState(false);
-
+  
   const [assign, setAssign] = useState("");
   const [className, setClassName] = useState("");
   const [marks, setMarks] = useState("");
   const [subject, setSubject] = useState("");
-
+  
   const [noq, setNoq] = useState();
   const [datas, setDatas] = useState([]);
   const [assignData, setAssignData] = useState([])
-const [err, setErr]= useState("")
   const [asserr, setAssErr] = useState("");
   const[classerr,setClassErr]=useState("");
   const[subjecterr,setSubjectErr]=useState("");
   const[markserr,setMarksErr]=useState("");
   const[noqerr,setNoqErr]=useState("");
-  const[questionerr,setQuestionErr]=useState("");
-  const[optionerr,setOptionErr]=useState("");
-  const[correcterr,setCorrectErr]=useState("");
   
+  const[facultyData,setFacultyData]=useState([])
+  let faculty = useContext(facultyContext);
  const componentPdf = useRef();
  const generatePdf = useReactToPrint({
     content: () => componentPdf.current,
@@ -54,7 +52,6 @@ const [err, setErr]= useState("")
      toast.success("Assignment Printed Successfully");
     }
   });
-
 
 
   const toggle = () => setOpen(!open);
@@ -99,7 +96,6 @@ const [err, setErr]= useState("")
     }
   }
   const handlechange = (e, index) => {
-    console.log(index);
     const { name, value, indexForOption, optionName } = e.target;
     const list = [...datas];
     if (name === "options") {
@@ -108,7 +104,6 @@ const [err, setErr]= useState("")
       list[index][name] = value;
     }
     setDatas(list);
-    console.log(datas);
   };
 
 
@@ -117,7 +112,6 @@ const [err, setErr]= useState("")
   const getAssign = async () => {
     try {
       let response = await getAllAssign();
-      console.log(response.data.data);
       if (!response.ok) {
         return toast.error(response.data.message);
       }
@@ -127,11 +121,20 @@ const [err, setErr]= useState("")
     }
   };
 
+  const getProf = async () => {
+    try {
+      let response = await getProfile();
+      setFacultyData(response.data.data);
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+}
   useEffect(() => {
     getAssign();
+    getProf();
   }, []);
   assignData?.map((item) => {
-    console.log(item,"item");
     })
   const initiateAssign = async () => {
     if (!assign) {
@@ -171,7 +174,7 @@ const [err, setErr]= useState("")
         setOpen(!open)
         toast.success(response.data.message);
       }
-    } catch (error) {
+    } catch (error) { 
       console.log(error);
     }
   }
@@ -179,10 +182,9 @@ const [err, setErr]= useState("")
     return toast.error("Please fill all the fields");
   }
   };
+  // console.log(faculty);
 
-  // let faculty = useContext(facultyContext);
   return (
-    // <DashboardLayout>
     <ArgonBox
       sx={({ breakpoints, transitions, functions: { pxToRem } }) => ({
         [breakpoints.up("xl")]: {
@@ -228,18 +230,7 @@ const [err, setErr]= useState("")
                   </h1>
                   <div>
                   
-                  {/* <Button
-                    style={{
-                      marginRight: "1rem",
-                    }}
-                    onClick={generatePdf}
-                    variant="contained"
-                    color={"primary"}
-                  >
-                    Download
-                  </Button> */}
-                  {/* if(faculty)
-                  { */}
+            {facultyData.isFaculty == true ? (
                   <Button
                     style={{
                       marginRight: "1rem",
@@ -249,15 +240,14 @@ const [err, setErr]= useState("")
                     color={"primary"}
                   >
                     Create
-                  </Button>
-{/* } */}
+                  </Button> 
+            ) :  null
+            }
                   </div>
                 </div>
                   <div style={{border:"1px solid #0070CD",marginBottom:"20px"}}/>
                 
-                {/* <div  ref={componentPdf} style={{width:"100%",height:"100%"}} >
-                
-                </div> */}
+          
                 <Get />
                 
               </>
@@ -311,7 +301,7 @@ const [err, setErr]= useState("")
                       className="cusInpFullWrap"
                       style={{ marginLeft: "3.2rem", marginTop: "1rem" }}
                     >
-                      <Row style={{ display: "flex", justifyContent: "normal" }}>
+                      <Row style={{ display: "flex", justifyContent: "normal",border:"none" }}>
                         <Col md={6} className="cusInpCon" style={{ width: "600px" }}>
                           <Label>
                             Assignment Name
@@ -337,7 +327,7 @@ const [err, setErr]= useState("")
                      
                       </Row>
 
-                      <Row style={{ display: "flex" }}>
+                      <Row style={{ display: "flex",border:"none" }}>
                         <Col md={6} className="cusInpCon" style={{ width: "600px" }}>
                           <Label>
                             Class
@@ -387,7 +377,7 @@ const [err, setErr]= useState("")
                           {markserr ? <ArgonTypography style={{ color: "red" }}>{markserr}</ArgonTypography> : null}
                         </Col>
                       </Row>
-                      <Row style={{display:"flex"}}>
+                      <Row style={{display:"flex",border:"none"}}>
                         <Col md={6} className="cusInpCon" style={{ width: "600px" }}>
                           <Label>
                            Subject
@@ -514,7 +504,7 @@ const [err, setErr]= useState("")
                     className="cusInpFullWrap"
                     style={{ marginLeft: "3.2rem", marginTop: "1rem" }}
                   >
-                    <Row style={{ display: "flex" }}>
+                    <Row style={{ display: "flex",border:"none" }}>
                       <Col md={6} className="cusInpCon" style={{width:"1220px"}} >
                         <Label>
                           {index + 1}. Question Name
@@ -545,11 +535,11 @@ const [err, setErr]= useState("")
                             )
                           }
                         />
-                        {err ? <ArgonTypography style={{ color: "red" }}>{err}</ArgonTypography> : null}
+                      
                       </Col>
                     </Row>
 
-                    <Row style={{ display: "flex", justifyContent: "normal" }}>
+                    <Row style={{ display: "flex", justifyContent: "normal" ,border:"none"}}>
                       <Col md={6} className="cusInpCon" style={{ width: "600px" }}>
                         <Label>
                           option 1
@@ -583,7 +573,7 @@ const [err, setErr]= useState("")
                           }
                           // width="400px"
                         />
-                        {err ? <ArgonTypography style={{ color: "red" }}>{err}</ArgonTypography> : null}
+                      
                       </Col>
                       <Col
                         md={6}
@@ -621,10 +611,10 @@ const [err, setErr]= useState("")
                           }
                           // width="400px"
                         />
-                        {err ? <ArgonTypography style={{ color: "red" }}>{err}</ArgonTypography> : null}
+                      
                       </Col>
                     </Row>
-                    <Row style={{ display: "flex", justifyContent: "normal" }}>
+                    <Row style={{ display: "flex", justifyContent: "normal" ,border:"none"}}>
                       <Col md={6} className="cusInpCon" style={{ width: "600px" }}>
                         <Label>
                           option 3
@@ -657,7 +647,7 @@ const [err, setErr]= useState("")
                           }
                           // width="400px"
                         />
-                        {err ? <ArgonTypography style={{ color: "red" }}>{err}</ArgonTypography> : null}
+                      
                       </Col>
                       <Col
                         md={6}
@@ -695,10 +685,10 @@ const [err, setErr]= useState("")
                           }
                           // width="400px"
                         />
-                        {err ? <ArgonTypography style={{ color: "red" }}>{err}</ArgonTypography> : null}
+                      
                       </Col>
                     </Row>
-                    <Row style={{ display: "flex", justifyContent: "normal" }}>
+                    <Row style={{ display: "flex", justifyContent: "normal",border:"none" }}>
                       <Col md={6} className="cusInpCon" style={{ width: "600px" }}>
                         <Label>
                           Correct Answer
@@ -729,7 +719,7 @@ const [err, setErr]= useState("")
                           }
                           // width="400px"
                         />
-                        {err ? <ArgonTypography style={{ color: "red" }}>{err}</ArgonTypography> : null}
+                      
                       </Col>
 
                       <Col
@@ -767,7 +757,7 @@ const [err, setErr]= useState("")
                           }
                           // width="400px"
                         />
-                        {err ? <ArgonTypography style={{ color: "red" }}>{err}</ArgonTypography> : null}
+                      
                       </Col>
                     </Row>
                   </Container>

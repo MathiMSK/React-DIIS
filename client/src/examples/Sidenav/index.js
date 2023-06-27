@@ -62,17 +62,11 @@ if (token) {
   decoded = jwt_decode(token);
 }
 
-const handleLogout = () => {
-  localStorage.removeItem("token");
-  window.location.href = "/authentication/sign-in";
-};
-
-
  let id = decoded?.id;
  const getUser = async () => {
   try {
     let result = await getById(id);
-    setUser(result.data.data);
+    setUser(result?.data?.data);
   } catch (error) {
     console.log(error.message); 
   }

@@ -39,7 +39,6 @@ const studentAssignment = () => {
   const [correcterr, setCorrectErr] = useState("");
 
   const handlechange = (e, index) => {
-    console.log(index);
     const { name, value, indexForOption, optionName } = e.target;
     const list = [...datas];
     if (name === "options") {
@@ -48,7 +47,6 @@ const studentAssignment = () => {
       list[index][name] = value;
     }
     setDatas(list);
-    console.log(datas);
   };
 
   // ***********************  api's  ***********************
@@ -56,7 +54,6 @@ const studentAssignment = () => {
   const getAssign = async () => {
     try {
       let response = await getAllAssign();
-      console.log(response.data.data);
       if (!response.ok) {
         return toast.error(response.data.message);
       }

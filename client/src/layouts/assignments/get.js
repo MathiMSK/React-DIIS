@@ -29,8 +29,6 @@ const Get = () => {
         totalQuestion: item?.totalQuestion,
       })
       setData(list)
-      // let list = []
-        console.log(list,"added");  
       })
     
     } catch (error) {

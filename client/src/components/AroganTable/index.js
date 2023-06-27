@@ -20,8 +20,7 @@ const get = async () => {
         subject: item?.subject,
         totalMarks: item?.totalMarks,
         totalQuestion: item?.totalQuestion,
-      });
-        console.log(list,"added");  
+      }); 
       })
     }
    
