@@ -2,6 +2,8 @@ import User from "../model/userModel.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
+import Assignment from "../model/assignmentModel.js";
+import StudentAssignment from "../model/studentAssignment.js";
 dotenv.config()
 
 export const reg = async (req, res) => {
@@ -21,8 +23,17 @@ export const reg = async (req, res) => {
           password: hash,
           class: req.body.class,
         });
-        let user = await register.save();
+        let userSaved = await register.save();
         res.status(201).json({ message: "Register success" });
+        let getAllAssign = await Assignment.find({class:req.body.class})
+        getAllAssign.map(async (assign)=>{ 
+            await User.findByIdAndUpdate({_id: userSaved._id},{$push:{assignments: assign._id}},{new:true});
+            let add = new StudentAssignment({
+                assignment: assign._id,
+                student: userSaved._id
+            })
+            await add.save();
+        });
       } catch (error) {
         res.status(400).json({ message: error.message });
       }

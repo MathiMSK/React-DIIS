@@ -200,7 +200,7 @@ import StudentAssignment from "../model/studentAssignment.js";
 import User from "../model/userModel.js";
 
 export const chart = async (req, res) => {
-  console.log(req.query );
+  console.log(req.query.stdid !== undefined );
   let { subject, assignmentid, stdid, view } = req.query;
   let selectedClass = req.query.class;
   let found = await StudentAssignment.find()
@@ -211,12 +211,11 @@ export const chart = async (req, res) => {
   let chartData = [];
   let dataForTable = [];
   if (
-    ((stdid != undefined || stdid != "undefined") && stdid != "") &&
+    ((stdid != undefined || stdid != "undefined") && stdid != undefined) &&
     (assignmentid == undefined || assignmentid == "undefined") &&
     (selectedClass == undefined || assignmentid == "undefined")&&
    ( subject == undefined|| subject == "undefined")
-  ) {
-    // console.log();
+  ) { 
     let foundStd = await User.findById(stdid);
     if (!foundStd)
       return res.status(400).json({ message: "Student not found" });

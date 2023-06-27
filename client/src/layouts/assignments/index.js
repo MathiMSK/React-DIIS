@@ -17,7 +17,7 @@ import { getAllAssign } from "utility/apiService";
 import Get from "./get";
 import ArgonTable from "components/AroganTable";
 import ArgonTypography from "components/ArgonTypography";
-import { facultyContext } from "context/facultyContext"
+// import { facultyContext } from "context/facultyContext"
 import { useReactToPrint } from "react-to-print";
 // import Get from "./get";
 
@@ -55,7 +55,7 @@ const [err, setErr]= useState("")
     }
   });
 
- x
+
 
   const toggle = () => setOpen(!open);
   const toggle2 = () => {
@@ -179,8 +179,8 @@ const [err, setErr]= useState("")
     return toast.error("Please fill all the fields");
   }
   };
-  let faculty = useContext(facultyContext);
-  
+
+  // let faculty = useContext(facultyContext);
   return (
     // <DashboardLayout>
     <ArgonBox
@@ -227,6 +227,7 @@ const [err, setErr]= useState("")
                     Assignments
                   </h1>
                   <div>
+                  
                   {/* <Button
                     style={{
                       marginRight: "1rem",
@@ -237,8 +238,8 @@ const [err, setErr]= useState("")
                   >
                     Download
                   </Button> */}
-                  if(faculty)
-                  {
+                  {/* if(faculty)
+                  { */}
                   <Button
                     style={{
                       marginRight: "1rem",
@@ -249,9 +250,10 @@ const [err, setErr]= useState("")
                   >
                     Create
                   </Button>
-}
+{/* } */}
                   </div>
                 </div>
+                  <div style={{border:"1px solid #0070CD",marginBottom:"20px"}}/>
                 
                 {/* <div  ref={componentPdf} style={{width:"100%",height:"100%"}} >
                 
@@ -266,6 +268,7 @@ const [err, setErr]= useState("")
                     style={{
                       flexDirection: "row",
                       position: "relative",
+                      marginTop: "1rem",
                       display: "flex",
                       borderRadius: "20px",
                       marginLeft: "0.5rem",
@@ -295,6 +298,7 @@ const [err, setErr]= useState("")
                       </h1>
                     </Container>
                   </div>
+                    <div style={{border:"1px solid #0070CD"}}/>
                   <div
                     className="cusInpFullCon"
                     style={{

@@ -178,7 +178,8 @@ const studentAssignment = () => {
                     Student Assignments
                   </h1>
                 </div>
-                {/* <SimpleCard /> */}
+                <div style={{border:"1px solid #0070CD",marginBottom:"20px"}}/>
+                
                 <Get />
               </>
             ) : (

@@ -183,7 +183,7 @@ export const createUser = async (body) => {
     return { data: data, ok: true };
   };
 
-  export const generatePDF = async (subjectVal)=>{
+  export const generatePDF = async (subjectVal,classVal)=>{
     let token = localStorage.getItem("token");
     if(token){
       token = JSON.parse(token);
@@ -196,27 +196,57 @@ export const createUser = async (body) => {
         "token": token,
       },
     };
-    const response = await fetch(`${baseUrl}assign/get?view=true&subject=${subjectVal}`,requestOptions);
-    if(!response.ok){
-      let data = await response.json();
-      return {data:data,ok:false};
+    if(subjectVal!== undefined && classVal!== undefined){
+      return await axios.get(`${baseUrl}assign/get?view=true&subject=${subjectVal}&class=${classVal}`)
+    }else if(subjectVal!== undefined){
+      return await axios.get(`${baseUrl}assign/get?view=true&subject=${subjectVal}`)
+    }else if(classVal!== undefined){
+      return await axios.get(`${baseUrl}assign/get?view=true&class=${classVal}`)
+    }else{
+      return await axios.get(`${baseUrl}assign/get?view=true`)
     }
-    let data = await response?.json();
-    return {data:data,ok:true};
-  }
+  } 
 
-  export const pdfDownload = async (subjectVal)=>{
-    console.log(subjectVal);
-    if(subjectVal !== undefined){
-      return await axios.get(`${baseUrl}assign/get?subject=${subjectVal}`, {
+  // export const pdfDownload = async (subjectVal,classNameVal)=>{
+  //   console.log(subjectVal,"codeval");
+  //   if(subjectVal!== undefined){
+  //     return await axios.get(`${baseUrl}assign/get?view=false&subject=${subjectVal}`, {
+  //       headers: {
+  //         'Content-Type': 'multipart/form-data'
+  //       },
+  //       responseType: 'arraybuffer'
+  //     }) 
+  //   }
+  //   if(classNameVal!== undefined)
+  //   return await axios.get(`${baseUrl}assign/get?class=${classNameVal}`, {
+  //     headers: {
+  //       'Content-Type': 'multipart/form-data'
+  //     },
+  //     responseType: 'arraybuffer'
+  //   }) 
+  // }
+ 
+  export const getTicketsPdf =async (subjectVal,classVal)=> {
+    if(subjectVal!== undefined && classVal == undefined){
+      return axios.get(`${baseUrl}assign/get?view=false&subject=${subjectVal}`, {
         headers: {
           'Content-Type': 'multipart/form-data'
         },
         responseType: 'arraybuffer'
       })
-      
+    }else if(classVal!== undefined && subjectVal == undefined){
+      return axios.get(`${baseUrl}assign/get?view=false&class=${classVal}`, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        },
+        responseType: 'arraybuffer'
+      })
+    }else{
+      return axios.get(`${baseUrl}assign/get?view=false`, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        },
+        responseType: 'arraybuffer'
+      })
     }
-   
-    
   }
- 

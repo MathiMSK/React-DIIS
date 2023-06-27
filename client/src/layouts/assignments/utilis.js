@@ -17,9 +17,10 @@ import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import { Image } from "@mui/icons-material";
 import ArgonButton from "components/ArgonButton";
 import { Col, Row } from "reactstrap";
+import facultyContext from "context/facultyContext";
 
 const SimpleCard = ({ index, style, data }) => {
-  const fatculty = useContext(FatcultyContext);
+  const faculty = useContext(facultyContext);
   // let arr=[]
   // data.forEach((item)=>{
   //   let found = false

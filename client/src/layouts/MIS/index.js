@@ -11,8 +11,13 @@ import {toast,Toaster } from 'react-hot-toast';
 import { useReactToPrint } from "react-to-print";
 import { saveAs } from 'file-saver'
 import { Col, Container, Row } from 'reactstrap';
+import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
+import { getTicketsPdf } from 'utility/apiService';
+import Modal from '@mui/material/Modal';
 const MIS = () => {
     const [ open, setOpen ] = useState(false);
+    const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
     const [controller] = useArgonController();
     const { miniSidenav } = controller;
     const [data, setData] = useState([]);
@@ -96,22 +101,32 @@ const componentPdf = useRef();
      toast.success("Assignment Printed Successfully");
     }
   });
-
+  const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 800,
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 4,
+  };
+  
     const handleSubt = async () => {
-      const Sub = await generatePDF(subjectVal?.value);
+      const Sub = await generatePDF(subjectVal?.value,classNameVal?.value);
+      console.log(Sub);
       setData(Sub?.data?.data?.tableData);
       setChartData(Sub?.data?.data?.chartImg);
     }  
 
     const handlePdf = async(e) => {
       e?.preventDefault();
-      const {data1} = await pdfDownload(subjectVal?.value);
-      const blob = new Blob([data1], { type: 'application/pdf' })
-      saveAs(blob, "result.pdf")
+        const { data } = await getTicketsPdf(subjectVal?.value,classNameVal?.value)
+        const blob = new Blob([data], { type: 'application/pdf' })
+        saveAs(blob, "Student Result.pdf")
     };
     useEffect(() => {
-      // handleSubt();
-      // handlePdf()
       values();
     }, []);
   return (
@@ -164,9 +179,18 @@ const componentPdf = useRef();
                     <i className="fas fa-download"></i>
                   </ArgonButton>
                 </div>
-                <Container>
-                  <Row>
-                    <Col>
+                <div style={{border:"1px solid #0070CD"}}/>
+                <div
+                    className="cusInpFullCon"
+                    style={{
+                      position: "relative",
+                      marginTop: "3rem",
+                      marginRight: "5rem",
+                    }}
+                  >
+                <Container   style={{ marginLeft: "3.2rem", marginTop: "1rem", display: "flex", justifyContent: "center" }}>
+                  <Row style={{ display: "flex", justifyContent: "center",border:"none" }}>
+                    <Col  md={6} className="cusInpCon" style={{ width: "200px" }}>
               <CustomSelect 
                  option={subject}
                   selectedOptions={subjectVal}
@@ -175,7 +199,7 @@ const componentPdf = useRef();
                   isMulti={false}
               />
               </Col>
-              <Col>
+              <Col  md={6} className="cusInpCon" style={{ width: "200px" }}>
               <CustomSelect 
                  option={className}
                   selectedOptions={classNameVal}
@@ -185,22 +209,84 @@ const componentPdf = useRef();
               />
               </Col>
               </Row>
-                </Container >
+              </Container>
+              </div>
                 </>
                 ) : (
               <>
-               <ArgonButton 
-               onClick={handlePdf}
-                >
-                    <span style={{ marginRight: "10px" }}>Download</span>
-                    <i className="fas fa-download"></i>
-                  </ArgonButton>
+                 <div
+                    style={{
+                      display: "flex",
+                    flexWrap: "wrap",
+                    flexDirection: "row",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    }}
+                  >
+                    <Container style={{ display: "contents" }}>
+                      <KeyboardArrowLeftIcon
+                        fontSize="large"
+                        style={{
+                          marginTop: "1rem",
+                          marginLeft: "1rem",
+                          cursor: "pointer",
+                        }}
+                        onClick={()=>{
+                          setOpen(!open)}}
+                      />
+                      <h1
+                        style={{
+                          fontSize: "1.5rem",
+                          fontWeight: "500",
+                          marginLeft: "3.8rem",
+                          position: "absolute",
+                          top: "13px",
+                        }}
+                      >
+                       Report Preview
+                      </h1>
+                     
+                    </Container>
+                  </div>
+                    <div style={{border:"1px solid #0070CD"}}/>
+                    <Modal
+                      open={open}
+                      onClose={handleClose}
+                      aria-labelledby="modal-modal-title"
+                      aria-describedby="modal-modal-description"
+                    >
+                       <ArgonBox sx={style}>
+                  <div
+                    className="cusInpFullCon"
+                    style={{
+                      position: "relative",
+                      marginTop: "3rem",
+                      marginRight: "5rem",
+                    }}
+                  >
+                    <Container
+                      className="cusInpFullWrap"
+                      style={{ marginLeft: "3.2rem", marginTop: "1rem" }}
+                    >      
                 <div ref={componentPdf} >
                   <DTable columns={columns} data={data}  />
                   <img style={{width:"100%"}} src={chartData} ></img>
                 </div>
 
-                
+                <div style={{display:'flex',justifyContent:"center"}}>
+                      <ArgonButton 
+                      variant="outlined"
+                      color="error"
+                      onClick={handlePdf}
+                        >
+                    <span style={{ marginRight: "10px" }}>Download</span>
+                    <i className="fas fa-download"></i>
+                  </ArgonButton>
+                  </div>
+                  </Container>
+                  </div>
+                  </ArgonBox>
+                  </Modal>
               </>
          )}
            
