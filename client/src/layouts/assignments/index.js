@@ -17,7 +17,7 @@ import { getAllAssign } from "utility/apiService";
 import Get from "./get";
 import ArgonTable from "components/AroganTable";
 import ArgonTypography from "components/ArgonTypography";
-import facultyContext from "context/facultyContext.js"
+import facultyContext from "context/facultyContext.js";
 import { useReactToPrint } from "react-to-print";
 import { getProfile } from "utility/apiService";
 
@@ -125,7 +125,6 @@ const Assign = () => {
     try {
       let response = await getProfile();
       setFacultyData(response.data.data);
-      console.log(response);
     } catch (error) {
       console.log(error);
     }
@@ -182,7 +181,6 @@ const Assign = () => {
     return toast.error("Please fill all the fields");
   }
   };
-  // console.log(faculty);
 
   return (
     <ArgonBox
@@ -230,7 +228,7 @@ const Assign = () => {
                   </h1>
                   <div>
                   
-            {facultyData.isFaculty == true ? (
+            {facultyData?.isFaculty == true ? (
                   <Button
                     style={{
                       marginRight: "1rem",

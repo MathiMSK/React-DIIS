@@ -27,7 +27,6 @@ const Get = () => {
   useEffect(() => {
         get();
   }, []); 
-  console.log(data);
   return (
     <AutoSizer>
       {({ height, width }) => (

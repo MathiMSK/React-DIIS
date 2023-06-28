@@ -47,7 +47,9 @@ import StudentAssignment from "layouts/studentAssignment";
 import Mis from "layouts/MIS";
 import ArgonBox from "components/ArgonBox";
 import {MdAssignment,MdOutlineAssignmentInd} from "react-icons/md";
+import {RiUserAddFill} from "react-icons/ri";
 import {BsFillInfoCircleFill} from "react-icons/bs";
+import Students from "layouts/Students";
 
 let token;
 let getToken=localStorage.getItem('token') 
@@ -64,6 +66,17 @@ const routes = [
     token: token,
     icon: <MdAssignment color="#FDD451"/>,
     component: <Assignments />,
+  },
+  {
+    type:"route",
+    name: "Student Creation",
+    key: "studentcreation",
+    route: "/studentcreation",
+    token: token,
+    icon: (
+     <RiUserAddFill color="#FDD451"/>
+    ),
+    component: <Students />,
   },
   {
     type:"route",
@@ -93,6 +106,7 @@ const routes = [
     ),
     component: <SignIn />,
   },
+ 
   // {
   //   name: "Sign Up",
   //   key: "sign-up",

@@ -166,8 +166,7 @@ export default function App() {
         )}
         {layout === "vr" && <Configurator />}
         <Routes>
-        {!token && <Route exact path="/authentication/sign-in" element={<SignIn/>} key="sign-in" />}
-          {getRoutes(routes)}
+     {getRoutes(routes)}
         </Routes>
       </ThemeProvider>
     </CacheProvider>
@@ -190,8 +189,7 @@ export default function App() {
       )}
       {layout === "vr" && <Configurator />}
       <Routes>
-        {!token && <Route exact path="/authentication/sign-in" element={<SignIn/>} />}
-        {getRoutes(routes)}
+      {getRoutes(routes)}
       </Routes>
     </ThemeProvider>
   );

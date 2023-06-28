@@ -16,7 +16,7 @@ Coded by www.creative-tim.com
 import { useEffect, useState } from "react";
 import jwt_decode from "jwt-decode";
 // react-router-dom components
-import { useLocation, NavLink } from "react-router-dom";
+import { useLocation, NavLink, useNavigate } from "react-router-dom";
 
 // prop-types is a library for typechecking of props.
 import PropTypes from "prop-types";
@@ -54,7 +54,7 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
   const itemName = pathname.split("/").slice(1)[0];
 
   const closeSidenav = () => setMiniSidenav(dispatch, true);
-
+let navigate = useNavigate();
 let token = localStorage.getItem("token");
 let decoded;
 if (token) {
@@ -95,7 +95,7 @@ getUser();
   }, [dispatch, location]);
 
   // Render all the routes from the routes.js (All the visible items on the Sidenav)
-  const renderRoutes = routes.map(({ type, name, icon, title, key, href, route }) => {
+  const renderRoutes = routes.map(({ type, name, icon, title, key, href, route,token }) => {
     let returnValue;
 
     if (type === "route") {
@@ -107,14 +107,14 @@ getUser();
               icon={icon}
               active={key === itemName}
               noCollapse={noCollapse}
-              
+              token={token}
             />
           </Link>
         );
       } else {
         returnValue = (
           <NavLink to={route} key={key}>
-            <SidenavItem name={name} icon={icon} active={key === itemName} />
+            <SidenavItem name={name} icon={icon} active={key === itemName}  />
           </NavLink>
         );
       }
@@ -204,7 +204,8 @@ getUser();
             </ArgonTypography>
       </ArgonBox>
       <Divider light={darkSidenav} />
-      <List sx={{    marginTop: "50%",    }}>{renderRoutes}</List>
+      {token ? <List sx={{ marginTop: "50%"}}>{renderRoutes}</List> : navigate("/authentication/sign-in")}
+    
 
       <ArgonBox pt={1} mt="auto" mb={2} mx={2}>
         <SidenavFooter />
