@@ -26,7 +26,7 @@ import { useArgonController } from "context";
 
 // Images
 import icon from "assets/images/illustrations/icon-documentation.svg";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {FaPowerOff} from "react-icons/fa"
 import {BiLogOutCircle} from "react-icons/bi"
@@ -35,21 +35,24 @@ function SidenavFooter() {
   const navigate = useNavigate();
   const [controller] = useArgonController();
   const { miniSidenav, darkSidenav } = controller;
-  const [Logout,setLogout]=useState(false)
-  const handellogout=(e)=>{
+  // const [Logout,setLogout]=useState(false)
+  
+  const handleLogout=(e)=>{
       e.preventDefault();  
       localStorage.removeItem("token")
-      setLogout(true)
       navigate("/authentication/sign-in")
+      // setLogout(true)
     }
+
   return (
     <ArgonBox opacity={miniSidenav ? 0 : 1} sx={{ transition: "opacity 200ms linear" }}>
       <ArgonBox position="relative" textAlign="center">
       <ArgonBox sx={{display:"flex",marginLeft:"10%"}}>
       <ArgonBox>
-      <BiLogOutCircle color="#FDD451"/>
+      <BiLogOutCircle color="#FDD451" style={{filter: "drop-shadow(5px 5px 5px rgba(0,0,0,0.3))"}} />
       </ArgonBox>
-      <ArgonTypography color="white" variant="h6" sx={{cursor:"pointer",marginLeft:"5%"}} onClick={handellogout}>
+      <ArgonTypography color="white" variant="h6" sx={{cursor:"pointer",marginLeft:"5%"}}
+       onClick={handleLogout}>
            Logout
           </ArgonTypography>
           </ArgonBox>

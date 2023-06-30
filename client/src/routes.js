@@ -64,7 +64,7 @@ const routes = [
     key: "assignments",
     route: "/assignments",
     token: token,
-    icon: <MdAssignment color="#FDD451"/>,
+    icon: <MdAssignment color="#FDD451" style={{filter: "drop-shadow(5px 5px 5px rgba(0,0,0,0.3))" }}/>,
     component: <Assignments />,
   },
   {
@@ -74,7 +74,7 @@ const routes = [
     route: "/studentcreation",
     token: token,
     icon: (
-     <RiUserAddFill color="#FDD451"/>
+     <RiUserAddFill color="#FDD451" style={{filter: "drop-shadow(5px 5px 5px rgba(0,0,0,0.3))" }}/>
     ),
     component: <Students />,
   },
@@ -82,9 +82,9 @@ const routes = [
     type:"route",
     name: "Student Assignments",
     key: "stuassign",
-    token: token,
     route: "/studentassignments",
-    icon: <MdOutlineAssignmentInd color="#FDD451"/>,
+    token: token,
+    icon: <MdOutlineAssignmentInd color="#FDD451" style={{filter: "drop-shadow(5px 5px 5px rgba(0,0,0,0.3))" }}/>,
     component: <StudentAssignment />,
   },
   {
@@ -93,7 +93,7 @@ const routes = [
     key: "mis",
     token: token,
     route: "/mis",
-    icon:  <BsFillInfoCircleFill style={{width:"17px"}} color="#FDD451"/>,
+    icon:  <BsFillInfoCircleFill style={{width:"17px",filter: "drop-shadow(5px 5px 5px rgba(0,0,0,0.3))"}} color="#FDD451" />,
     component: <Mis />,
   },
   {

@@ -183,7 +183,7 @@ export const createUser = async (body) => {
     return { data: data, ok: true };
   };
 
-  export const generatePDF = async (subjectVal,classVal,stdidVal)=>{
+  export const generatePDF = async (subjectVal,classVal,stdidVal,assVal)=>{
     let token = localStorage.getItem("token");
     if(token){
       token = JSON.parse(token);
@@ -204,12 +204,14 @@ export const createUser = async (body) => {
       return await axios.get(`${baseUrl}assign/get?view=true&class=${classVal}`)
     }else if(stdidVal!== undefined){
       return await axios.get(`${baseUrl}assign/get?view=true&stdid=${stdidVal}`)
+    }else if(assVal!== undefined){
+      return await axios.get(`${baseUrl}assign/get?view=true&assignmentid=${assVal}`)
     }else{
       return await axios.get(`${baseUrl}assign/get?view=true`)
     }
   } 
  
-  export const getTicketsPdf =async (subjectVal,classVal,stdidVal)=> {
+  export const getTicketsPdf =async (subjectVal,classVal,stdidVal,assVal)=> {
     console.log(stdidVal);
     if(subjectVal!== undefined && classVal == undefined){
       return axios.get(`${baseUrl}assign/get?view=false&subject=${subjectVal}`, {
@@ -227,6 +229,13 @@ export const createUser = async (body) => {
       })
     }else if(stdidVal!== undefined){
       return axios.get(`${baseUrl}assign/get?view=false&stdid=${stdidVal}`, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        },
+        responseType: 'arraybuffer'
+      })
+    }else if(assVal!== undefined){
+      return axios.get(`${baseUrl}assign/get?view=false&assignmentid=${assVal}`, {
         headers: {
           'Content-Type': 'multipart/form-data'
         },

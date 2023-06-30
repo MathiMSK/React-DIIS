@@ -69,16 +69,12 @@ const Students = () => {
           selector: row => row.email,
           sortable: true,
       },
-      // {
-      //     name: 'Subject',
-      //     selector: row => row.subject,
-      //     sortable: true,
-      // },
     ];
     useEffect(() => {
         getProf();
         getUsers();
     }, []);
+
     const handleSubmit = async() => {
         if (!stuname) {
             setStuerr("Student Name is required");
@@ -153,6 +149,7 @@ const Students = () => {
                       fontWeight: "500",
                       padding: "20px",
                       paddingRight: "5px",
+                      color: "#0070CD",
                     }}
                   >
                     Student Creation
@@ -163,12 +160,23 @@ const Students = () => {
                   <Button
                     style={{
                       marginRight: "1rem",
+                      border:"1px solid #b931ce",
+                      color: "#b931ce",
                     }}
                     onClick={toggle}
                     variant="contained"
-                    color={"primary"}
+                    color={"error"}
                   >
-                    Create
+                   <ArgonTypography
+                          style={{
+                            filter: "drop-shadow(5px 5px 5px #b931ce)",
+                            fontSize: "13px",
+                            color: "#b931ce",
+                            fontWeight: "bold",
+                          }}
+                        >
+                          Create
+                        </ArgonTypography>
                   </Button> 
             ) :  null}
 
@@ -176,8 +184,8 @@ const Students = () => {
                 </div>
                 <div style={{border:"1px solid #0070CD",marginBottom:"20px"}}/>  
 
-                <Card style={{display:'flex',justifyContent:"center",width:"50%",marginLeft:"20%"}}>
-               <Container style={{border:"1px solid black"}} >
+                <Card style={{display:'flex',justifyContent:"center",width:"50%",marginLeft:"20%",border:"1px solid #b931ce"}}>
+               <Container  >
                 <DTable data={data} columns={columns} title="Students List" />
                </Container>
                </Card>
@@ -213,6 +221,7 @@ const Students = () => {
                           marginLeft: "3.8rem",
                           position: "absolute",
                           top: "13px",
+                          color: "#0070CD",
                         }}
                       >
                         Create Student
@@ -346,11 +355,22 @@ const Students = () => {
                         display: "flex",
                         margin: "12px",
                         alignSelf: "left",
+                        border:"1px solid #b931ce",
+                        color: "#b931ce",
                       }}
                       color={"success"}
                       onClick={handleSubmit}
                     >
-                      Next
+                        <ArgonTypography
+                          style={{
+                            filter: "drop-shadow(5px 5px 5px #b931ce)",
+                            fontSize: "13px",
+                            color: "#b931ce",
+                            fontWeight: "bold",
+                          }}
+                        >
+                          Submit
+                        </ArgonTypography>
                     </Button>
                   </ArgonBox>
                 </div>

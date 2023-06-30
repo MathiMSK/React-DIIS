@@ -17,10 +17,10 @@ import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import { Image } from "@mui/icons-material";
 import ArgonButton from "components/ArgonButton";
 import { Col, Row } from "reactstrap";
-import facultyContext from "context/facultyContext";
+// import facultyContext from "context/facultyContext";
 
 const SimpleCard = ({ index, style, data }) => {
-  const faculty = useContext(facultyContext);
+  // const faculty = useContext(facultyContext);
   // let arr=[]
   // data.forEach((item)=>{
   //   let found = false
@@ -52,7 +52,10 @@ const unique = data.filter(element => {
   return (
     <ArgonBox>
       {data?.map((item,index) => (
-        <Card key={index} style={{border:"1px solid #b931ce" ,marginBottom:"20px"}}>
+        <Card key={index} style={{border:"1px solid #b931ce" ,marginBottom:"20px"
+        // ,borderRadius:0
+        }}
+        >
           <CardContent>
             <ArgonTypography variant="body2" color="textSecondary" component="p">
               Assignment Name : {item?.assignmentTitle}

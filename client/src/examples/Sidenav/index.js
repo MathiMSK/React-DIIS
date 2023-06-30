@@ -38,12 +38,14 @@ import SidenavFooter from "examples/Sidenav/SidenavFooter";
 // Custom styles for the Sidenav
 import SidenavRoot from "examples/Sidenav/SidenavRoot";
 import sidenavLogoLabel from "examples/Sidenav/styles/sidenav";
-
+import "./styles.css"
 // Argon Dashboard 2 MUI context
 import { useArgonController, setMiniSidenav } from "context";
 
-import dp from "assets/images/dp.jpg";
+// import dp from "assets/images/dp.jpg";
 // import dp from "assets/images/dp1.jpg";
+// import dp from "assets/images/dp2.jpg"; 
+import dp from "assets/images/dp3.jpg"; 
 import { getById } from "utility/apiService";
 
 function Sidenav({ color, brand, brandName, routes, ...rest }) {
@@ -55,11 +57,12 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
   const itemName = pathname.split("/").slice(1)[0];
 
   const closeSidenav = () => setMiniSidenav(dispatch, true);
-let navigate = useNavigate();
-let token = localStorage.getItem("token");
+
+let getToken = localStorage.getItem("token");
+let token
 let decoded;
-if (token) {
-  token = JSON.parse(token);
+if (getToken) {
+  token = JSON.parse(getToken);
   decoded = jwt_decode(token);
 }
 
@@ -180,13 +183,17 @@ getUser();
             </ArgonTypography>
           </ArgonBox>
         </ArgonBox> */}
-        <ArgonBox display="flex" justifyContent="center" alignItems="center" mt={3} mb={4}>
+        
+   
+
+        <ArgonBox display="flex" justifyContent="center" alignItems="center" mt={3} mb={4} className="hover-2" >
           <ArgonBox
           sx={{
           borderRadius: "50%",
-          width: "12rem",
-          height: "12rem",
-          display: "block"
+          width: "10rem",
+          height: "10rem",
+          display: "block",
+          boxShadow: "0 0 0 1rem rgba(255, 255, 255, 0.1)",
        
           }}
             component="img"
@@ -194,10 +201,12 @@ getUser();
           />
           </ArgonBox>
           <ArgonTypography
+          className="hover"
               component="h1"
               variant="button"
               fontWeight="medium"
               fontSize="1rem"
+              style={{filter: "drop-shadow(5px 5px 5px #5F693B)"}}
               color={darkSidenav ? "white" : "white"}
             >
              {user?.name}
@@ -205,9 +214,7 @@ getUser();
             </ArgonTypography>
       </ArgonBox>
       <Divider light={darkSidenav} />
-      {token ? <List sx={{ marginTop: "50%"}}>{renderRoutes}</List> : navigate("/authentication/sign-in")}
-    
-
+       <List sx={{ marginTop: "50%"}}>{renderRoutes}</List> 
       <ArgonBox pt={1} mt="auto" mb={2} mx={2}>
         <SidenavFooter />
       </ArgonBox>

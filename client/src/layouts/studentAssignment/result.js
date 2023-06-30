@@ -77,7 +77,7 @@ function BpRadio(props) {
 export default function Result({ data,id}) {
   const [controller] = useArgonController();
   const { miniSidenav } = controller;
-  const [open, setOpen] = useState(false);
+  const [open1, setOpen1] = useState(false);
   const [answerData, setAnswerData] = useState([]); 
   
   const handleAns = async () => {
@@ -90,9 +90,10 @@ export default function Result({ data,id}) {
     handleAns();
   }, []);
 
+  
   return (
     <>
-        <ArgonBox
+        {/* <ArgonBox
       sx={({ breakpoints, transitions, functions: { pxToRem } }) => ({
         [breakpoints.up("xl")]: {
           transition: transitions.create(["margin-left", "margin-right"], {
@@ -101,8 +102,8 @@ export default function Result({ data,id}) {
           }),
         },
       })}
-    >
-      {open ? (
+    > */}
+      {open1 ? (
         <View />
       ) : (
         <>
@@ -122,15 +123,20 @@ export default function Result({ data,id}) {
                   marginLeft: "1rem",
                   cursor: "pointer",
                 }}
-                onClick={() => setOpen(true)}
+                onClick={() => setOpen1(true)}
               />
-          <ArgonTypography 
-             style={{
-                  width: "40%",
+          <ArgonTypography
+                          style={{
+                            filter: "drop-shadow(5px 5px 5px #b931ce)",
+                            fontSize: "13px",
+                            fontWeight: "bold",
+                            width: "40%",
                   marginTop: "1.5%",    
-                }}>
-            Result
-          </ArgonTypography> 
+                  color: "#0070CD",
+                          }}
+                        >
+                          Create
+                        </ArgonTypography>
           </div>
           {answerData?.assignment?.question.map((i, index) =>
             i ? (
@@ -198,10 +204,8 @@ export default function Result({ data,id}) {
                   </RadioGroup>
                   <br/>
                   <FormLabel id="demo-radio-buttons-group-label">
-                   Correct Answer:
-                  <ArgonTypography>
-                  {i?.answer}
-                  </ArgonTypography>
+                  <ArgonTypography>Correct Answer: {i?.answer}</ArgonTypography>
+                 
                     <ArgonTypography>
                       {i?.answer==answerData.answers[index].answer ? (<>
                         <ArgonTypography key={i} style={{ fontSize: "15px",color:"green" }} >Wonderful! Student</ArgonTypography>
@@ -228,7 +232,7 @@ export default function Result({ data,id}) {
                   </FormLabel> */}
         </>
       )}
-      </ArgonBox>
+      {/* </ArgonBox> */}
     </>
   );
 }

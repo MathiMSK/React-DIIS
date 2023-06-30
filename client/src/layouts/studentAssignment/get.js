@@ -45,5 +45,4 @@ const Get = () => {
     </AutoSizer>
   );
 };
-
 export default Get;

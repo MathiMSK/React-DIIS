@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState,createContext,useRef } from "react";
+import React, { useContext, useEffect, useState, createContext, useRef } from "react";
 import { toast, Toaster } from "react-hot-toast";
 // import CIcon from "@coreui/icons-react";
 // import { cilArrowCircleLeft } from "@coreui/icons";
@@ -17,7 +17,7 @@ import { getAllAssign } from "utility/apiService";
 import Get from "./get";
 import ArgonTable from "components/AroganTable";
 import ArgonTypography from "components/ArgonTypography";
-import facultyContext from "context/facultyContext.js";
+// import facultyContext from "context/facultyContext.js";
 import { useReactToPrint } from "react-to-print";
 import { getProfile } from "utility/apiService";
 
@@ -25,34 +25,33 @@ const Assign = () => {
   const [controller, dispatch] = useArgonController();
   const { miniSidenav, darkMode } = controller;
   const [open, setOpen] = useState(false);
-  
+
   const [open2, setOpen2] = useState(false);
-  
+
   const [assign, setAssign] = useState("");
   const [className, setClassName] = useState("");
   const [marks, setMarks] = useState("");
   const [subject, setSubject] = useState("");
-  
+
   const [noq, setNoq] = useState();
   const [datas, setDatas] = useState([]);
-  const [assignData, setAssignData] = useState([])
+  const [assignData, setAssignData] = useState([]);
   const [asserr, setAssErr] = useState("");
-  const[classerr,setClassErr]=useState("");
-  const[subjecterr,setSubjectErr]=useState("");
-  const[markserr,setMarksErr]=useState("");
-  const[noqerr,setNoqErr]=useState("");
-  
-  const[facultyData,setFacultyData]=useState([])
-  let faculty = useContext(facultyContext);
- const componentPdf = useRef();
- const generatePdf = useReactToPrint({
+  const [classerr, setClassErr] = useState("");
+  const [subjecterr, setSubjectErr] = useState("");
+  const [markserr, setMarksErr] = useState("");
+  const [noqerr, setNoqErr] = useState("");
+
+  const [facultyData, setFacultyData] = useState([]);
+  // let faculty = useContext(facultyContext);
+  const componentPdf = useRef();
+  const generatePdf = useReactToPrint({
     content: () => componentPdf.current,
     documentTitle: "Assignment",
     onAfterPrint: () => {
-     toast.success("Assignment Printed Successfully");
-    }
+      toast.success("Assignment Printed Successfully");
+    },
   });
-
 
   const toggle = () => setOpen(!open);
   const toggle2 = () => {
@@ -62,7 +61,6 @@ const Assign = () => {
     setAssign("");
   };
 
-  
   let arr = [];
   for (let i = 1; i <= noq; i++) {
     if (arr?.length < noq) {
@@ -106,7 +104,6 @@ const Assign = () => {
     setDatas(list);
   };
 
-
   // ***********************  api's  ***********************
 
   const getAssign = async () => {
@@ -128,65 +125,62 @@ const Assign = () => {
     } catch (error) {
       console.log(error);
     }
-}
+  };
   useEffect(() => {
     getAssign();
     getProf();
   }, []);
-  assignData?.map((item) => {
-    })
+  assignData?.map((item) => {});
   const initiateAssign = async () => {
     if (!assign) {
-       setAssErr("Assign is required");
+      setAssErr("Assign is required");
     }
     setAssErr("");
     if (!noq) {
-       setNoqErr("Number of questions is required");
+      setNoqErr("Number of questions is required");
     }
     setNoqErr("");
-    if(!subject){
-       setSubjectErr("Subject is required");
+    if (!subject) {
+      setSubjectErr("Subject is required");
     }
     setSubjectErr("");
     if (!className) {
-       setClassErr("Class name is required");
+      setClassErr("Class name is required");
     }
-    setClassErr("")
+    setClassErr("");
     if (!marks) {
-       setMarksErr("Marks is required");
+      setMarksErr("Marks is required");
     }
     setMarksErr("");
-    if(assign && noq && subject && className && marks){
-    try {
-      let response = await createAssign({ 
-        assignmentTitle: assign, 
-        class:className,
-        totalMarks:marks,
-        subject:subject,
-        totalQuestion:noq,
-        question:datas,
-       });
-      if (!response.ok) {
-        return toast.error(response.data.message);
+    if (assign && noq && subject && className && marks) {
+      try {
+        let response = await createAssign({
+          assignmentTitle: assign,
+          class: className,
+          totalMarks: marks,
+          subject: subject,
+          totalQuestion: noq,
+          question: datas,
+        });
+        if (!response.ok) {
+          return toast.error(response.data.message);
+        } else {
+          setOpen(!open);
+          toast.success(response.data.message);
+        }
+      } catch (error) {
+        console.log(error);
       }
-      else{
-        setOpen(!open)
-        toast.success(response.data.message);
-      }
-    } catch (error) { 
-      console.log(error);
+    } else {
+      return toast.error("Please fill all the fields");
     }
-  }
-  else{
-    return toast.error("Please fill all the fields");
-  }
   };
 
   return (
     <ArgonBox
       sx={({ breakpoints, transitions, functions: { pxToRem } }) => ({
         [breakpoints.up("xl")]: {
-         marginLeft: miniSidenav ? pxToRem(120) : pxToRem(274),
+          marginLeft: miniSidenav ? pxToRem(120) : pxToRem(274),
           transition: transitions.create(["margin-left", "margin-right"], {
             easing: transitions.easing.easeInOut,
             duration: transitions.duration.standard,
@@ -222,32 +216,40 @@ const Assign = () => {
                       padding: "20px",
                       paddingRight: "5px",
                       wordWrap: "break-word",
+                      color: "#0070CD",
                     }}
                   >
                     Assignments
                   </h1>
                   <div>
-                  
-            {facultyData?.isFaculty == true ? (
-                  <Button
-                    style={{
-                      marginRight: "1rem",
-                    }}
-                    onClick={toggle}
-                    variant="contained"
-                    color={"primary"}
-                  >
-                    Create
-                  </Button> 
-            ) :  null
-            }
+                    {facultyData?.isFaculty == true ? (
+                      <Button
+                        style={{
+                          marginRight: "1rem",
+                          color: "#b931ce",
+                          border: "1px solid #b931ce",
+                        }}
+                        onClick={toggle}
+                        variant="contained"
+                        color={"error"}
+                      >
+                        <ArgonTypography
+                          style={{
+                            filter: "drop-shadow(5px 5px 5px #b931ce)",
+                            fontSize: "13px",
+                            color: "#b931ce",
+                            fontWeight: "bold",
+                          }}
+                        >
+                          Create
+                        </ArgonTypography>
+                      </Button>
+                    ) : null}
                   </div>
                 </div>
-                  <div style={{border:"1px solid #0070CD",marginBottom:"20px"}}/>
-                
-          
+                <div style={{ border: "1px solid #0070CD", marginBottom: "20px" }} />
+
                 <Get />
-                
               </>
             ) : (
               <>
@@ -255,8 +257,7 @@ const Assign = () => {
                   <div
                     style={{
                       flexDirection: "row",
-                      position: "relative",
-                      marginTop: "1rem",
+                      position: "relative", 
                       display: "flex",
                       borderRadius: "20px",
                       marginLeft: "0.5rem",
@@ -280,13 +281,14 @@ const Assign = () => {
                           marginLeft: "3.8rem",
                           position: "absolute",
                           top: "13px",
+                          color: "#0070CD",
                         }}
                       >
                         Create Assignment
                       </h1>
                     </Container>
                   </div>
-                    <div style={{border:"1px solid #0070CD"}}/>
+                  <div style={{ border: "1px solid #0070CD" }} />
                   <div
                     className="cusInpFullCon"
                     style={{
@@ -299,7 +301,7 @@ const Assign = () => {
                       className="cusInpFullWrap"
                       style={{ marginLeft: "3.2rem", marginTop: "1rem" }}
                     >
-                      <Row style={{ display: "flex", justifyContent: "normal",border:"none" }}>
+                      <Row style={{ display: "flex", justifyContent: "normal", border: "none" }}>
                         <Col md={6} className="cusInpCon" style={{ width: "600px" }}>
                           <Label>
                             Assignment Name
@@ -320,12 +322,13 @@ const Assign = () => {
                             onChange={(e) => setAssign(e.target.value)}
                             // width="400px"
                           />
-                          {asserr ? <ArgonTypography style={{ color: "red" }}>{asserr}</ArgonTypography> : null}
+                          {asserr ? (
+                            <ArgonTypography style={{ color: "red" }}>{asserr}</ArgonTypography>
+                          ) : null}
                         </Col>
-                     
                       </Row>
 
-                      <Row style={{ display: "flex",border:"none" }}>
+                      <Row style={{ display: "flex", border: "none" }}>
                         <Col md={6} className="cusInpCon" style={{ width: "600px" }}>
                           <Label>
                             Class
@@ -346,7 +349,9 @@ const Assign = () => {
                             onChange={(e) => setClassName(e.target.value)}
                             // width="400px"
                           />
-                          {classerr ? <ArgonTypography style={{ color: "red" }}>{classerr}</ArgonTypography> : null}
+                          {classerr ? (
+                            <ArgonTypography style={{ color: "red" }}>{classerr}</ArgonTypography>
+                          ) : null}
                         </Col>
                         <Col
                           md={6}
@@ -372,13 +377,15 @@ const Assign = () => {
                             onChange={(e) => setMarks(e.target.value)}
                             // width="400px"
                           />
-                          {markserr ? <ArgonTypography style={{ color: "red" }}>{markserr}</ArgonTypography> : null}
+                          {markserr ? (
+                            <ArgonTypography style={{ color: "red" }}>{markserr}</ArgonTypography>
+                          ) : null}
                         </Col>
                       </Row>
-                      <Row style={{display:"flex",border:"none"}}>
+                      <Row style={{ display: "flex", border: "none" }}>
                         <Col md={6} className="cusInpCon" style={{ width: "600px" }}>
                           <Label>
-                           Subject
+                            Subject
                             <span
                               style={{
                                 paddingLeft: "5px",
@@ -396,10 +403,16 @@ const Assign = () => {
                             onChange={(e) => setSubject(e.target.value)}
                             // width="400px"
                           />
-                          {subjecterr ? <ArgonTypography style={{ color: "red" }}>{subjecterr}</ArgonTypography> : null}
+                          {subjecterr ? (
+                            <ArgonTypography style={{ color: "red" }}>{subjecterr}</ArgonTypography>
+                          ) : null}
                         </Col>
-                        <Col md={6} className="cusInpCon" style={{ width: "600px", marginLeft: "20px"  }}>
-                          <Label> 
+                        <Col
+                          md={6}
+                          className="cusInpCon"
+                          style={{ width: "600px", marginLeft: "20px" }}
+                        >
+                          <Label>
                             No. of Questions
                             <span
                               style={{
@@ -418,7 +431,9 @@ const Assign = () => {
                             onChange={(e) => setNoq(e.target.value)}
                             // width="400px"
                           />
-                          {noqerr ? <ArgonTypography style={{ color: "red" }}>{noqerr}</ArgonTypography> : null}
+                          {noqerr ? (
+                            <ArgonTypography style={{ color: "red" }}>{noqerr}</ArgonTypography>
+                          ) : null}
                         </Col>
                       </Row>
                     </Container>
@@ -441,11 +456,22 @@ const Assign = () => {
                         display: "flex",
                         margin: "12px",
                         alignSelf: "left",
+                        color: "#b931ce",
+                        border: "1px solid #b931ce",
                       }}
                       color={"success"}
                       onClick={toggle2}
                     >
-                      Next
+                      <ArgonTypography
+                        style={{
+                          filter: "drop-shadow(5px 5px 5px #b931ce)",
+                          fontSize: "13px",
+                          color: "#b931ce",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        Next
+                      </ArgonTypography>
                     </Button>
                   </Box>
                 </div>
@@ -502,8 +528,8 @@ const Assign = () => {
                     className="cusInpFullWrap"
                     style={{ marginLeft: "3.2rem", marginTop: "1rem" }}
                   >
-                    <Row style={{ display: "flex",border:"none" }}>
-                      <Col md={6} className="cusInpCon" style={{width:"1220px"}} >
+                    <Row style={{ display: "flex", border: "none" }}>
+                      <Col md={6} className="cusInpCon" style={{ width: "1220px" }}>
                         <Label>
                           {index + 1}. Question Name
                           <span
@@ -532,11 +558,10 @@ const Assign = () => {
                             )
                           }
                         />
-                      
                       </Col>
                     </Row>
 
-                    <Row style={{ display: "flex", justifyContent: "normal" ,border:"none"}}>
+                    <Row style={{ display: "flex", justifyContent: "normal", border: "none" }}>
                       <Col md={6} className="cusInpCon" style={{ width: "600px" }}>
                         <Label>
                           option 1
@@ -568,7 +593,6 @@ const Assign = () => {
                           }
                           // width="400px"
                         />
-                      
                       </Col>
                       <Col
                         md={6}
@@ -604,10 +628,9 @@ const Assign = () => {
                             )
                           }
                         />
-                      
                       </Col>
                     </Row>
-                    <Row style={{ display: "flex", justifyContent: "normal" ,border:"none"}}>
+                    <Row style={{ display: "flex", justifyContent: "normal", border: "none" }}>
                       <Col md={6} className="cusInpCon" style={{ width: "600px" }}>
                         <Label>
                           option 3
@@ -638,7 +661,6 @@ const Assign = () => {
                             )
                           }
                         />
-                      
                       </Col>
                       <Col
                         md={6}
@@ -674,10 +696,9 @@ const Assign = () => {
                             )
                           }
                         />
-                      
                       </Col>
                     </Row>
-                    <Row style={{ display: "flex", justifyContent: "normal",border:"none" }}>
+                    <Row style={{ display: "flex", justifyContent: "normal", border: "none" }}>
                       <Col md={6} className="cusInpCon" style={{ width: "600px" }}>
                         <Label>
                           Correct Answer
@@ -707,7 +728,6 @@ const Assign = () => {
                             )
                           }
                         />
-                      
                       </Col>
 
                       <Col
@@ -730,7 +750,7 @@ const Assign = () => {
                         <Input
                           id="exampleFormControlInput1"
                           placeholder="Enter Marks"
-                          type = "number"
+                          type="number"
                           onChange={(e) =>
                             handlechange(
                               {
@@ -743,7 +763,6 @@ const Assign = () => {
                             )
                           }
                         />
-                      
                       </Col>
                     </Row>
                   </Container>
@@ -770,7 +789,16 @@ const Assign = () => {
                   color={"primary"}
                   onClick={reset}
                 >
-                  Reset
+                  <ArgonTypography
+                    style={{
+                      filter: "drop-shadow(5px 5px 5px #b931ce)",
+                      fontSize: "13px",
+                      color: "#b931ce",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    Reset
+                  </ArgonTypography>
                 </Button>
                 <Button
                   autoCapitalize="none"
@@ -781,11 +809,22 @@ const Assign = () => {
                     display: "flex",
                     margin: "12px",
                     alignSelf: "left",
+                    border: "1px solid #b931ce",
+                    color: "#b931ce",
                   }}
                   color={"success"}
                   onClick={initiateAssign}
                 >
-                  Submit
+                  <ArgonTypography
+                    style={{
+                      filter: "drop-shadow(5px 5px 5px #b931ce)",
+                      fontSize: "13px",
+                      color: "#b931ce",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    Submit
+                  </ArgonTypography>
                 </Button>
               </Box>
             </div>

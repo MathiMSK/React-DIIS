@@ -79,7 +79,7 @@ function BpRadio(props) {
   );
 }
 
-export default function Attend({ data ,id }) {
+export default function Attend({ id }) {
   const [controller] = useArgonController();
   const { miniSidenav } = controller;
   const [open, setOpen] = useState(false);
@@ -87,6 +87,7 @@ export default function Attend({ data ,id }) {
   const [val, setVal] = useState({
     answer: [],
   });
+
   useEffect(() => {
     data.map((i) => {
       if(i.assignment._id == id){
@@ -124,7 +125,7 @@ export default function Attend({ data ,id }) {
 
   return (
     <>
-     <ArgonBox
+     {/* <ArgonBox
       sx={({ breakpoints, transitions, functions: { pxToRem } }) => ({
         [breakpoints.up("xl")]: {
           marginLeft: miniSidenav ? pxToRem(120) : pxToRem(274),
@@ -134,7 +135,7 @@ export default function Attend({ data ,id }) {
           }),
         },
       })}
-    >
+    > */}
     <div>
       {open ? (
         <View />
@@ -165,6 +166,7 @@ export default function Attend({ data ,id }) {
                   marginTop: "1.5%",
                   display: "flex",
                   justifyContent: "start",
+                  color: "#0070CD",
                 }}
               >
                 Student Attend
@@ -173,7 +175,7 @@ export default function Attend({ data ,id }) {
             {question?.map((i, index) =>
               i ? (
                 <Container
-                  key={index}
+                  key={i}
                   className="shadow-inner"
                   style={{ backgroundColor: "white", height: "320px" }}
                 >
@@ -214,16 +216,27 @@ export default function Attend({ data ,id }) {
               color="success"
               variant="contained"
               onClick={handleSubmit}
-              style={{ marginLeft: "90%" }}
+              style={{ marginLeft: "90%" ,
+              color: "#b931ce",
+              border:"1px solid #b931ce"}}
             >
-              Submit
+        <ArgonTypography
+                          style={{
+                            filter: "drop-shadow(5px 5px 5px #b931ce)",
+                            fontSize: "13px",
+                            color: "#b931ce",
+                            fontWeight: "bold",
+                          }}
+                        >
+                          Submit
+                        </ArgonTypography>
             </ArgonButton>
           </div>
         </>
       )}
   <Toaster/> 
   </div>
-    </ArgonBox>
+    {/* </ArgonBox> */}
     </>
   );
 }

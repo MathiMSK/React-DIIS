@@ -13,10 +13,10 @@ Coded by www.creative-tim.com
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useContext } from "react";
 
 // react-router components
-import { Routes, Route, Navigate, useLocation } from "react-router-dom";
+import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
 
 // @mui material components
 import { ThemeProvider } from "@mui/material/styles";
@@ -54,8 +54,14 @@ import brandDark from "assets/images/logo-ct-dark.png";
 // Icon Fonts
 import "assets/css/nucleo-icons.css";
 import "assets/css/nucleo-svg.css";
+import facultyContext from "context/facultyContext";
 
 export default function App() {
+  let factContext=useContext(facultyContext);
+  console.log(factContext);
+  factContext.isFaculty=true;
+  const navigate = useNavigate();
+  console.log(factContext);
   const [controller, dispatch] = useArgonController();
   const { miniSidenav, direction, layout, openConfigurator, sidenavColor, darkSidenav, darkMode } =
     controller;
@@ -102,6 +108,13 @@ export default function App() {
   if(getToken){
     token=JSON.parse(getToken)
   }
+
+  useEffect(() => {
+    if(!token){
+      navigate("/authentication/sign-in");
+    } 
+  }, [token]);
+
   // Setting page scroll to 0 when changing the route
   useEffect(() => {
     document.documentElement.scrollTop = 0;
@@ -109,10 +122,10 @@ export default function App() {
   }, [pathname]);
 
   const getRoutes = (allRoutes) =>  
-    allRoutes.map((route) => {
-      if (route.collapse) {
-        return getRoutes(route.collapse)
-      }
+  allRoutes.map((route) => {
+    if (route.collapse) {
+      return getRoutes(route.collapse)
+    }
       if (route.route) {
         return <Route exact path={route.route} element={route.component} key={route.key} />;
       }
