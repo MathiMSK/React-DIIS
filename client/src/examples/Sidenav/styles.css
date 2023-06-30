@@ -1,13 +1,13 @@
 @keyframes blink {
-  0% { text-shadow: 0 0 60px black; }
+  0% { text-shadow: 0 0 8px black; }
   50% { text-shadow: none; }
-  100% { text-shadow: 0 0 60px black; }
+  100% { text-shadow: 0 0 8px black; }
 }
 
 @-webkit-keyframes blink {
-  0% { text-shadow: 0 0 60px black; }
+  0% { text-shadow: 0 0 8px black; }
   50% { text-shadow: 0 0 0; }
-  100% { text-shadow: 0 0 60px black; }
+  100% { text-shadow: 0 0 8px black; }
 }
 
 .hover {
@@ -18,47 +18,6 @@
   animation: blink 3.0s linear infinite;
 }
 
-
-.hover-2 {
-    --c: #1095c1; /* the color */
-    --b: .1em;    /* border length*/
-    --d: 20px;    /* the cube depth */
-    
-    --_s: calc(var(--d) + var(--b));
-    
-    color: var(--c);
-    height: 100%;
-    width: 122%;
-    border-radius: 50%;
-    background:
-      conic-gradient(at left var(--d)  bottom var(--d),
-        #0000 90deg, rgb(255 255 255 /0.3) 0 225deg,rgb(255 255 255 /0.6) 0) border-box,
-      conic-gradient(at left var(--_s) bottom var(--_s),
-        #0000 90deg,var(--c) 0) 0 100%/calc(100% - var(--b)) calc(100% - var(--b))  border-box;
-    transform: translate(calc(var(--d)/-1),var(--d));
-    clip-path: 
-      polygon(
-       var(--d) 0%, 
-       var(--d) 0%, 
-       100% 0%, 
-       100% calc(100% - var(--d)),
-       100% calc(100% - var(--d)),
-       var(--d) calc(100% - var(--d))
-      );
-    transition: 0.5s;
-  }
-  .hover-2:hover {
-    transform: translate(0,0);
-    clip-path: 
-      polygon(
-       0% var(--d), 
-       var(--d) 0%, 
-       100% 0%, 
-       100% calc(100% - var(--d)), 
-       calc(100% - var(--d)) 100%, 
-       0% 100%
-     );
-  }
 
   .hover {
     --c:linear-gradient(#FDD451 0 0); /* update the color here */
@@ -75,6 +34,28 @@
     background-position: 10% 100%, 90% 100%;
   }
   
+
+
+  .vitto {
+    --g:#0000 ,#000 .5deg 90deg,#0000 91deg;
+    --m:
+      conic-gradient(from 45deg ,var(--g)) 20px 0  no-repeat,
+      conic-gradient(from 135deg,var(--g)) 0 20px  no-repeat,
+      conic-gradient(from 225deg,var(--g)) -20px 0 no-repeat,
+      conic-gradient(from 315deg,var(--g)) 0 -20px no-repeat;
+    -webkit-mask: var(--m);
+            mask: var(--m);
+    transition: .3s linear;
+      border-radius: 50%;
+    filter: grayscale(.5);
+    cursor: pointer;
+  }
+  .vitto:hover {
+    -webkit-mask-position: 0 0;
+            mask-position: 0 0;
+    filter: grayscale(0);
+      border-radius: 50%;
+  }
   
 
   

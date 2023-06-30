@@ -35,19 +35,7 @@ const SimpleCard = ({ index, style, data }) => {
   // })
 
   // console.log(arr);
-  const uniqueIds = [];
 
-const unique = data.filter(element => {
-  const isDuplicate = uniqueIds.includes(element.assignmentTitle);
-
-  if (!isDuplicate) {
-    uniqueIds.push(element.assignmentTitle);
-
-    return true;
-  }
-
-  return false;
-});
 
   return (
     <ArgonBox>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 // import faker from "faker";
 import { FixedSizeList as List } from "react-window";
 import AutoSizer from "react-virtualized-auto-sizer";
@@ -6,39 +6,35 @@ import { Container } from "@mui/material";
 import SimpleCard from "./utilis";
 import { getAllAssign } from "utility/apiService";
 
-
-const ListContainer = props => {
-
-  return <Container maxWidth="sm"  {...props} />;
+const ListContainer = (props) => {
+  return <Container maxWidth="sm" {...props} />;
 };
 
 const Get = () => {
   const [data, setData] = useState([]);
-  
-  
-  const get = async () => {
-    try {
-      let response = await getAllAssign();
-      let list = []
-      response?.data?.data.map((item) => {
-      list.push({
-        assignmentTitle: item?.assignmentTitle,
-        class: item?.class,
-        subject: item?.subject,
-        totalMarks: item?.totalMarks,
-        totalQuestion: item?.totalQuestion,
-      })
-      setData(list)
-      })
-    
-    } catch (error) {
-      console.log(error);
-    }
-  }
+  const calc = useMemo(() => data, [data]);
   useEffect(() => {
-        get();
+    const get = async () => {
+      try {
+        let list = [];
+        let response = await getAllAssign();
+        response?.data?.data.map((item) => {
+          list?.push({
+            assignmentTitle: item?.assignmentTitle,
+            class: item?.class,
+            subject: item?.subject,
+            totalMarks: item?.totalMarks,
+            totalQuestion: item?.totalQuestion,
+          });
+          setData(list);
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    get();
   }, []);
-
+  const length = calc?.length - (calc.length - 1);
   return (
     <AutoSizer>
       {({ height, width }) => (
@@ -46,9 +42,9 @@ const Get = () => {
           className="List"
           height={height}
           width={width}
-          itemCount={data?.length-(data?.length/2)}
+          itemCount={length}
           itemSize={220}
-          itemData={data}
+          itemData={calc}
           innerElementType={ListContainer}
         >
           {SimpleCard}
