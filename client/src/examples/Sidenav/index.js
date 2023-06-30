@@ -188,6 +188,7 @@ getUser();
 
         <ArgonBox display="flex" justifyContent="center" alignItems="center" mt={3} mb={4} className="hover-2" >
           <ArgonBox
+          className="vitto"
           sx={{
           borderRadius: "50%",
           width: "10rem",

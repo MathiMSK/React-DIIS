@@ -206,6 +206,8 @@ export const createUser = async (body) => {
       return await axios.get(`${baseUrl}assign/get?view=true&stdid=${stdidVal}`)
     }else if(assVal!== undefined){
       return await axios.get(`${baseUrl}assign/get?view=true&assignmentid=${assVal}`)
+    }else if(subjectVal == undefined && assVal!== undefined){
+      return await axios.get(`${baseUrl}assign/get?view=true&subject=${subjectVal}&assignmentid=${assVal}`)
     }else{
       return await axios.get(`${baseUrl}assign/get?view=true`)
     }
@@ -236,6 +238,13 @@ export const createUser = async (body) => {
       })
     }else if(assVal!== undefined){
       return axios.get(`${baseUrl}assign/get?view=false&assignmentid=${assVal}`, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        },
+        responseType: 'arraybuffer'
+      })
+    }else if(subjectVal == undefined && assVal!== undefined ){
+      return axios.get(`${baseUrl}assign/get?view=false&subject=${subjectVal}&assignmentid=${assVal}`, {
         headers: {
           'Content-Type': 'multipart/form-data'
         },

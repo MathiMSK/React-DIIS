@@ -26,14 +26,11 @@ import ArgonBox from "components/ArgonBox";
 import ArgonTypography from "components/ArgonTypography";
 import ArgonInput from "components/ArgonInput";
 import ArgonButton from "components/ArgonButton";
-import bgImage from "assets/images/bg.png";
+// import bgImage from "assets/images/bg.png";
+import bgImage from "assets/images/bg3.png";
 // Authentication layout components
 import IllustrationLayout from "layouts/authentication/components/IllustrationLayout";
 import { userLogin } from "utility/apiService";
-
-// Image
-// const bgImage =
-//   "https://raw.githubusercontent.com/creativetimofficial/public-assets/master/argon-dashboard-pro/assets/img/signin-ill.jpg";
 
 function Illustration() {
   let navigate = useNavigate();

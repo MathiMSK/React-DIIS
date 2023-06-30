@@ -1,3 +1,24 @@
+@keyframes blink {
+  0% { text-shadow: 0 0 60px black; }
+  50% { text-shadow: none; }
+  100% { text-shadow: 0 0 60px black; }
+}
+
+@-webkit-keyframes blink {
+  0% { text-shadow: 0 0 60px black; }
+  50% { text-shadow: 0 0 0; }
+  100% { text-shadow: 0 0 60px black; }
+}
+
+.hover {
+  -webkit-animation: blink 3.0s linear infinite;
+  -moz-animation: blink 3.0s linear infinite;
+  -ms-animation: blink 3.0s linear infinite;
+  -o-animation: blink 3.0s linear infinite;
+  animation: blink 3.0s linear infinite;
+}
+
+
 .hover-2 {
     --c: #1095c1; /* the color */
     --b: .1em;    /* border length*/
@@ -57,4 +78,4 @@
   
 
   
-  
+ 

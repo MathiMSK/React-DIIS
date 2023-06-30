@@ -223,7 +223,8 @@ const Assign = () => {
                   </h1>
                   <div>
                     {facultyData?.isFaculty == true ? (
-                      <Button
+                      <Button 
+                      className="btn1"
                         style={{
                           marginRight: "1rem",
                           color: "#b931ce",

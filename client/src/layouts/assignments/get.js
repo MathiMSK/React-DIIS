@@ -39,23 +39,6 @@ const Get = () => {
         get();
   }, []);
 
-  // const [data, setData] = React.useMemo(() => {
-  //   return Array.from({ length: 1000 }).map(() => {
-  //     return faker.lorem.sentence();
-  //   });
-  // }, []);
-  // if (!data) {
-  //   return (
-  //     <Button
-  //       variant="contained"
-  //       color="primary"
-  //       disableElevation
-  //       // onClick={handleLoadData}
-  //     >
-  //       Load Data
-  //     </Button>
-  //   );
-  // }
   return (
     <AutoSizer>
       {({ height, width }) => (
@@ -63,7 +46,7 @@ const Get = () => {
           className="List"
           height={height}
           width={width}
-          itemCount={data.length-(data.length/2)}
+          itemCount={data?.length-(data?.length/2)}
           itemSize={220}
           itemData={data}
           innerElementType={ListContainer}
