@@ -29,6 +29,7 @@ const Students = () => {
 
     const [controller, dispatch] = useArgonController();
     const { miniSidenav, darkMode } = controller;
+
     const toggle = () => setOpen(!open);
 
     const getProf = async () => {
@@ -70,6 +71,7 @@ const Students = () => {
           sortable: true,
       },
     ];
+
     useEffect(() => {
         getProf();
         getUsers();
@@ -92,7 +94,6 @@ const Students = () => {
             setPasserr("Password is required");
          }
          setPasserr("");
-         if(stuname && email && password && className){
     try {
         let response = await createUser({
             name: stuname,
@@ -100,17 +101,16 @@ const Students = () => {
             password: password,
             class: className
         })
-        if (!response.ok) {
+        if(!response.ok) {
             return toast.error(response.data.message);
           }
-          else{
-            setOpen(!open)
-            toast.success(response.data.message);
-          }
+          toast.success(response.data.message);
+          setOpen(!open)
+       
     } catch (error) {
         console.log(error);
     }
-}}
+  }
 
 
   return (
@@ -261,7 +261,7 @@ const Students = () => {
                             value={stuname}
                             onChange={(e) => setStuName(e.target.value)}
                           />
-                          {stuerr ? <ArgonTypography style={{ color: "red" }}>{stuerr}</ArgonTypography> : null}
+                          {stuerr ? <p style={{ color: "red" }}>{stuerr}</p> : null}
                         </Col>
                         <Col
                           md={6}
@@ -286,7 +286,7 @@ const Students = () => {
                             value={className}
                             onChange={(e) => setClassName(e.target.value)}
                           />
-                          {classerr ? <ArgonTypography style={{ color: "red" }}>{classerr}</ArgonTypography> : null}
+                          {classerr ? <p style={{ color: "red" }}>{classerr}</p> : null}
                         </Col>
                       </Row>
                       <Row style={{display:"flex",border:"none"}}>
@@ -308,9 +308,8 @@ const Students = () => {
                             placeholder="Enter Email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
-                            // width="400px"
                           />
-                          {emailerr ? <ArgonTypography style={{ color: "red" }}>{emailerr}</ArgonTypography> : null}
+                          {emailerr ? <p style={{ color: "red",fontSize:"10px" }}>{emailerr}</p> : null}
                         </Col>
                         <Col md={6} className="cusInpCon" style={{ width: "600px", marginLeft: "20px"  }}>
                         <Label>
@@ -330,9 +329,19 @@ const Students = () => {
                             placeholder="Enter password Name"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
-                            // width="400px"
                           />
-                          {passerr ? <ArgonTypography style={{ color: "red" }}>{passerr}</ArgonTypography> : null}
+                           {passerr ? (
+                          <p
+                            className="error"
+                            style={{
+                              paddingLeft: "14px",
+                              color: "red",
+                              fontSize: "14px",
+                            }}
+                          >
+                            {passerr}
+                          </p>
+                            ) : null}
                         </Col>
                       </Row>
                     </Container>

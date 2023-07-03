@@ -14,6 +14,7 @@ import HighlightOffSharpIcon from '@mui/icons-material/HighlightOffSharp';
 import { viewStuAssById } from "utility/apiService.js";
 import ArgonBox from "components/ArgonBox/index.js";
 import { useArgonController } from "context/index.js";
+import Get from "./get.js";
 
 //******************************** */
 const BpIcon = styled("span")(({ theme }) => ({
@@ -93,6 +94,12 @@ export default function Result({ data,id}) {
   
   return (
     <>
+    <div  style={{
+          width: "100%",
+          minHeight: "calc(100vh - 0px)",
+          backgroundColor: "white",
+          borderRadius: "20px",
+    }}>
         {/* <ArgonBox
       sx={({ breakpoints, transitions, functions: { pxToRem } }) => ({
         [breakpoints.up("xl")]: {
@@ -104,7 +111,7 @@ export default function Result({ data,id}) {
       })}
     > */}
       {open1 ? (
-        <View />
+        <Get/>
       ) : (
         <>
         <div
@@ -123,7 +130,7 @@ export default function Result({ data,id}) {
                   marginLeft: "1rem",
                   cursor: "pointer",
                 }}
-                onClick={() => setOpen1(true)}
+                onClick={() => setOpen1(!open1)}
               />
           <ArgonTypography
                           style={{
@@ -233,6 +240,8 @@ export default function Result({ data,id}) {
         </>
       )}
       {/* </ArgonBox> */}
-    </>
+   
+      </div>
+        </>
   );
 }

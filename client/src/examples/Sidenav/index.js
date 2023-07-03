@@ -13,7 +13,7 @@ Coded by www.creative-tim.com
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import jwt_decode from "jwt-decode";
 // react-router-dom components
 import { useLocation, NavLink, useNavigate } from "react-router-dom";
@@ -41,12 +41,14 @@ import sidenavLogoLabel from "examples/Sidenav/styles/sidenav";
 import "./styles.css"
 // Argon Dashboard 2 MUI context
 import { useArgonController, setMiniSidenav } from "context";
-
+import { sturoutes } from "routes";
 // import dp from "assets/images/dp.jpg";
 // import dp from "assets/images/dp1.jpg";
 // import dp from "assets/images/dp2.jpg"; 
 import dp from "assets/images/dp3.jpg"; 
 import { getById } from "utility/apiService";
+import facultyContext from "context/facultyContext";
+import { getProfile } from "utility/apiService";
 
 function Sidenav({ color, brand, brandName, routes, ...rest }) {
   const [controller, dispatch] = useArgonController();
@@ -55,7 +57,23 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
   const location = useLocation();
   const { pathname } = location;
   const itemName = pathname.split("/").slice(1)[0];
+  const [facultyData, setFacultyData] = useState([]); 
 
+  let factContext = useContext(facultyContext);
+
+  const getProf = async () => {
+    try {
+      let response = await getProfile();
+      setFacultyData(response.data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  factContext.isFaculty = facultyData.isFaculty;
+  
+  useEffect(() => {
+    getProf();
+  }, []);
   const closeSidenav = () => setMiniSidenav(dispatch, true);
 
 let getToken = localStorage.getItem("token");
@@ -98,7 +116,7 @@ getUser();
     return () => window.removeEventListener("resize", handleMiniSidenav);
   }, [dispatch, location]);
 
-  // Render all the routes from the routes.js (All the visible items on the Sidenav)
+
   const renderRoutes = routes.map(({ type, name, icon, title, key, href, route,token }) => {
     let returnValue;
 
@@ -148,9 +166,59 @@ getUser();
     return returnValue;
   });
 
+ const sturenderRoutes = sturoutes.map(({ type, name, icon, title, key, href, route,token }) => {
+    let returnValue;
+
+    if (type === "route") {
+      if (href) {
+        returnValue = (
+          <Link href={href} key={key} target="_blank" rel="noreferrer">
+            <SidenavItem
+              name={name}
+              icon={icon}
+              active={key === itemName}
+              noCollapse={noCollapse}
+              token={token}
+            />
+          </Link>
+        );
+      } else {
+        returnValue = (
+          <NavLink to={route} key={key}>
+            <SidenavItem name={name} icon={icon} active={key === itemName}  />
+          </NavLink>
+        );
+      }
+    } else if (type === "title") {
+      returnValue = (
+        <ArgonTypography
+          key={key}
+          color={darkSidenav ? "white" : "dark"}
+          display="block"
+          variant="caption"
+          fontWeight="bold"
+          textTransform="uppercase"
+          opacity={0.6}
+          pl={3}
+          mt={2}
+          mb={1}
+          ml={1}
+          
+        >
+          {title}
+        </ArgonTypography>
+      );
+    } else if (type === "divider") {
+      returnValue = <Divider key={key} light={darkSidenav} />;
+    }
+
+    return returnValue;
+  });
+
   return (
-    <SidenavRoot {...rest} variant="permanent"  ownerState={{ darkSidenav, miniSidenav, layout }}>
-      <ArgonBox pt={3} pb={1} px={4} textAlign="center" >
+    <>
+    <SidenavRoot {...rest} variant="permanent" ownerState={{ darkSidenav, miniSidenav, layout }}>
+      <ArgonBox pt={3} pb={1} px={4} textAlign="center">
         <ArgonBox
           display={{ xs: "block", xl: "none" }}
           position="absolute"
@@ -165,61 +233,62 @@ getUser();
           </ArgonTypography>
         </ArgonBox>
         {/* <ArgonBox component={NavLink} to="/" display="flex" alignItems="center">
-          {brand && (
-            <ArgonBox component="img" src={brand} alt="Argon Logo" width="2rem" mr={0.25} />
-          )}
-          <ArgonBox
-            width={!brandName && "100%"}
-            sx={(theme) => sidenavLogoLabel(theme, { miniSidenav })}
-          >
-            <ArgonTypography
-              component="h6"
-              variant="button"
-              fontWeight="medium"
-              color={darkSidenav ? "white" : "dark"}
-            >
-              {brandName}
-             
-            </ArgonTypography>
-          </ArgonBox>
-        </ArgonBox> */}
-        
-   
-
-        <ArgonBox display="flex" justifyContent="center" alignItems="center" mt={3} mb={4} className="hover-2" >
-          <ArgonBox
-          className="vitto"
-          sx={{
-          borderRadius: "50%",
-          width: "10rem",
-          height: "10rem",
-          display: "block",
-          boxShadow: "0 0 0 1rem rgba(255, 255, 255, 0.1)",
-       
-          }}
-            component="img"
-            src={dp}
-          />
-          </ArgonBox>
-          <ArgonTypography
-          className="hover"
-              component="h1"
-              variant="button"
-              fontWeight="medium"
-              fontSize="1rem"
-              style={{filter: "drop-shadow(5px 5px 5px #5F693B)"}}
-              color={darkSidenav ? "white" : "white"}
-            >
-             {user?.name}
-             
-            </ArgonTypography>
+      {brand && (
+        <ArgonBox component="img" src={brand} alt="Argon Logo" width="2rem" mr={0.25} />
+      )}
+      <ArgonBox
+        width={!brandName && "100%"}
+        sx={(theme) => sidenavLogoLabel(theme, { miniSidenav })}
+      >
+        <ArgonTypography
+          component="h6"
+          variant="button"
+          fontWeight="medium"
+          color={darkSidenav ? "white" : "dark"}
+        >
+          {brandName}
+         
+        </ArgonTypography>
       </ArgonBox>
-      <Divider light={darkSidenav} />
-       <List sx={{ marginTop: "50%"}}>{renderRoutes}</List> 
-      <ArgonBox pt={1} mt="auto" mb={2} mx={2}>
+    </ArgonBox> */}
+
+
+
+        <ArgonBox display="flex" justifyContent="center" alignItems="center" mt={3} mb={4}>
+          <div className="outer-circle">
+            <ArgonBox
+              className="vitto"
+              sx={{
+                width: "8rem",
+                height: "8rem",
+              }}
+              component="img"
+              src={dp} />
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+          </ArgonBox>
+      <ArgonTypography
+        className="hover"
+        component="h1"
+        variant="button"
+        fontWeight="medium"
+        fontSize="1rem"
+        style={{ filter: "drop-shadow(5px 5px 5px #5F693B)" }}
+        color={darkSidenav ? "white" : "white"}
+      >
+        {user?.name}
+
+      </ArgonTypography>
+    </ArgonBox><Divider light={darkSidenav} />
+   {factContext.isFaculty ==true ? <List sx={{ marginTop: "50%" }}>{renderRoutes}</List> : <List sx={{ marginTop: "50%" }}>{sturenderRoutes}</List>  }
+    <ArgonBox pt={1} mt="auto" mb={2} mx={2}>
         <SidenavFooter />
       </ArgonBox>
     </SidenavRoot>
+      </>
   );
 }
 

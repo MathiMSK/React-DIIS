@@ -1,42 +1,13 @@
-import React,{useContext} from "react";
-import { makeStyles, createStyles } from "@material-ui/core/styles";
+import React from "react";
 import ArgonBox from "components/ArgonBox";
 import {
   Card,
-  CardContent,
-  CardActions,
-  Avatar,
-  IconButton,
-  CardHeader,
-  CardMedia,
+  CardContent
 } from "@mui/material";
 import ArgonTypography from "components/ArgonTypography";
-import exam from "assets/images/exam.png";
-import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
-import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
-import { Image } from "@mui/icons-material";
-import ArgonButton from "components/ArgonButton";
 import { Col, Row } from "reactstrap";
-// import facultyContext from "context/facultyContext";
 
 const SimpleCard = ({ index, style, data }) => {
-  // const faculty = useContext(facultyContext);
-  // let arr=[]
-  // data.forEach((item)=>{
-  //   let found = false
-  //   console.log(item);
-  //   arr.forEach((items)=>{
-  //     console.log(items);
-  //     if(items.assignmentTitle == item.assignmentTitle,item.class == items.class,item.subject == items.subject){ 
-  //       found = true
-  //     }
-  //   })
-  //   if(found) arr.push(item)
-  // })
-
-  // console.log(arr);
-
-
   return (
     <ArgonBox>
       {data?.map((item,index) => (

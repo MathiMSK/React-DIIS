@@ -43,25 +43,37 @@ import createCache from "@emotion/cache";
 
 // Argon Dashboard 2 MUI routes
 import routes from "routes";
-
+import { sturoutes } from "routes";
 // Argon Dashboard 2 MUI contexts
 import { useArgonController, setMiniSidenav, setOpenConfigurator } from "context";
-
 // Images
 import brand from "assets/images/logo-ct.png";
 import brandDark from "assets/images/logo-ct-dark.png";
-
+import Assign from "layouts/assignments";
 // Icon Fonts
 import "assets/css/nucleo-icons.css";
 import "assets/css/nucleo-svg.css";
 import facultyContext from "context/facultyContext";
+import { getProfile } from "utility/apiService";
 
 export default function App() {
   let factContext=useContext(facultyContext);
-  console.log(factContext);
-  factContext.isFaculty=true;
+
+  const [facultyData, setFacultyData] = useState([]); 
+  const getProf = async () => {
+    try {
+      let response = await getProfile();
+      setFacultyData(response.data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  factContext.isFaculty = facultyData?.isFaculty;
+
+  useEffect(() => {
+    getProf();
+  }, []);
   const navigate = useNavigate();
-  console.log(factContext);
   const [controller, dispatch] = useArgonController();
   const { miniSidenav, direction, layout, openConfigurator, sidenavColor, darkSidenav, darkMode } =
     controller;
@@ -129,11 +141,19 @@ export default function App() {
       if (route.route) {
         return <Route exact path={route.route} element={route.component} key={route.key} />;
       }
-      if(route.token == undefined) {
-        return <Route exact path="/authentication/sign-in" element={<SignIn/>} key={"sign-in"} />
-      }
       return null;
     })
+
+    const stuRoutes = (sturoutes) =>  
+    sturoutes.map((route) => {
+      if (route.collapse) {
+        return getRoutes(route.collapse)
+      }
+        if (route.route) {
+          return <Route exact path={route.route} element={route.component} key={route.key} />;
+        }
+              return null;
+      })
 
   const configsButton = (
     <ArgonBox
@@ -179,7 +199,7 @@ export default function App() {
         )}
         {layout === "vr" && <Configurator />}
         <Routes>
-     {getRoutes(routes)}
+     {factContext.isFaculty==true ? getRoutes(routes) : stuRoutes(sturoutes)}
         </Routes>
       </ThemeProvider>
     </CacheProvider>
@@ -202,7 +222,7 @@ export default function App() {
       )}
       {layout === "vr" && <Configurator />}
       <Routes>
-      {getRoutes(routes)}
+      {factContext.isFaculty==true ? getRoutes(routes) : stuRoutes(sturoutes)}
       </Routes>
     </ThemeProvider>
   );

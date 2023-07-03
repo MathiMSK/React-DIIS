@@ -11,7 +11,7 @@ import { Col, Row } from "reactstrap";
 import Attend from "./Attend";
 import Result from "./result";
 
-const SimpleCard = ({ index, style, data,key }) => {
+const SimpleCard = ({ index, style, data}) => {
   const [attendData, setAttendData] = useState([]);
   const [checkData, setCheckData] = useState([]);
   const [open, setOpen] = useState(false);
@@ -21,7 +21,7 @@ const SimpleCard = ({ index, style, data,key }) => {
   return (
     <>
       {open1 ? (
-        <Result open={open1} setOpen={setOpen1} data={checkData} id={id}  />
+        <Result open={open1}  data={checkData} id={id}  />
       ) : (
         <>
           {open ? (

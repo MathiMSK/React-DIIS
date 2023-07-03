@@ -13,7 +13,7 @@ Coded by www.creative-tim.com
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 // react-router-dom components
 import { Link, useNavigate } from "react-router-dom";
@@ -31,10 +31,13 @@ import bgImage from "assets/images/bg3.png";
 // Authentication layout components
 import IllustrationLayout from "layouts/authentication/components/IllustrationLayout";
 import { userLogin } from "utility/apiService";
+import facultyContext from "context/facultyContext";
+import { getProfile } from "utility/apiService";
 
 function Illustration() {
+  const factContext = useContext(facultyContext);
   let navigate = useNavigate();
-  const [rememberMe, setRememberMe] = useState(false);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState("");
@@ -43,7 +46,22 @@ function Illustration() {
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => setShowPassword(!showPassword);
   const handleMouseDownPassword = () => setShowPassword(!showPassword);
-  
+
+  const [facultyData, setFacultyData] = useState([]);
+  const getProf = async () => {
+    try {
+      let response = await getProfile();
+      setFacultyData(response.data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  factContext.isFaculty = facultyData?.isFaculty;
+
+  useEffect(() => {
+    getProf();
+  }, []);
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!email) {
@@ -58,16 +76,22 @@ function Illustration() {
       return setPasswordError("Enter Your password Here");
     } else {
       setPasswordError("");
-    } 
+    }
 
-    try { 
-      let response = await userLogin({email, password}); 
+    try {
+      let response = await userLogin({ email, password });
+      console.log(response.data);
       if (!response?.ok) {
         return toast.error(response.data.message);
+      } else {
+        {
+          response.data.isFaculty
+            ? navigate("/assignments")
+            : navigate("/studentassignments")
+        }
+        window.location.reload();
+        localStorage.setItem("token", JSON.stringify(response.data.token));
       }
-      localStorage.setItem("token", JSON.stringify(response.data.token));
-      navigate("/assignments");
-      window.location.reload();
     } catch (error) {
       console.log(error.message);
     }
@@ -77,53 +101,67 @@ function Illustration() {
     <IllustrationLayout
       title="Login"
       illustration={{
-        image: bgImage
+        image: bgImage,
       }}
     >
-      <ArgonBox component="form" role="form"  >
+      <ArgonBox component="form" role="form">
         <ArgonBox mb={2}>
-        <ArgonTypography variant="h5" color="textPrimary">Email</ArgonTypography>
-          <ArgonInput type="email" placeholder="Email" size="large" sx={{boxShadow:"3px 4px 5px #877b7b"}}
-                   value={email}
-            onChange={(e) => setEmail(e.target.value)} />
-           {emailError ? (
-                    <ArgonTypography
-                      style={{
-                        paddingLeft: "14px",
-                        color: "red",
-                        fontSize: "14px",
-                      }}
-                      color="red"
-                    >
-                      {emailError}
-                    </ArgonTypography>
-                  ) : null}
-        </ArgonBox> 
+          <ArgonTypography variant="h5" color="textPrimary">
+            Email
+          </ArgonTypography>
+          <ArgonInput
+            type="email"
+            placeholder="Email"
+            size="large"
+            sx={{ boxShadow: "3px 4px 5px #877b7b" }}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          {emailError ? (
+            <ArgonTypography
+              style={{
+                paddingLeft: "14px",
+                color: "red",
+                fontSize: "14px",
+              }}
+              color="red"
+            >
+              {emailError}
+            </ArgonTypography>
+          ) : null}
+        </ArgonBox>
         <ArgonBox mb={2}>
-        <ArgonTypography variant="h5" color="textPrimary">Password</ArgonTypography>
-          <ArgonInput type="password" placeholder="Password" size="large" sx={{boxShadow:"3px 4px 5px #877b7b"}}
-             value={password}
-            onChange={(e) => setPassword(e.target.value)} />
-           {passwordError ? (
-                    <ArgonTypography
-                      style={{
-                        paddingLeft: "14px",
-                        color: "red",
-                        fontSize: "14px",
-                      }}
-                      color="red"
-                    >
-                      {passwordError}
-                    </ArgonTypography>
-                  ) : null}
+          <ArgonTypography variant="h5" color="textPrimary">
+            Password
+          </ArgonTypography>
+          <ArgonInput
+            type="password"
+            placeholder="Password"
+            size="large"
+            sx={{ boxShadow: "3px 4px 5px #877b7b" }}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          {passwordError ? (
+            <ArgonTypography
+              style={{
+                paddingLeft: "14px",
+                color: "red",
+                fontSize: "14px",
+              }}
+              color="red"
+            >
+              {passwordError}
+            </ArgonTypography>
+          ) : null}
         </ArgonBox>
         <ArgonBox mt={4} mb={1}>
-          <ArgonButton color="info" size="large" fullWidth  onClick={handleSubmit}>
+          <ArgonButton color="info" size="large" fullWidth onClick={handleSubmit}>
             Login
           </ArgonButton>
         </ArgonBox>
       </ArgonBox>
-      <Toaster/>
+      <Toaster />
     </IllustrationLayout>
   );
 }

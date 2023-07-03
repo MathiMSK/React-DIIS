@@ -196,8 +196,10 @@ export const createUser = async (body) => {
         "token": token,
       },
     };
-    if(subjectVal!== undefined && classVal!== undefined){
-      return await axios.get(`${baseUrl}assign/get?view=true&subject=${subjectVal}&class=${classVal}`)
+    if(assVal !== undefined && subjectVal!== undefined && classVal!== undefined){
+      return await axios.get(`${baseUrl}assign/get?view=true&class=${classVal}&assignmentid=${assVal}&subject=${subjectVal}`)
+    }else if(assVal !== undefined && subjectVal !== undefined ){
+      return await axios.get(`${baseUrl}assign/get?view=true&subject=${subjectVal}&assignmentid=${assVal}`)
     }else if(subjectVal!== undefined){
       return await axios.get(`${baseUrl}assign/get?view=true&subject=${subjectVal}`)
     }else if(classVal!== undefined){
@@ -206,23 +208,34 @@ export const createUser = async (body) => {
       return await axios.get(`${baseUrl}assign/get?view=true&stdid=${stdidVal}`)
     }else if(assVal!== undefined){
       return await axios.get(`${baseUrl}assign/get?view=true&assignmentid=${assVal}`)
-    }else if(subjectVal == undefined && assVal!== undefined){
-      return await axios.get(`${baseUrl}assign/get?view=true&subject=${subjectVal}&assignmentid=${assVal}`)
     }else{
       return await axios.get(`${baseUrl}assign/get?view=true`)
     }
   } 
  
   export const getTicketsPdf =async (subjectVal,classVal,stdidVal,assVal)=> {
-    console.log(stdidVal);
-    if(subjectVal!== undefined && classVal == undefined){
+    if(assVal !== undefined && subjectVal!== undefined && classVal !== undefined){
+      return axios.get(`${baseUrl}assign/get?view=false&class=${classVal}&assignmentid=${assVal}&subject=${subjectVal}`, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        },
+        responseType: 'arraybuffer'
+      })
+    }else if(assVal !== undefined && subjectVal !== undefined  ){
+      return axios.get(`${baseUrl}assign/get?view=false&assignmentid=${assVal}&subject=${subjectVal}`, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        },
+        responseType: 'arraybuffer'
+      })
+    }else if(classVal== undefined && subjectVal !== undefined){
       return axios.get(`${baseUrl}assign/get?view=false&subject=${subjectVal}`, {
         headers: {
           'Content-Type': 'multipart/form-data'
         },
         responseType: 'arraybuffer'
       })
-    }else if(classVal!== undefined && subjectVal == undefined){
+    }else if(classVal !== undefined && subjectVal == undefined){
       return axios.get(`${baseUrl}assign/get?view=false&class=${classVal}`, {
         headers: {
           'Content-Type': 'multipart/form-data'
@@ -243,13 +256,7 @@ export const createUser = async (body) => {
         },
         responseType: 'arraybuffer'
       })
-    }else if(subjectVal == undefined && assVal!== undefined ){
-      return axios.get(`${baseUrl}assign/get?view=false&subject=${subjectVal}&assignmentid=${assVal}`, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        },
-        responseType: 'arraybuffer'
-      })
+    
     }else{
       return axios.get(`${baseUrl}assign/get?view=false`, {
         headers: {

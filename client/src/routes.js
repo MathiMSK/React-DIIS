@@ -50,14 +50,77 @@ import {MdAssignment,MdOutlineAssignmentInd} from "react-icons/md";
 import {RiUserAddFill} from "react-icons/ri";
 import {BsFillInfoCircleFill} from "react-icons/bs";
 import Students from "layouts/Students";
+import facultyContext from "context/facultyContext";
+import { useContext } from "react";
+
 
 let token;
 let getToken=localStorage.getItem('token') 
 if(getToken){
   token=JSON.parse(getToken)
 }
+
+// const routes = [
+//   {
+//     type:"route",
+//     name: "Assignments",
+//     key: "assignments",
+//     route: "/assignments",
+//     token: token,
+//     icon: <MdAssignment color="#FDD451" style={{filter: "drop-shadow(5px 5px 5px rgba(0,0,0,0.3))" }}/>,
+//     component: <Assignments />,
+//   },
+//   {
+//     type:"route",
+//     name: "Student Creation",
+//     key: "studentcreation",
+//     route: "/studentcreation",
+//     token: token,
+//     icon: (
+//      <RiUserAddFill color="#FDD451" style={{filter: "drop-shadow(5px 5px 5px rgba(0,0,0,0.3))" }}/>
+//     ),
+//     component: <Students />,
+//   },
+//   {
+//     type:"route",
+//     name: "Student Assignments",
+//     key: "stuassign",
+//     route: "/studentassignments",
+//     token: token,
+//     icon: <MdOutlineAssignmentInd color="#FDD451" style={{filter: "drop-shadow(5px 5px 5px rgba(0,0,0,0.3))" }}/>,
+//     component: <StudentAssignment />,
+//   },
+//   {
+//     type:"route",
+//     name: "MIS",
+//     key: "mis",
+//     token: token,
+//     route: "/mis",
+//     icon: <BsFillInfoCircleFill style={{width:"17px",filter: "drop-shadow(5px 5px 5px rgba(0,0,0,0.3))"}} color="#FDD451" />,
+//     component: <Mis />,
+//   },
+//   {
+//     name: "Sign In",
+//     key: "sign-in",
+//     route: "/authentication/sign-in",
+//     token: token,
+//     icon: (
+//       <ArgonBox component="i" color="warning" fontSize="14px" className="ni ni-single-copy-04" />
+//     ),
+//     component: <SignIn />,
+//   },
+ 
+//   // {
+//   //   name: "Sign Up",
+//   //   key: "sign-up",
+//   //   route: "/authentication/sign-up",
+//   //   icon: <ArgonBox component="i" color="info" fontSize="14px" className="ni ni-collection" />,
+//   //   component: <SignUp />,
+//   // },
+// ];
+
+
 const routes = [
-  
   {
     type:"route",
     name: "Assignments",
@@ -66,18 +129,40 @@ const routes = [
     token: token,
     icon: <MdAssignment color="#FDD451" style={{filter: "drop-shadow(5px 5px 5px rgba(0,0,0,0.3))" }}/>,
     component: <Assignments />,
-  },
+  },  
   {
-    type:"route",
-    name: "Student Creation",
-    key: "studentcreation",
-    route: "/studentcreation",
-    token: token,
-    icon: (
-     <RiUserAddFill color="#FDD451" style={{filter: "drop-shadow(5px 5px 5px rgba(0,0,0,0.3))" }}/>
-    ),
-    component: <Students />,
-  },
+        type:"route",
+        name: "Student Creation",
+        key: "studentcreation",
+        route: "/studentcreation",
+        token: token,
+        icon: (
+         <RiUserAddFill color="#FDD451" style={{filter: "drop-shadow(5px 5px 5px rgba(0,0,0,0.3))" }}/>
+        ),
+        component: <Students />,
+      },
+      {
+        type:"route",
+        name: "MIS",
+        key: "mis",
+        token: token,
+        route: "/mis",
+        icon: <BsFillInfoCircleFill style={{width:"17px",filter: "drop-shadow(5px 5px 5px rgba(0,0,0,0.3))"}} color="#FDD451" />,
+        component: <Mis />,
+      },
+      {
+        name: "Sign In",
+        key: "sign-in",
+        route: "/authentication/sign-in",
+        token: token,
+        icon: (
+          <ArgonBox component="i" color="warning" fontSize="14px" className="ni ni-single-copy-04" />
+        ),
+        component: <SignIn />,
+      },
+]
+
+export const sturoutes = [
   {
     type:"route",
     name: "Student Assignments",
@@ -86,15 +171,6 @@ const routes = [
     token: token,
     icon: <MdOutlineAssignmentInd color="#FDD451" style={{filter: "drop-shadow(5px 5px 5px rgba(0,0,0,0.3))" }}/>,
     component: <StudentAssignment />,
-  },
-  {
-    type:"route",
-    name: "MIS",
-    key: "mis",
-    token: token,
-    route: "/mis",
-    icon:  <BsFillInfoCircleFill style={{width:"17px",filter: "drop-shadow(5px 5px 5px rgba(0,0,0,0.3))"}} color="#FDD451" />,
-    component: <Mis />,
   },
   {
     name: "Sign In",
@@ -107,13 +183,5 @@ const routes = [
     component: <SignIn />,
   },
  
-  // {
-  //   name: "Sign Up",
-  //   key: "sign-up",
-  //   route: "/authentication/sign-up",
-  //   icon: <ArgonBox component="i" color="info" fontSize="14px" className="ni ni-collection" />,
-  //   component: <SignUp />,
-  // },
-];
-
+]
 export default routes;

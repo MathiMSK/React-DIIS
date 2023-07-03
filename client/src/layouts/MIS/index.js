@@ -51,7 +51,6 @@ const MIS = () => {
     );
     setAss(
       data?.map((item) => {
-        console.log(item);
         return {
           id: item._id,
           value: item.assignmentTitle || "",
@@ -137,11 +136,14 @@ const MIS = () => {
   };
 
   const handleSubt = async () => {
-    const Sub = await generatePDF(subjectVal?.value, classNameVal?.value, stdidVal?.id,assVal?.id);
-    setData(Sub?.data?.data?.tableData);
-    setChartData(Sub?.data?.data?.chartImg);
-  };
-
+    try {
+      const Sub = await generatePDF(subjectVal?.value, classNameVal?.value, stdidVal?.id,assVal?.id);
+      setData(Sub?.data?.data?.tableData);
+      setChartData(Sub?.data?.data?.chartImg);
+    } catch (error) {
+      console.log(error);
+    }
+  }
   const handlePdf = async (e) => {
     e?.preventDefault();
     const { data } = await getTicketsPdf(subjectVal?.value, classNameVal?.value, stdidVal?.id,assVal?.id);

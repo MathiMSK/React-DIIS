@@ -19,6 +19,7 @@ import ArgonButton from "components/ArgonButton/index.js";
 import { toast ,Toaster} from "react-hot-toast";
 import ArgonBox from "components/ArgonBox/index.js";
 import { useArgonController } from "context/index.js";
+import Get from "./get.js";
 
 
 const BpIcon = styled("span")(({ theme }) => ({
@@ -79,9 +80,8 @@ function BpRadio(props) {
   );
 }
 
-export default function Attend({ id }) {
+export default function Attend({data, id }) {
   const [controller] = useArgonController();
-  const { miniSidenav } = controller;
   const [open, setOpen] = useState(false);
   const [question, setQuestion] = useState([]);
   const [val, setVal] = useState({
@@ -125,27 +125,22 @@ export default function Attend({ id }) {
 
   return (
     <>
-     {/* <ArgonBox
-      sx={({ breakpoints, transitions, functions: { pxToRem } }) => ({
-        [breakpoints.up("xl")]: {
-          marginLeft: miniSidenav ? pxToRem(120) : pxToRem(274),
-          transition: transitions.create(["margin-left", "margin-right"], {
-            easing: transitions.easing.easeInOut,
-            duration: transitions.duration.standard,
-          }),
-        },
-      })}
-    > */}
-    <div>
+      <div
+        style={{
+          width: "100%",
+          minHeight: "calc(100vh - 0px)",
+          backgroundColor: "white",
+          borderRadius: "20px",
+        }}
+      >
       {open ? (
-        <View />
+          <Get/>
       ) : (
         <>  
           <div>
             <div
               style={{
                 flexDirection: "row",
-                position: "relative",
                 display: "flex",
                 borderRadius: "20px",
                 alignItems: "center",
@@ -158,7 +153,7 @@ export default function Attend({ id }) {
                   marginLeft: "1rem",
                   cursor: "pointer",
                 }}
-                onClick={() => setOpen(true)}
+                onClick={() => setOpen(!open)}
               />
               <ArgonTypography
                 style={{
@@ -235,8 +230,9 @@ export default function Attend({ id }) {
         </>
       )}
   <Toaster/> 
-  </div>
+
     {/* </ArgonBox> */}
+    </div>
     </>
   );
 }

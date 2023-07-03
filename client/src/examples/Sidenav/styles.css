@@ -35,7 +35,7 @@
   }
   
 
-
+/* 
   .vitto {
     --g:#0000 ,#000 .5deg 90deg,#0000 91deg;
     --m:
@@ -56,7 +56,57 @@
     filter: grayscale(0);
       border-radius: 50%;
   }
-  
+   */
 
-  
  
+ 
+ .outer-circle {
+   height: 150px;
+   width: 150px;
+   background: linear-gradient(#14ffe9, #ffeb3b, #ff00e0);
+   border-radius: 50%;
+   animation: rotate 1.5s linear infinite;
+ }
+ 
+
+ .outer-circle span {
+  position: absolute; 
+  height: 150px;
+  width: 150px;
+  background: linear-gradient(#14ffe9, #ffeb3b, #ff00e0);
+  border-radius: 50%;
+  margin-left: -50%;
+}
+span:nth-child(1) {
+  filter: blur(0.1px);
+}
+
+span:nth-child(2) {
+  filter: blur(10px);
+}
+
+span:nth-child(3) {
+  filter: blur(25px);
+}
+
+span:nth-child(4) {
+  filter: blur(150px);
+}
+ .vitto {
+   height: 29px;
+   width: 29px;
+   position: absolute;
+   top: 10px;
+   left: 10px;
+   border-radius: 50%;
+   z-index: 9;
+ }
+ 
+ @keyframes rotate {
+   0% {
+     filter: hue-rotate(0deg);
+   }
+   100% {
+     filter: hue-rotate(360deg);
+   }
+ }

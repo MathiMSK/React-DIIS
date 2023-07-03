@@ -20,6 +20,7 @@ import ArgonTypography from "components/ArgonTypography";
 // import facultyContext from "context/facultyContext.js";
 import { useReactToPrint } from "react-to-print";
 import { getProfile } from "utility/apiService";
+import CustomSelect from "components/select/CustomSelect";
 
 const Assign = () => {
   const [controller, dispatch] = useArgonController();
@@ -43,6 +44,8 @@ const Assign = () => {
   const [noqerr, setNoqErr] = useState("");
 
   const [facultyData, setFacultyData] = useState([]);
+  const [attend, setAttend] = useState("")
+  const [attendVal, setAttendVal] = useState("");
   // let faculty = useContext(facultyContext);
   const componentPdf = useRef();
   const generatePdf = useReactToPrint({
@@ -130,7 +133,9 @@ const Assign = () => {
     getAssign();
     getProf();
   }, []);
-  assignData?.map((item) => {});
+  
+  // if()
+
   const initiateAssign = async () => {
     if (!assign) {
       setAssErr("Assign is required");
@@ -321,7 +326,6 @@ const Assign = () => {
                             placeholder="Enter Assignment Name"
                             value={assign}
                             onChange={(e) => setAssign(e.target.value)}
-                            // width="400px"
                           />
                           {asserr ? (
                             <ArgonTypography style={{ color: "red" }}>{asserr}</ArgonTypography>
@@ -348,7 +352,6 @@ const Assign = () => {
                             placeholder="Enter Class Name"
                             value={className}
                             onChange={(e) => setClassName(e.target.value)}
-                            // width="400px"
                           />
                           {classerr ? (
                             <ArgonTypography style={{ color: "red" }}>{classerr}</ArgonTypography>
@@ -376,7 +379,6 @@ const Assign = () => {
                             placeholder="Enter Total Marks"
                             value={marks}
                             onChange={(e) => setMarks(e.target.value)}
-                            // width="400px"
                           />
                           {markserr ? (
                             <ArgonTypography style={{ color: "red" }}>{markserr}</ArgonTypography>
@@ -402,7 +404,6 @@ const Assign = () => {
                             placeholder="Enter subject Name"
                             value={subject}
                             onChange={(e) => setSubject(e.target.value)}
-                            // width="400px"
                           />
                           {subjecterr ? (
                             <ArgonTypography style={{ color: "red" }}>{subjecterr}</ArgonTypography>
@@ -430,7 +431,6 @@ const Assign = () => {
                             placeholder="Enter noq"
                             value={noq}
                             onChange={(e) => setNoq(e.target.value)}
-                            // width="400px"
                           />
                           {noqerr ? (
                             <ArgonTypography style={{ color: "red" }}>{noqerr}</ArgonTypography>
