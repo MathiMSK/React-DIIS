@@ -46,11 +46,9 @@ export const attendAssign = async (req, res) => {
         .status(400)
         .json({ message: "you have already submitted the assignment" });
     if (view.assignment.totalQuestion !== req.body.answers?.length)
-      return res
-        .status(400)
-        .json({
-          message: `total question is ${view?.assignment?.totalQuestion} you answer for ${req.body.answers?.length} question`,
-        });
+      return res.status(400).json({
+        message: `total question is ${view?.assignment?.totalQuestion} you answer for ${req.body.answers?.length} question`,
+      });
     if (!view)
       return res
         .status(404)
@@ -101,10 +99,10 @@ export const stdViewTheirAllAssign = async (req, res) => {
     if (!view) return res.status(404).json({ message: "assignment not found" });
     // console.log(view[0].assignment.question);
     view.map((i) => {
-        console.log(i.assignment);
-        i?.assignment?.question.forEach((que) => { 
-          que.answer = ""; 
-        });
+      console.log(i.assignment);
+      i?.assignment?.question.forEach((que) => {
+        que.answer = "";
+      });
     });
     res.status(200).json({ data: view });
   } catch (error) {

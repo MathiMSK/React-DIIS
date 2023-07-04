@@ -1,38 +1,43 @@
-import React, { useState } from "react"; 
+import React, { useState } from "react";
 import ArgonBox from "components/ArgonBox";
-import {
-  Card,
-  CardContent,
-  CardActions, 
-} from "@mui/material";
-import ArgonTypography from "components/ArgonTypography"; 
+import { Card, CardContent, CardActions } from "@mui/material";
+import ArgonTypography from "components/ArgonTypography";
 import ArgonButton from "components/ArgonButton";
-import { Col, Row } from "reactstrap"; 
+import { Col, Row } from "reactstrap";
 import Attend from "./Attend";
 import Result from "./result";
+import { useArgonController } from "context";
 
-const SimpleCard = ({ index, style, data}) => {
+const SimpleCard = ({ index, style, data }) => {
   const [attendData, setAttendData] = useState([]);
   const [checkData, setCheckData] = useState([]);
   const [open, setOpen] = useState(false);
   const [open1, setOpen1] = useState(false);
   const [id, setId] = useState();
- 
+  const [controller, dispatch] = useArgonController();
+  const { miniSidenav, darkSidenav, layout } = controller;
   return (
     <>
       {open1 ? (
-        <Result open={open1}  data={checkData} id={id}  />
+        <Result open={open1} data={checkData} id={id} />
       ) : (
         <>
           {open ? (
-            <Attend data={data} id={id}  />
+            <Attend data={data} id={id} />
           ) : (
             <ArgonBox>
-              {data?.map((item,index) => (
-                <Card key={item} style={{ border: "1px solid #b931ce", marginBottom: "20px",pointerEvents: 'auto' }}>
+              {data?.map((item, index) => (
+                <Card
+                  key={item}
+                  style={{
+                    border: "1px solid #b931ce",
+                    marginBottom: "20px",
+                    pointerEvents: "auto",
+                  }}
+                >
                   <>
                     <CardContent>
-                      <ArgonTypography variant="body2" color="textSecondary" component="p">
+                      <ArgonTypography variant="body2" color={darkSidenav ? "white" : "black"} component="p">
                         Assignment Name : {item?.assignment?.assignmentTitle}
                       </ArgonTypography>
                       <Row
@@ -43,12 +48,12 @@ const SimpleCard = ({ index, style, data}) => {
                         }}
                       >
                         <Col>
-                          <ArgonTypography variant="body2" color="textSecondary" component="p">
+                          <ArgonTypography variant="body2" color={darkSidenav ? "white" : "black"} component="p">
                             Class : {item?.assignment?.class}
                           </ArgonTypography>
                         </Col>
                         <Col>
-                          <ArgonTypography variant="body2" color="textSecondary" component="p">
+                          <ArgonTypography variant="body2" color={darkSidenav ? "white" : "black"} component="p">
                             Subject :{item?.assignment?.subject}
                           </ArgonTypography>
                         </Col>
@@ -61,12 +66,12 @@ const SimpleCard = ({ index, style, data}) => {
                         }}
                       >
                         <Col>
-                          <ArgonTypography variant="body2" color="textSecondary" component="p">
+                          <ArgonTypography variant="body2" color={darkSidenav ? "white" : "black"} component="p">
                             Total Marks :{item?.assignment?.totalMarks}
                           </ArgonTypography>
                         </Col>
                         <Col>
-                          <ArgonTypography variant="body2" color="textSecondary" component="p">
+                          <ArgonTypography variant="body2" color={darkSidenav ? "white" : "black"} component="p">
                             Total Question : {item?.assignment?.totalQuestion}
                           </ArgonTypography>
                         </Col>
@@ -78,32 +83,32 @@ const SimpleCard = ({ index, style, data}) => {
                     >
                       {item?.answers.length <= 0 ? (
                         <ArgonButton
-                        key={index}
+                          key={index}
                           variant="contained"
                           style={{
                             alignItems: "center",
                             display: "flex",
                             justifyContent: "center",
-                            border:"1px solid #b931ce",
-                            
+                            border: "1px solid #b931ce",
+
                             color: "#b931ce",
                           }}
-                          onClick={() =>{
-                            setOpen(true)
-                            setId(item.assignment._id)
+                          onClick={() => {
+                            setOpen(true);
+                            setId(item.assignment._id);
                           }}
                         >
-                           <ArgonTypography
-                           key={item}
-                          style={{
-                            filter: "drop-shadow(5px 5px 5px #b931ce)",
-                            fontSize: "13px",
-                            color: "#b931ce",
-                            fontWeight: "bold",
-                          }}
-                        >
-                          Attend
-                        </ArgonTypography>
+                          <ArgonTypography
+                            key={item}
+                            style={{
+                              filter: "drop-shadow(5px 5px 5px #b931ce)",
+                              fontSize: "13px",
+                              color: "#b931ce",
+                              fontWeight: "bold",
+                            }}
+                          >
+                            Attend
+                          </ArgonTypography>
                         </ArgonButton>
                       ) : (
                         <ArgonButton
@@ -112,25 +117,25 @@ const SimpleCard = ({ index, style, data}) => {
                             alignItems: "center",
                             display: "flex",
                             justifyContent: "center",
-                            border:"1px solid #b931ce",
+                            border: "1px solid #b931ce",
                             color: "#b931ce",
                           }}
-                          onClick={() => { 
-                            setId(item.assignment._id)
+                          onClick={() => {
+                            setId(item.assignment._id);
                             setOpen1(true);
                             setCheckData(item);
                           }}
                         >
                           <ArgonTypography
-                          style={{
-                            filter: "drop-shadow(5px 5px 5px #b931ce)",
-                            fontSize: "13px",
-                            color: "#b931ce",
-                            fontWeight: "bold",
-                          }}
-                        >
-                          View
-                        </ArgonTypography>
+                            style={{
+                              filter: "drop-shadow(5px 5px 5px #b931ce)",
+                              fontSize: "13px",
+                              color: "#b931ce",
+                              fontWeight: "bold",
+                            }}
+                          >
+                            View
+                          </ArgonTypography>
                         </ArgonButton>
                       )}
                     </CardActions>

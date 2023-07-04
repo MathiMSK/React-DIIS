@@ -16,11 +16,10 @@ import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import ArgonTypography from "components/ArgonTypography/index.js";
 import { identifier } from "stylis";
 import ArgonButton from "components/ArgonButton/index.js";
-import { toast ,Toaster} from "react-hot-toast";
+import { toast, Toaster } from "react-hot-toast";
 import ArgonBox from "components/ArgonBox/index.js";
 import { useArgonController } from "context/index.js";
 import Get from "./get.js";
-
 
 const BpIcon = styled("span")(({ theme }) => ({
   borderRadius: "50%",
@@ -44,17 +43,13 @@ const BpIcon = styled("span")(({ theme }) => ({
   },
   "input:disabled ~ &": {
     boxShadow: "none",
-    background:
-      theme.palette.mode === "dark"
-        ? "rgba(57,75,89,.5)"
-        : "rgba(206,217,224,.5)",
+    background: theme.palette.mode === "dark" ? "rgba(57,75,89,.5)" : "rgba(206,217,224,.5)",
   },
 }));
 
 const BpCheckedIcon = styled(BpIcon)({
   backgroundColor: "#137cbd",
-  backgroundImage:
-    "linear-gradient(180deg,hsla(0,0%,100%,.1),hsla(0,0%,100%,0))",
+  backgroundImage: "linear-gradient(180deg,hsla(0,0%,100%,.1),hsla(0,0%,100%,0))",
   "&:before": {
     display: "block",
     width: 16,
@@ -80,8 +75,9 @@ function BpRadio(props) {
   );
 }
 
-export default function Attend({data, id }) {
-  const [controller] = useArgonController();
+export default function Attend({ data, id }) {
+  const [controller, dispatch] = useArgonController();
+  const { miniSidenav, darkSidenav, layout } = controller;
   const [open, setOpen] = useState(false);
   const [question, setQuestion] = useState([]);
   const [val, setVal] = useState({
@@ -90,7 +86,7 @@ export default function Attend({data, id }) {
 
   useEffect(() => {
     data?.map((i) => {
-      if(i?.assignment?._id == id){
+      if (i?.assignment?._id == id) {
         setQuestion(i?.assignment?.question);
       }
     });
@@ -98,30 +94,30 @@ export default function Attend({data, id }) {
 
   const handleChange = (e, index) => {
     e.preventDefault();
-    val?.answer?.map((item)=>{
-      if (item?.questionNo === index ){
+    val?.answer?.map((item) => {
+      if (item?.questionNo === index) {
         item.questionNo = 0;
       }
-    })
+    });
     val?.answer.push({
       questionNo: index,
       answer: e.target.value,
     });
   };
 
-  const handleSubmit=async()=>{
-    let arr = {answers:[]}
-    val.answer.map((i)=>{
-      if (i.questionNo != 0){
-        arr.answers.push(i)
+  const handleSubmit = async () => {
+    let arr = { answers: [] };
+    val.answer.map((i) => {
+      if (i.questionNo != 0) {
+        arr.answers.push(i);
       }
-    })
-    arr.answers?.sort((a,b)=> a.questionNo - b.questionNo ) 
-    let res= await assAttend(id,arr)
-    if(res.ok == false) return toast.error(res.data.message)  
-    toast.success(res.data.message)
-    setOpen(true) 
-  }
+    });
+    arr.answers?.sort((a, b) => a.questionNo - b.questionNo);
+    let res = await assAttend(id, arr);
+    if (res.ok == false) return toast.error(res.data.message);
+    toast.success(res.data.message);
+    setOpen(true);
+  };
 
   return (
     <>
@@ -133,106 +129,117 @@ export default function Attend({data, id }) {
           borderRadius: "20px",
         }}
       >
-      {open ? (
-          <Get/>
-      ) : (
-        <>  
-          <div>
-            <div
-              style={{
-                flexDirection: "row",
-                display: "flex",
-                borderRadius: "20px",
-                alignItems: "center",
-              }}
-            >
-              <KeyboardArrowLeftIcon
-                fontSize="large"
+        {open ? (
+          <Get />
+        ) : (
+          <>
+            <div>
+              <div
                 style={{
-                  marginTop: "1rem",  
-                  marginLeft: "1rem",
-                  cursor: "pointer",
-                }}
-                onClick={() => setOpen(!open)}
-              />
-              <ArgonTypography
-                style={{
-                  width: "40%",
-                  marginTop: "1.5%",
+                  flexDirection: "row",
                   display: "flex",
-                  justifyContent: "start",
-                  color: "#0070CD",
+                  borderRadius: "20px",
+                  alignItems: "center",
+                  marginLeft: "-4rem",
                 }}
               >
-                Student Attend
-              </ArgonTypography>
-            </div>
-            {question?.map((i, index) =>
-              i ? (
-                <Container
-                  key={i}
-                  className="shadow-inner"
-                  style={{ backgroundColor: "white", height: "320px" }}
+                <KeyboardArrowLeftIcon
+                  fontSize="large"
+                  style={{
+                    marginTop: "1rem",
+                    marginLeft: "1rem",
+                    cursor: "pointer",
+                  }}
+                  onClick={() => setOpen(!open)}
+                />
+                <ArgonTypography
+                  style={{
+                    width: "40%",
+                    marginTop: "1.5%",
+                    display: "flex",
+                    
+                    color: "#0070CD",
+                  }}
                 >
-                  <Row style={{ height: "55px" }}>
-                    <div style={{ marginTop: "10px", fontSize: "31px" }}>{index + 1},</div>
-                    <Col size="12" style={{ marginTop: "20px" }}>
-                      <ArgonTypography style={{ fontSize: "20px" }}>{i?.question}</ArgonTypography>
-                    </Col>
-                  </Row>
-                  <FormControl style={{ margin: "5%" }} onChange={(e) => handleChange(e, index + 1)}>
-                    <RadioGroup>
-                      <FormControlLabel
-                        value={i?.options[0]?.optionAns}
-                        control={<BpRadio />}
-                        label={i?.options[0]?.optionAns}
-                      />
-                      <FormControlLabel
-                        value={i?.options[1]?.optionAns}
-                        control={<BpRadio />}
-                        label={i?.options[1]?.optionAns}
-                      />
-                      <FormControlLabel
-                        value={i?.options[2]?.optionAns}
-                        control={<BpRadio />}
-                        label={i?.options[2]?.optionAns}
-                      />
-                      <FormControlLabel
-                        value={i?.options[3]?.optionAns}
-                        control={<BpRadio />}
-                        label={i?.options[3]?.optionAns}
-                      />
-                    </RadioGroup>
-                  </FormControl>
-                </Container>
-              ) : null
-            )}
-            <ArgonButton
-              color="success"
-              variant="contained"
-              onClick={handleSubmit}
-              style={{ marginLeft: "90%" ,
-              color: "#b931ce",
-              border:"1px solid #b931ce"}}
-            >
-        <ArgonTypography
-                          style={{
-                            filter: "drop-shadow(5px 5px 5px #b931ce)",
-                            fontSize: "13px",
-                            color: "#b931ce",
-                            fontWeight: "bold",
-                          }}
+                  Student Attend
+                </ArgonTypography>
+              </div>
+              {question?.map((i, index) =>
+                i ? (
+                  <Container
+                    key={i}
+                    className="shadow-inner"
+                    style={{ backgroundColor: "white", height: "320px" }}
+                  >
+                    <Row style={{ height: "55px" }}>
+                      <div style={{ marginTop: "10px", fontSize: "31px" }}>{index + 1},</div>
+                      <Col size="12" style={{ marginTop: "20px" }}>
+                        <ArgonTypography
+                          color={darkSidenav ? "black" : "black"}
+                          style={{ fontSize: "20px" }}
                         >
-                          Submit
+                          {i?.question}
                         </ArgonTypography>
-            </ArgonButton>
-          </div>
-        </>
-      )}
-  <Toaster/> 
+                      </Col>
+                    </Row>
+                    <FormControl
+                      style={{ margin: "5%" }}
+                      onChange={(e) => handleChange(e, index + 1)}
+                    >
+                      <RadioGroup>
+                        <FormControlLabel
+                          value={i?.options[0]?.optionAns}
+                          control={<BpRadio />}
+                          label={i?.options[0]?.optionAns}
+                        />
+                        <FormControlLabel
+                          value={i?.options[1]?.optionAns}
+                          control={<BpRadio />}
+                          label={i?.options[1]?.optionAns}
+                        />
+                        <FormControlLabel
+                          value={i?.options[2]?.optionAns}
+                          control={<BpRadio />}
+                          label={i?.options[2]?.optionAns}
+                        />
+                        <FormControlLabel
+                          value={i?.options[3]?.optionAns}
+                          control={<BpRadio />}
+                          label={i?.options[3]?.optionAns}
+                        />
+                      </RadioGroup>
+                    </FormControl>
+                  </Container>
+                ) : null
+              )}
 
-    {/* </ArgonBox> */}
-    </div>
+              <ArgonButton
+                variant="contained"
+                style={{
+                  marginLeft: "90%",
+                  border: "1px solid #b931ce",
+                  color: "#b931ce",
+                }}
+                onClick={handleSubmit}
+              >
+                <ArgonTypography
+                  style={{
+                    filter: "drop-shadow(5px 5px 5px #b931ce)",
+                    fontSize: "13px",
+                    color: "#b931ce",
+                    fontWeight: "bold",
+                  }}
+                >
+                  Submit
+                </ArgonTypography>
+              </ArgonButton>
+            </div>
+          </>
+        )}
+        <Toaster />
+
+        {/* </ArgonBox> */}
+      </div>
     </>
   );
 }

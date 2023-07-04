@@ -31,23 +31,22 @@ const MIS = () => {
   const [classNameVal, setClassNameVal] = useState("");
   const [stdid, setStdid] = useState("");
   const [stdidVal, setStdidVal] = useState("");
-  const [ass,setAss] = useState("");
-  const [assVal,setAssVal] = useState("");
+  const [ass, setAss] = useState("");
+  const [assVal, setAssVal] = useState("");
 
   const values = async () => {
     let response = await getAllAssign();
     let data = response.data?.data?.filter((item) => {
       return item;
     });
-    const uniqueSub = [...new Set(data?.map(item => item.subject))];
+    const uniqueSub = [...new Set(data?.map((item) => item.subject))];
     setSubject(
       uniqueSub?.map((index) => {
         return {
           value: index || "",
           label: index || "",
-        }
+        };
       })
-     
     );
     setAss(
       data?.map((item) => {
@@ -55,15 +54,15 @@ const MIS = () => {
           id: item._id,
           value: item.assignmentTitle || "",
           label: item.assignmentTitle || "",
-        }
+        };
       })
-    )
+    );
 
     let res = await getAllAssign();
     let clasdata = res.data?.data?.filter((item) => {
       return item;
     });
-    const uniqueClass = [...new Set(clasdata.map(item => item.class))];
+    const uniqueClass = [...new Set(clasdata.map((item) => item.class))];
     setClassName(
       uniqueClass.map((index) => {
         return {
@@ -137,16 +136,26 @@ const MIS = () => {
 
   const handleSubt = async () => {
     try {
-      const Sub = await generatePDF(subjectVal?.value, classNameVal?.value, stdidVal?.id,assVal?.id);
+      const Sub = await generatePDF(
+        subjectVal?.value,
+        classNameVal?.value,
+        stdidVal?.id,
+        assVal?.id
+      );
       setData(Sub?.data?.data?.tableData);
       setChartData(Sub?.data?.data?.chartImg);
     } catch (error) {
       console.log(error);
     }
-  }
+  };
   const handlePdf = async (e) => {
     e?.preventDefault();
-    const { data } = await getTicketsPdf(subjectVal?.value, classNameVal?.value, stdidVal?.id,assVal?.id);
+    const { data } = await getTicketsPdf(
+      subjectVal?.value,
+      classNameVal?.value,
+      stdidVal?.id,
+      assVal?.id
+    );
     const blob = new Blob([data], { type: "application/pdf" });
     saveAs(blob, "Student Result.pdf");
   };
@@ -202,16 +211,21 @@ const MIS = () => {
                   setOpen(true);
                 }}
                 style={{
-                  border:"1px solid #b931ce",
+                  border: "1px solid #b931ce",
                   color: "#b931ce",
                   marginRight: "15px",
-                  
                 }}
               >
-              <ArgonTypography style={{filter: "drop-shadow(5px 5px 5px #b931ce)",fontSize:"13px",color: "#b931ce",fontWeight:"bold"}}>
-               Generate
-               </ArgonTypography>
-                
+                <ArgonTypography
+                  style={{
+                    filter: "drop-shadow(5px 5px 5px #b931ce)",
+                    fontSize: "13px",
+                    color: "#b931ce",
+                    fontWeight: "bold",
+                  }}
+                >
+                  Generate
+                </ArgonTypography>
               </ArgonButton>
             </div>
             <div style={{ border: "1px solid #0070CD" }} />
@@ -344,23 +358,24 @@ const MIS = () => {
                     style={{ marginLeft: "3.2rem", marginTop: "1rem" }}
                   >
                     <div ref={componentPdf}>
-                      <DTable columns={columns} data={data} />
                       <img style={{ width: "100%" }} src={chartData}></img>
+                      <h3>Student Report Table View</h3>
+                      <DTable columns={columns} data={data} />
                     </div>
 
                     <div style={{ display: "flex", justifyContent: "center" }}>
                       <ArgonButton variant="outlined" color="error" onClick={handlePdf}>
                         <span style={{ marginRight: "10px" }}>
-                        <ArgonTypography
-                          style={{
-                            filter: "drop-shadow(5px 5px 5px #b931ce)",
-                            fontSize: "13px",
-                            color: "#b931ce",
-                            fontWeight: "bold",
-                          }}
-                        >
-                          Download
-                        </ArgonTypography>
+                          <ArgonTypography
+                            style={{
+                              filter: "drop-shadow(5px 5px 5px #b931ce)",
+                              fontSize: "13px",
+                              color: "#b931ce",
+                              fontWeight: "bold",
+                            }}
+                          >
+                            Download
+                          </ArgonTypography>
                         </span>
                         <i className="fas fa-download"></i>
                       </ArgonButton>

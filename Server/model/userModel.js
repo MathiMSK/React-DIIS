@@ -1,34 +1,36 @@
 import mongoose from "mongoose";
 
-const user =  new mongoose.Schema({
-    name:{
-        type:String,
-        required: true
+const user = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      required: true,
     },
-    email:{
-        type:String,
-        required: true
+    email: {
+      type: String,
+      required: true,
     },
-    password:{
-        type:String,
+    password: {
+      type: String,
     },
-    isFaculty:{
-        type:Boolean,
-        default:false
+    isFaculty: {
+      type: Boolean,
+      default: false,
     },
-    assignments:[
-        {
-            type:mongoose.Schema.Types.ObjectId,
-            ref:"Assignment"
-        }
+    assignments: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Assignment",
+      },
     ],
-    class:{
-        type:Number
-    },    
-},  {
-    timestamps: true
-}
-)
+    class: {
+      type: Number,
+    },
+  },
+  {
+    timestamps: true,
+  }
+);
 
-const User=mongoose.model('User',user)
+const User = mongoose.model("User", user);
 export default User;

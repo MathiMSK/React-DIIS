@@ -55,11 +55,19 @@ import "assets/css/nucleo-icons.css";
 import "assets/css/nucleo-svg.css";
 import facultyContext from "context/facultyContext";
 import { getProfile } from "utility/apiService";
+import jwt_decode from "jwt-decode";
 
 export default function App() {
-  let factContext=useContext(facultyContext);
+  let factContext = useContext(facultyContext);
+  const navigate = useNavigate();
+  const [controller, dispatch] = useArgonController();
+  const { miniSidenav, direction, layout, openConfigurator, sidenavColor, darkSidenav, darkMode } =
+    controller;
+  const [onMouseEnter, setOnMouseEnter] = useState(false);
+  const [rtlCache, setRtlCache] = useState(null);
+  const { pathname } = useLocation();
 
-  const [facultyData, setFacultyData] = useState([]); 
+  const [facultyData, setFacultyData] = useState([]);
   const getProf = async () => {
     try {
       let response = await getProfile();
@@ -68,18 +76,12 @@ export default function App() {
       console.log(error);
     }
   };
+
   factContext.isFaculty = facultyData?.isFaculty;
 
   useEffect(() => {
     getProf();
   }, []);
-  const navigate = useNavigate();
-  const [controller, dispatch] = useArgonController();
-  const { miniSidenav, direction, layout, openConfigurator, sidenavColor, darkSidenav, darkMode } =
-    controller;
-  const [onMouseEnter, setOnMouseEnter] = useState(false);
-  const [rtlCache, setRtlCache] = useState(null);
-  const { pathname } = useLocation();
 
   // Cache for the rtl
   useMemo(() => {
@@ -116,44 +118,58 @@ export default function App() {
   }, [direction]);
 
   let token;
-  let getToken=localStorage.getItem('token') 
-  if(getToken){
-    token=JSON.parse(getToken)
+  let decoded;
+  let getToken = localStorage.getItem("token");
+
+  if (getToken) {
+    token = JSON.parse(getToken);
+    decoded = jwt_decode(token);
   }
 
   useEffect(() => {
-    if(!token){
+    if (!token) {
       navigate("/authentication/sign-in");
-    } 
+    }
   }, [token]);
 
-  // Setting page scroll to 0 when changing the route
+  const expToken = async () => {
+    const exp = decoded?.exp;
+    const expirationTime = exp * 1000 - 600;
+    if (Date.now() >= expirationTime) {
+      return navigate("/authentication/sign-in");
+    }
+  };
+
+  useEffect(() => {
+    expToken();
+  }, [token]);
+
   useEffect(() => {
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
   }, [pathname]);
 
-  const getRoutes = (allRoutes) =>  
-  allRoutes.map((route) => {
-    if (route.collapse) {
-      return getRoutes(route.collapse)
-    }
+  const getRoutes = (allRoutes) =>
+    allRoutes.map((route) => {
+      if (route.collapse) {
+        return getRoutes(route.collapse);
+      }
       if (route.route) {
         return <Route exact path={route.route} element={route.component} key={route.key} />;
       }
       return null;
-    })
+    });
 
-    const stuRoutes = (sturoutes) =>  
+  const stuRoutes = (sturoutes) =>
     sturoutes.map((route) => {
       if (route.collapse) {
-        return getRoutes(route.collapse)
+        return getRoutes(route.collapse);
       }
-        if (route.route) {
-          return <Route exact path={route.route} element={route.component} key={route.key} />;
-        }
-              return null;
-      })
+      if (route.route) {
+        return <Route exact path={route.route} element={route.component} key={route.key} />;
+      }
+      return null;
+    });
 
   const configsButton = (
     <ArgonBox
@@ -198,9 +214,7 @@ export default function App() {
           </>
         )}
         {layout === "vr" && <Configurator />}
-        <Routes>
-     {factContext.isFaculty==true ? getRoutes(routes) : stuRoutes(sturoutes)}
-        </Routes>
+        <Routes>{factContext.isFaculty == true ? getRoutes(routes) : stuRoutes(sturoutes)}</Routes>
       </ThemeProvider>
     </CacheProvider>
   ) : (
@@ -221,9 +235,7 @@ export default function App() {
         </>
       )}
       {layout === "vr" && <Configurator />}
-      <Routes>
-      {factContext.isFaculty==true ? getRoutes(routes) : stuRoutes(sturoutes)}
-      </Routes>
+      <Routes>{factContext.isFaculty == true ? getRoutes(routes) : stuRoutes(sturoutes)}</Routes>
     </ThemeProvider>
   );
 }

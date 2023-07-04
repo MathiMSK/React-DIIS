@@ -6,7 +6,7 @@ export const DataContext = createContext({});
 const studentAssignment = () => {
   const [controller, dispatch] = useArgonController();
   const { miniSidenav, darkMode } = controller;
-   
+
   return (
     <ArgonBox
       sx={({ breakpoints, transitions, functions: { pxToRem } }) => ({
@@ -49,7 +49,7 @@ const studentAssignment = () => {
           </h1>
         </div>
         <div style={{ border: "1px solid #0070CD", marginBottom: "20px" }} />
-        <Get /> 
+        <Get />
       </div>
     </ArgonBox>
   );

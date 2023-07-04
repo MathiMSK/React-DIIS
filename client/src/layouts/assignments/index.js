@@ -44,7 +44,7 @@ const Assign = () => {
   const [noqerr, setNoqErr] = useState("");
 
   const [facultyData, setFacultyData] = useState([]);
-  const [attend, setAttend] = useState("")
+  const [attend, setAttend] = useState("");
   const [attendVal, setAttendVal] = useState("");
   // let faculty = useContext(facultyContext);
   const componentPdf = useRef();
@@ -133,7 +133,7 @@ const Assign = () => {
     getAssign();
     getProf();
   }, []);
-  
+
   // if()
 
   const initiateAssign = async () => {
@@ -228,8 +228,8 @@ const Assign = () => {
                   </h1>
                   <div>
                     {facultyData?.isFaculty == true ? (
-                      <Button 
-                      className="btn1"
+                      <Button
+                        className="btn1"
                         style={{
                           marginRight: "1rem",
                           color: "#b931ce",
@@ -263,7 +263,7 @@ const Assign = () => {
                   <div
                     style={{
                       flexDirection: "row",
-                      position: "relative", 
+                      position: "relative",
                       display: "flex",
                       borderRadius: "20px",
                       marginLeft: "0.5rem",

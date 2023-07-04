@@ -85,9 +85,7 @@ function Illustration() {
         return toast.error(response.data.message);
       } else {
         {
-          response.data.isFaculty
-            ? navigate("/assignments")
-            : navigate("/studentassignments")
+          response.data.isFaculty ? navigate("/assignments") : navigate("/studentassignments");
         }
         window.location.reload();
         localStorage.setItem("token", JSON.stringify(response.data.token));
@@ -104,7 +102,7 @@ function Illustration() {
         image: bgImage,
       }}
     >
-      <ArgonBox component="form" role="form">
+      <ArgonBox component="form" role="form" >
         <ArgonBox mb={2}>
           <ArgonTypography variant="h5" color="textPrimary">
             Email

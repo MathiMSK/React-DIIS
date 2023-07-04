@@ -19,7 +19,7 @@
 //     (assignmentid == undefined || assignmentid == "undefined") &&
 //     (selectedClass == undefined || assignmentid == "undefined")&&
 //    ( subject == undefined|| subject == "undefined")
-//   ) { 
+//   ) {
 //     let foundStd = await User.findById(stdid);
 //     if (!foundStd)
 //       return res.status(400).json({ message: "Student not found" });
@@ -305,7 +305,7 @@ import User from "../model/userModel.js";
 //       ) {
 //         arr.push(item);
 //       }
-      
+
 //     });
 //   }
 //   if (
@@ -377,7 +377,7 @@ import User from "../model/userModel.js";
 //     .setHeight(280);
 //   const chartImageUrl = myChart.getUrl();
 //   console.log(chartImageUrl);
-  
+
 //   // var download = function(uri, filename, callback){
 //   //   request.head(uri, function(err, res, body){
 //   //     console.log("content-type:", res.headers["content-type"]);
@@ -437,10 +437,8 @@ import User from "../model/userModel.js";
 //   });
 // };
 
-
-
 export const chart = async (req, res) => {
-  let { subject, assignmentid, stdid ,view} = req.query;
+  let { subject, assignmentid, stdid, view } = req.query;
   console.log(subject);
   let selectedClass = req.query.class;
   let found = await StudentAssignment.find()
@@ -533,7 +531,7 @@ export const chart = async (req, res) => {
       }
     });
   }
-  
+
   if (
     selectedClass == undefined &&
     subject == undefined &&
@@ -593,23 +591,45 @@ export const chart = async (req, res) => {
   table += "<div style='heigth:100%'>";
   table += "<h1 style='text-align:center'> Students Report </h1>";
   table += "<img src=" + chartImageUrl + "style='margin-bottom:30px' >";
-  table += "<div style=' break-after: always !important;page-break-after: always !important;page-break-inside: avoid !important;'>";
+  table +=
+    "<div style=' break-after: always !important;page-break-after: always !important;page-break-inside: avoid !important;'>";
   table += "<h1 style='text-align:center'>Student Marks</h1>";
-  table += "<table border='1' style='width:95%;margin-left:2%;word-break:break-word;background-color:white'>";
+  table +=
+    "<table border='1' style='width:95%;margin-left:2%;word-break:break-word;background-color:white'>";
   table += "<tr style='background-color:#8f32a8;color:white' >";
-  table += "<th style='font-size:24px;max-width:150px;padding:10px'>Student Name</th>";
-  table += "<th style='font-size:24px;max-width:150px;padding:10px'>Student Class</th>";
-  table += "<th style='font-size:24px;max-width:150px;padding:10px'>Assignment Name</th>";
-  table += "<th style='font-size:24px;max-width:150px;padding:10px'>Subject</th>";
-  table += "<th style='font-size:24px;max-width:150px;padding:10px'>Student Mark</th>";
+  table +=
+    "<th style='font-size:24px;max-width:150px;padding:10px'>Student Name</th>";
+  table +=
+    "<th style='font-size:24px;max-width:150px;padding:10px'>Student Class</th>";
+  table +=
+    "<th style='font-size:24px;max-width:150px;padding:10px'>Assignment Name</th>";
+  table +=
+    "<th style='font-size:24px;max-width:150px;padding:10px'>Subject</th>";
+  table +=
+    "<th style='font-size:24px;max-width:150px;padding:10px'>Student Mark</th>";
   table += "</tr>";
   dataForTable.forEach(function (tableData) {
     table += "<tr >";
-    table += "<td style='font-size:20px;max-width:150px;padding:10px'>" +tableData.name +"</td>";
-    table += "<td style='font-size:20px;max-width:150px;padding:10px'>" +tableData.class +"</td>";
-    table += "<td style='font-size:20px;max-width:150px;padding:10px'>" +tableData.assignmentName +"</td>";
-    table += "<td style='font-size:20px;max-width:150px;padding:10px'>" +tableData.subject +"</td>";
-    table += "<td style='font-size:20px;max-width:150px;padding:10px'>" +tableData.scoredMarks +"</td>";
+    table +=
+      "<td style='font-size:20px;max-width:150px;padding:10px'>" +
+      tableData.name +
+      "</td>";
+    table +=
+      "<td style='font-size:20px;max-width:150px;padding:10px'>" +
+      tableData.class +
+      "</td>";
+    table +=
+      "<td style='font-size:20px;max-width:150px;padding:10px'>" +
+      tableData.assignmentName +
+      "</td>";
+    table +=
+      "<td style='font-size:20px;max-width:150px;padding:10px'>" +
+      tableData.subject +
+      "</td>";
+    table +=
+      "<td style='font-size:20px;max-width:150px;padding:10px'>" +
+      tableData.scoredMarks +
+      "</td>";
     table += "</tr>";
   });
   table += "</div>";
@@ -624,14 +644,16 @@ export const chart = async (req, res) => {
     },
     timeout: "120000",
   };
-    if( view == "true" &&  view != "false"){
-      return res.status(200).json({data:{chartImg:chartImageUrl,tableData:dataForTable}})
+  if (view == "true" && view != "false") {
+    return res
+      .status(200)
+      .json({ data: { chartImg: chartImageUrl, tableData: dataForTable } });
+  }
+  let pdfFileName = `tickets.pdf`;
+  pdf.create(table, options).toFile(pdfFileName, function (err, result) {
+    if (err) return console.log({ message: err });
+    if (result) {
+      res.download(result.filename);
     }
-    let pdfFileName = `tickets.pdf`;
-      pdf.create(table, options).toFile(pdfFileName, function (err, result) {
-        if (err) return console.log({ message: err });
-        if (result){
-          res.download(result.filename);
-        }
   });
 };

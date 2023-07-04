@@ -39,51 +39,51 @@ function IllustrationLayout({ color, header, title, description, button, illustr
           ...button,
         }}
       /> */}
-      <Grid container>
+      <Grid container >
         <Grid item xs={12} lg={6}>
-      <div>
-          <ArgonBox
-            display={{ lg: "flex" }}
-            backgroundColor={color}
-            width="50%"
-            sx={{backgroundColor: "#0070CD"}}
-          >
-            <ArgonBox
-              component="img"
-            alt="background"
-            marginLeft="50%"
-            marginTop= "40%"
-            src={illustration.image}
-              width="100%"
-              height="100%"
-              // sx={{marginTop: "50%"}}
-            />
-           
-        
-          </ArgonBox>
+          <div>
+            <ArgonBox 
+              display={{ lg: "flex" }}
+              // backgroundColor={color}
+              marginLeft="25%"
+                marginTop="27%"
+              width="50%"
+              sx={{ backgroundColor: "#0070CD" }}
+            >
+              <ArgonBox
+                component="img"
+                alt="background"
+                // marginLeft="50%"
+                // marginTop="50%"
+                src={illustration.image}
+                width="100%"
+                height="100%"
+                // sx={{marginTop: "50%"}}
+              />
+            </ArgonBox>
           </div>
         </Grid>
         <Grid item xs={11} sm={8} md={6} lg={4} xl={3} sx={{ mx: "auto" }}>
-        <Card sx={{height:"50vh",marginTop:"50%",justifyContent:"center",width:"80%"}} >
-          <ArgonBox display="flex" flexDirection="column" justifyContent="center" height="100vh"  >
-            <ArgonBox pt={3} px={3}  >
-              {!header ? (
-                <>
-                  <ArgonBox mb={1}>
-                    <ArgonTypography variant="h4" fontWeight="bold">
-                      {title}
+          <Card sx={{ height: "50vh", marginTop: "50%", justifyContent: "center", width: "80%" }}>
+            <ArgonBox display="flex" flexDirection="column" justifyContent="center" height="100vh">
+              <ArgonBox pt={3} px={3}>
+                {!header ? (
+                  <>
+                    <ArgonBox mb={1}>
+                      <ArgonTypography variant="h4" fontWeight="bold">
+                        {title}
+                      </ArgonTypography>
+                    </ArgonBox>
+                    <ArgonTypography variant="body2" fontWeight="regular" color="text">
+                      {description}
                     </ArgonTypography>
-                  </ArgonBox>
-                  <ArgonTypography variant="body2" fontWeight="regular" color="text">
-                    {description}
-                  </ArgonTypography>
-                </>
-              ) : (
-                header
-              )}
+                  </>
+                ) : (
+                  header
+                )}
+              </ArgonBox>
+              <ArgonBox p={3}>{children}</ArgonBox>
             </ArgonBox>
-            <ArgonBox p={3}>{children}</ArgonBox>
-          </ArgonBox>
           </Card>
         </Grid>
       </Grid>
