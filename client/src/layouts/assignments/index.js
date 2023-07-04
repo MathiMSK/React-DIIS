@@ -113,9 +113,9 @@ const Assign = () => {
     try {
       let response = await getAllAssign();
       if (!response.ok) {
-        return toast.error(response.data.message);
+        return toast.error(response?.data?.message);
       }
-      setAssignData(response.data.data);
+      setAssignData(response?.data?.data);
     } catch (error) {
       console.log(error);
     }
@@ -124,7 +124,7 @@ const Assign = () => {
   const getProf = async () => {
     try {
       let response = await getProfile();
-      setFacultyData(response.data.data);
+      setFacultyData(response?.data?.data);
     } catch (error) {
       console.log(error);
     }
@@ -171,7 +171,7 @@ const Assign = () => {
           return toast.error(response.data.message);
         } else {
           setOpen(!open);
-          toast.success(response.data.message);
+          // toast.success(response.data.message);
         }
       } catch (error) {
         console.log(error);

@@ -64,12 +64,12 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
   const getProf = async () => {
     try {
       let response = await getProfile();
-      setFacultyData(response.data.data);
+      setFacultyData(response?.data?.data);
     } catch (error) {
       console.log(error);
     }
   };
-  factContext.isFaculty = facultyData.isFaculty;
+  factContext.isFaculty = facultyData?.isFaculty;
   
   useEffect(() => {
     getProf();

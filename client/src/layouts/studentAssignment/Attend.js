@@ -89,17 +89,17 @@ export default function Attend({data, id }) {
   });
 
   useEffect(() => {
-    data.map((i) => {
-      if(i.assignment._id == id){
-        setQuestion(i.assignment.question);
+    data?.map((i) => {
+      if(i?.assignment?._id == id){
+        setQuestion(i?.assignment?.question);
       }
     });
   }, [id]);
 
   const handleChange = (e, index) => {
     e.preventDefault();
-    val.answer.map((item)=>{
-      if (item.questionNo === index ){
+    val?.answer?.map((item)=>{
+      if (item?.questionNo === index ){
         item.questionNo = 0;
       }
     })

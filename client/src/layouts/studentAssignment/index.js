@@ -6,15 +6,7 @@ export const DataContext = createContext({});
 const studentAssignment = () => {
   const [controller, dispatch] = useArgonController();
   const { miniSidenav, darkMode } = controller;
-  
-
-  // ***********************  api's  ***********************
-
-
-
-
- 
- 
+   
   return (
     <ArgonBox
       sx={({ breakpoints, transitions, functions: { pxToRem } }) => ({

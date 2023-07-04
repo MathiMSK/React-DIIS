@@ -39,7 +39,7 @@ const MIS = () => {
     let data = response.data?.data?.filter((item) => {
       return item;
     });
-    const uniqueSub = [...new Set(data.map(item => item.subject))];
+    const uniqueSub = [...new Set(data?.map(item => item.subject))];
     setSubject(
       uniqueSub?.map((index) => {
         return {
@@ -74,15 +74,15 @@ const MIS = () => {
     );
 
     let resp = await getAllUser();
-    let std = resp.data?.data.filter((item) => {
+    let std = resp?.data?.data.filter((item) => {
       return item.isFaculty == false;
     });
     setStdid(
       std.map((item) => {
         return {
-          id: item._id,
-          value: item.name || "",
-          label: item.name || "",
+          id: item?._id,
+          value: item?.name || "",
+          label: item?.name || "",
         };
       })
     );

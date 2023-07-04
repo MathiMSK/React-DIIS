@@ -35,7 +35,7 @@ const Students = () => {
     const getProf = async () => {
         try {
           let response = await getProfile();
-          setFacultyData(response.data.data);
+          setFacultyData(response?.data?.data);
         } catch (error) {
           console.log(error);
         }
@@ -44,7 +44,7 @@ const Students = () => {
     const getUsers = async () => {
         try {
             let response = await getAllUser();
-            let std = response.data?.data.filter((item) => {
+            let std = response?.data?.data.filter((item) => {
               return item.isFaculty==false
             });
             setData(std);
@@ -104,7 +104,7 @@ const Students = () => {
         if(!response.ok) {
             return toast.error(response.data.message);
           }
-          toast.success(response.data.message);
+          toast.success(response?.data?.message);
           setOpen(!open)
        
     } catch (error) {
