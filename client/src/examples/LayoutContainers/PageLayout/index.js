@@ -40,7 +40,7 @@ function PageLayout({ background, children }) {
   return (
     <ArgonBox
       width="100vw"
-      height="100%"
+      height="100%"   
       minHeight="100vh"
       bgColor={darkMode ? "transparent" : background}
       sx={{ overflowX: "hidden" }}

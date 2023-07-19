@@ -52,6 +52,7 @@ import { BsFillInfoCircleFill } from "react-icons/bs";
 import Students from "layouts/Students";
 import facultyContext from "context/facultyContext";
 import { useContext } from "react";
+import Emoji from "layouts/emoji";
 
 let token;
 let getToken = localStorage.getItem("token");
@@ -132,6 +133,20 @@ const routes = [
       />
     ),
     component: <Assignments />,
+  },
+  {
+    type: "route",
+    name: "Emoji",
+    key: "assignments",
+    route: "/emoji",
+    token: token,
+    icon: (
+      <MdAssignment
+        color="#FDD451"
+        style={{ filter: "drop-shadow(5px 5px 5px rgba(0,0,0,0.3))" }}
+      />
+    ),
+    component: <Emoji />,
   },
   {
     type: "route",
